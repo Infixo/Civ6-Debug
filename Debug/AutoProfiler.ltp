@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>AutoProfiler</Name>
+  <App>Civ6</App>
+  <EnterAction>g_PanelHasFocus = true;
+if (g_PlacementSettings.Active) then
+		LuaEvents.TunerEnterDebugMode();
+end
+</EnterAction>
+  <ExitAction>if (g_PanelHasFocus) then
+	g_PanelHasFocus = false;
+	if (g_PlacementSettings.Active) then
+			LuaEvents.TunerExitDebugMode();
+	end
+end
+</ExitAction>
+  <CompatibleStates>
+    <string>TunerAssetPreviewPanel</string>
+  </CompatibleStates>
+  <LoadStates>
+    <string>UI:TunerAssetPreviewPanel</string>
+  </LoadStates>
+  <Actions>
+    <ActionData>
+      <Name>Clear All Landmarks</Name>
+      <Action>AssetPreview.ClearLandmarkSystem();</Action>
+      <Location>
+        <X>10</X>
+        <Y>35</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Place Cities</Name>
+      <Action>AssetPreview.ClearLandmarkSystem();
+	  local maptype = Map.GetMapSize();
+	  local mapx = GameInfo.Maps[maptype].GridWidth;
+	  local mapy = GameInfo.Maps[maptype].GridHeight;
+	  local step = g_AddCitySpacing and 2 or 1;
+	  for y = 0, mapy-1, step do
+		local firstx = 0;
+		if ( g_AddCitySpacing ) then
+			firstx = (y/2) % 2;
+		end
+		for x = firstx, mapx-1, step do
+			local plot = Map.GetPlot(x, y);
+			if ( not plot:IsImpassable() and not plot:IsWater() ) then
+				AssetPreview.PlaceCityAt( x, y, GameInfo.Civilizations[g_SelectedCiv].Index, GameInfo.Eras[g_SelectedEra].Index, 22 );
+			end
+		end
+	  end</Action>
+      <Location>
+        <X>10</X>
+        <Y>63</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Start AutoProfile</Name>
+      <Action>AutoProfiler.Start(g_BenchmarkLogName);</Action>
+      <Location>
+        <X>10</X>
+        <Y>247</Y>
+      </Location>
+    </ActionData>
+  </Actions>
+  <StringControls>
+    <StringControlData>
+      <Name>State</Name>
+      <GetFunction>function()
+	return AutoProfiler.GetStateString();
+end</GetFunction>
+      <SetFunction>function(value)
+	return;
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>179</Y>
+      </Location>
+    </StringControlData>
+    <StringControlData>
+      <Name>Benchmark Log Name</Name>
+      <GetFunction>function()
+	return g_BenchmarkLogName;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_BenchmarkLogName = value;
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>412</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
+  <IntegerControls>
+    <IntegerControlData>
+      <Name>Seconds Remaining</Name>
+      <GetFunction>function()
+	return math.ceil(AutoProfiler.GetTimeRemaining());
+end</GetFunction>
+      <SetFunction>function(value)
+
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>212</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+    <IntegerControlData>
+      <Name>LookAt Total Positions</Name>
+      <GetFunction>function()
+	return AutoProfiler.GetNumLookAtPositions();
+end</GetFunction>
+      <SetFunction>function(value)
+	AutoProfiler.SetNumLookAtPositions(value);
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>345</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+  </IntegerControls>
+  <FloatControls>
+    <FloatControlData>
+      <Name>LookAt Linger Seconds</Name>
+      <GetFunction>function()
+	return AutoProfiler.GetLookAtLingerSeconds();
+end</GetFunction>
+      <SetFunction>function(value)
+	AutoProfiler.SetLookAtLingerSeconds( value );
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>379</Y>
+      </Location>
+      <DefaultValue>-1</DefaultValue>
+    </FloatControlData>
+    <FloatControlData>
+      <Name>Sweep Pan Speed</Name>
+      <GetFunction>function()
+	return AutoProfiler.GetCameraPanSpeed();
+end</GetFunction>
+      <SetFunction>function(value)
+	AutoProfiler.SetCameraPanSpeed( value );
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>311</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </FloatControlData>
+    <FloatControlData>
+      <Name>Camera Zoom</Name>
+      <GetFunction>function()
+	return AutoProfiler.GetCameraZoom();
+end</GetFunction>
+      <SetFunction>function(value)
+	AutoProfiler.SetCameraZoom(value);
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>277</Y>
+      </Location>
+      <DefaultValue>1</DefaultValue>
+    </FloatControlData>
+  </FloatControls>
+  <BooleanControls>
+    <BooleanControlData>
+      <Name>Sparse Cities</Name>
+      <GetFunction>function()
+	return g_AddCitySpacing;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_AddCitySpacing = value;
+end</SetFunction>
+      <Location>
+        <X>10</X>
+        <Y>90</Y>
+      </Location>
+    </BooleanControlData>
+  </BooleanControls>
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists />
+  <MultiselectLists>
+    <MultiselectListData>
+      <Location>
+        <X>140</X>
+        <Y>36</Y>
+      </Location>
+      <Size>
+        <Width>149</Width>
+        <Height>134</Height>
+      </Size>
+      <Name>Era</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local ID = 1;
+
+	for era in GameInfo.Eras() do
+		local item = {};
+		item.Text = string.gsub( era.EraType, "ERA_", "" );
+		item.Selected = era.EraType == g_SelectedEra;
+		listItems[ID] = item;
+		ID = ID + 1;
+	end
+	if ( g_SelectedEra == nil and #listItems &gt; 0) then
+		g_SelectedEra = "ERA_" .. listItems[1].Text;
+		listItems[1].Selected = true;
+	end	
+	
+	return listItems;
+end
+</PopulateList>
+      <OnSelected>function(selection)
+	g_SelectedEra = "ERA_" .. selection;
+end
+
+</OnSelected>
+      <OnDeselected>function(selection) end
+</OnDeselected>
+    </MultiselectListData>
+    <MultiselectListData>
+      <Location>
+        <X>300</X>
+        <Y>36</Y>
+      </Location>
+      <Size>
+        <Width>254</Width>
+        <Height>254</Height>
+      </Size>
+      <Name>Civilization</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local ID = 1;
+	for civ in GameInfo.Civilizations() do
+		local item = {};
+		item.Text = string.gsub( civ.CivilizationType, "CIVILIZATION_", "" );
+		item.Selected = civ.CivilizationType == g_SelectedCiv;
+		listItems[ID] = item;
+		ID = ID + 1;
+	end
+	if ( g_SelectedCiv == nil and #listItems &gt; 0) then
+		g_SelectedCiv = "CIVILIZATION_" .. listItems[1].Text;
+		listItems[1].Selected = true;
+	end	
+	
+	return listItems;
+end
+</PopulateList>
+      <OnSelected>function(selection)
+	g_SelectedCiv = "CIVILIZATION_" .. selection;
+end
+</OnSelected>
+      <OnDeselected>function(selection)
+
+end
+</OnDeselected>
+    </MultiselectListData>
+  </MultiselectLists>
+</PanelData>

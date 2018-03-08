@@ -1,0 +1,1235 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Events InGame</Name>
+  <App>Civ6</App>
+  <EnterAction />
+  <ExitAction />
+  <CompatibleStates>
+    <string>InGame</string>
+  </CompatibleStates>
+  <Actions>
+    <ActionData>
+      <Name>Listen to All Events</Name>
+      <Action>local seen = {}
+function dump(t,i)
+	seen[t]=true
+	local s={}
+	local n=0
+	for k, v in pairs(t) do
+		print(i,k, v)
+		if type(v)=="table" and not seen[v] then
+			dump(v,i.."\t\t")
+		end
+	end
+end
+
+function getEventArguments(...)
+	local args = {...}
+	if args then
+		print("---------------------------------------------------------------------------------- Start &lt;")
+		print("num arguments = " .. #args)
+		print(unpack({...}))		
+		for i = 1, #args do
+			if type(args[i])== "table" then
+				print("--------------- "..tostring(args[i]).." ---------------");
+				dump(args[i], "");
+				print();
+			end
+		end
+		print("------------------------------------------------------------------------------------ End &gt;");
+		print();
+	else	
+		print("---------------------------------------------------------------------------------- Start &lt;")
+		print("No arguments...")
+		print("------------------------------------------------------------------------------------ End &gt;");
+		print();
+	end
+end
+
+function maxCall()
+	return 5
+end
+
+local numCall = {}
+
+numCall["AnarchyBegins                     	"] = 0
+numCall["AnarchyEnds                       	"] = 0
+numCall["BeliefAdded                       	"] = 0
+numCall["BuildingAddedToMap                	"] = 0
+numCall["BuildingChanged                   	"] = 0
+numCall["BuildingRemovedFromMap            	"] = 0
+numCall["CapitalCityChanged                	"] = 0
+numCall["CityAddedToMap                    	"] = 0
+numCall["CityCommandStarted                	"] = 0
+numCall["CityDefenseStatusChanged          	"] = 0
+numCall["CityFocusChanged                  	"] = 0
+numCall["CityInitialized                   	"] = 0
+numCall["CityLiberated                     	"] = 0
+numCall["CityMadePurchase                  	"] = 0
+numCall["CityPopulationChanged             	"] = 0
+numCall["CityProductionChanged             	"] = 0
+numCall["CityProductionCompleted           	"] = 0
+numCall["CityProductionUpdated             	"] = 0
+numCall["CityProjectCompleted              	"] = 0
+numCall["CityReligionChanged               	"] = 0
+numCall["CityReligionFollowersChanged      	"] = 0
+numCall["CityRemovedFromMap                	"] = 0
+numCall["CitySiegeStatusChanged            	"] = 0
+numCall["CityTileOwnershipChanged          	"] = 0
+numCall["CityUnitsChanged                  	"] = 0
+numCall["CityVisibilityChanged             	"] = 0
+numCall["CityWorkerChanged                 	"] = 0
+numCall["CivicBoostTriggered               	"] = 0
+numCall["CivicChanged                      	"] = 0
+numCall["CivicCompleted                    	"] = 0
+numCall["CivicQueueChanged                 	"] = 0
+numCall["CivicsUnlocked                    	"] = 0
+numCall["Combat                            	"] = 0
+numCall["CultureChanged                    	"] = 0
+numCall["CultureYieldChanged               	"] = 0
+numCall["DiplomacyDealEnacted              	"] = 0
+numCall["DiplomacyDealExpired              	"] = 0
+numCall["DiplomacyDeclareWar               	"] = 0
+numCall["DiplomacyIncomingDeal             	"] = 0
+numCall["DiplomacyMakePeace                	"] = 0
+numCall["DiplomacyMeet                     	"] = 0
+numCall["DiplomacyMeetMajorMinor           	"] = 0
+numCall["DiplomacyMeetMajors               	"] = 0
+numCall["DiplomacyRefusePeace              	"] = 0
+numCall["DiplomacyRelationshipChanged      	"] = 0
+numCall["DiplomacySessionClosed            	"] = 0
+numCall["DiplomacyStatement                	"] = 0
+numCall["DistrictAddedToMap                	"] = 0
+numCall["DistrictBuildProgressChanged      	"] = 0
+numCall["DistrictCombatChanged             	"] = 0
+numCall["DistrictDamageChanged             	"] = 0
+numCall["DistrictPillaged                  	"] = 0
+numCall["DistrictRemovedFromMap            	"] = 0
+numCall["DistrictUnitsChanged              	"] = 0
+numCall["DistrictVisibilityChanged         	"] = 0
+numCall["EndTurnBlockingChanged            	"] = 0
+numCall["EndTurnDirty                      	"] = 0
+numCall["FaithChanged                      	"] = 0
+numCall["FeatureAddedToMap                 	"] = 0
+numCall["FeatureChanged                    	"] = 0
+numCall["FeatureRemovedFromMap             	"] = 0
+numCall["GoodyHutReward                    	"] = 0
+numCall["GovernmentChanged                 	"] = 0
+numCall["GovernmentPolicyChanged           	"] = 0
+numCall["GovernmentPolicyObsoleted         	"] = 0
+numCall["GreatPeoplePointsChanged          	"] = 0
+numCall["GreatPeopleTimelineChanged        	"] = 0
+numCall["GreatWorkCreated                  	"] = 0
+numCall["GreatWorkMoved                    	"] = 0
+numCall["ImprovementActivated              	"] = 0
+numCall["ImprovementAddedToMap             	"] = 0
+numCall["ImprovementChanged                	"] = 0
+numCall["ImprovementOwnershipChanged       	"] = 0
+numCall["ImprovementRemovedFromMap         	"] = 0
+numCall["ImprovementVisibilityChanged      	"] = 0
+numCall["InfluenceChanged                  	"] = 0
+numCall["InfluenceGiven                    	"] = 0
+numCall["LevyCounterChanged                	"] = 0
+numCall["LocalPlayerChanged                	"] = 0
+numCall["LocalPlayerTurnBegin              	"] = 0
+numCall["LocalPlayerTurnEnd                	"] = 0
+numCall["MapYieldsChanged                  	"] = 0
+numCall["NationalParkAdded                 	"] = 0
+numCall["NaturalWonderRevealed             	"] = 0
+numCall["NotificationAdded                 	"] = 0
+numCall["NotificationDismissed             	"] = 0
+numCall["NotificationRefreshRequested      	"] = 0
+numCall["ObjectPairing                     	"] = 0
+numCall["OnAiAdvisorUpdated                	"] = 0
+numCall["PantheonFounded                   	"] = 0
+numCall["PhaseBegin                        	"] = 0
+numCall["PhaseEnd                          	"] = 0
+numCall["PlayerBordersChanged              	"] = 0
+numCall["PlayerDefeat                      	"] = 0
+numCall["PlayerDestroyed                   	"] = 0
+numCall["PlayerEraChanged                  	"] = 0
+numCall["PlayerOperationComplete           	"] = 0
+numCall["PlayerTurnActivated               	"] = 0
+numCall["PlayerTurnDeactivated             	"] = 0
+numCall["PlayerVictory                     	"] = 0
+numCall["PlotMarkerChanged                 	"] = 0
+numCall["PlotVisibilityChanged             	"] = 0
+numCall["PlotYieldChanged                  	"] = 0
+numCall["QuestChanged                      	"] = 0
+numCall["ReligionFounded                   	"] = 0
+numCall["RemotePlayerTurnBegin             	"] = 0
+numCall["RemotePlayerTurnEnd               	"] = 0
+numCall["ResearchChanged                   	"] = 0
+numCall["ResearchCompleted                 	"] = 0
+numCall["ResearchQueueChanged              	"] = 0
+numCall["ResearchYieldChanged              	"] = 0
+numCall["ResourceAddedToMap                	"] = 0
+numCall["ResourceChanged                   	"] = 0
+numCall["ResourceRemovedFromMap            	"] = 0
+numCall["ResourceVisibilityChanged         	"] = 0
+numCall["RouteAddedToMap                   	"] = 0
+numCall["RouteChanged                      	"] = 0
+numCall["RouteRemovedFromMap               	"] = 0
+numCall["SpyAdded                          	"] = 0
+numCall["SpyMissionUpdated                 	"] = 0
+numCall["SpyRemoved                        	"] = 0
+numCall["SpyUpdated                        	"] = 0
+numCall["StatusMessage                     	"] = 0
+numCall["TechBoostTriggered                	"] = 0
+numCall["TerrainTypeChanged                	"] = 0
+numCall["TradeRouteActivityChanged         	"] = 0
+numCall["TradeRouteAddedToMap              	"] = 0
+numCall["TradeRouteCapacityChanged         	"] = 0
+numCall["TradeRouteRangeChanged            	"] = 0
+numCall["TradeRouteRemovedFromMap          	"] = 0
+numCall["TreasuryChanged                   	"] = 0
+numCall["TurnBegin                         	"] = 0
+numCall["TurnEnd                           	"] = 0
+numCall["UnitActivityChanged               	"] = 0
+numCall["UnitAddedToMap                    	"] = 0
+numCall["UnitAirlifted                     	"] = 0
+numCall["UnitArtifactChanged               	"] = 0
+numCall["UnitCaptured                      	"] = 0
+numCall["UnitChargesChanged                	"] = 0
+numCall["UnitCommandStarted                	"] = 0
+numCall["UnitDamageChanged                 	"] = 0
+numCall["UnitEmbarkedStateChanged          	"] = 0
+numCall["UnitEnterFormation                	"] = 0
+numCall["UnitExitFormation                 	"] = 0
+numCall["UnitFormArmy                      	"] = 0
+numCall["UnitFormCorps                     	"] = 0
+numCall["UnitFortificationChanged          	"] = 0
+numCall["UnitGreatPersonActivated          	"] = 0
+numCall["UnitGreatPersonChanged            	"] = 0
+numCall["UnitGreatPersonCreated            	"] = 0
+numCall["UnitKilledInCombat                	"] = 0
+numCall["UnitMoveComplete                  	"] = 0
+numCall["UnitMoved                         	"] = 0
+numCall["UnitMovementPointsChanged         	"] = 0
+numCall["UnitMovementPointsCleared         	"] = 0
+numCall["UnitMovementPointsRestored        	"] = 0
+numCall["UnitOperationAdded                	"] = 0
+numCall["UnitOperationDeactivated          	"] = 0
+numCall["UnitOperationSegmentComplete      	"] = 0
+numCall["UnitOperationStarted              	"] = 0
+numCall["UnitOperationsCleared             	"] = 0
+numCall["UnitPromoted                      	"] = 0
+numCall["UnitPromotionAvailable            	"] = 0
+numCall["UnitRemovedFromMap                	"] = 0
+numCall["UnitTeleported                    	"] = 0
+numCall["UnitUpgraded                      	"] = 0
+numCall["UnitVisibilityChanged             	"] = 0
+numCall["WMDCountChanged                   	"] = 0
+numCall["WMDDetonated                      	"] = 0
+numCall["WMDFalloutChanged                 	"] = 0
+numCall["WMDFalloutVisibilityChanged       	"] = 0
+numCall["WonderCompleted                   	"] = 0
+numCall["WorldTextMessage                  	"] = 0
+numCall["ARXOrientationChanged             	"] = 0
+numCall["ARXTap                            	"] = 0
+numCall["AchievementProgress               	"] = 0
+numCall["AchievementUnlocked               	"] = 0
+numCall["Begin2KLoginProcess               	"] = 0
+numCall["BeginGameView                     	"] = 0
+numCall["BeginMy2KLinkAccountProcess       	"] = 0
+numCall["BeginWonderReveal                 	"] = 0
+numCall["Camera_Updated                    	"] = 0
+numCall["CloudGameInfoUpdated              	"] = 0
+numCall["CloudGameJoinResponse             	"] = 0
+numCall["CloudGameListUpdated              	"] = 0
+numCall["EndGameView                       	"] = 0
+numCall["EndWonderReveal                   	"] = 0
+numCall["ExitToMainMenu                    	"] = 0
+numCall["FiraxisLiveActivate               	"] = 0
+numCall["FrontEndPopup                     	"] = 0
+numCall["GameConfigChanged                 	"] = 0
+numCall["HideLeaderScreen                  	"] = 0
+numCall["InputActionTriggered              	"] = 0
+numCall["InputGestureRecorded              	"] = 0
+numCall["LeaderAnimationChanged            	"] = 0
+numCall["LeaderAnimationComplete           	"] = 0
+numCall["LeaderScreenFinishedLoading       	"] = 0
+numCall["LeaveGameComplete                 	"] = 0
+numCall["ModStatusUpdated                  	"] = 0
+numCall["MultiplayerChat                   	"] = 0
+numCall["MultiplayerGameAbandoned          	"] = 0
+numCall["MultiplayerGameLastPlayer         	"] = 0
+numCall["MultiplayerGameListClear          	"] = 0
+numCall["MultiplayerGameListComplete       	"] = 0
+numCall["MultiplayerGameListUpdated        	"] = 0
+numCall["MultiplayerHostMigrated           	"] = 0
+numCall["MultiplayerJoinGameComplete       	"] = 0
+numCall["MultiplayerJoinRoomAttempt        	"] = 0
+numCall["MultiplayerJoinRoomComplete       	"] = 0
+numCall["MultiplayerJoinRoomFailed         	"] = 0
+numCall["MultiplayerPingTimesChanged       	"] = 0
+numCall["MultiplayerPlayerConnected        	"] = 0
+numCall["MultiplayerPostPlayerDisconnected 	"] = 0
+numCall["MultiplayerPrePlayerDisconnected  	"] = 0
+numCall["MultiplayerSnapshotProcessed      	"] = 0
+numCall["My2KActivate                      	"] = 0
+numCall["My2KLinkAccountResult             	"] = 0
+numCall["OptionChangeRequiresAppRestart    	"] = 0
+numCall["OptionChangeRequiresGameRestart   	"] = 0
+numCall["OptionChangeRequiresResolutionAck 	"] = 0
+numCall["OptionChanged                     	"] = 0
+numCall["OptionsReset                      	"] = 0
+numCall["OptionsReverted                   	"] = 0
+numCall["OptionsSaved                      	"] = 0
+numCall["PlayerInfoChanged                 	"] = 0
+numCall["ShowLeaderScreen                  	"] = 0
+numCall["SteamFriendsPresenceUpdated       	"] = 0
+numCall["SteamFriendsStatusUpdated         	"] = 0
+numCall["SteamServersConnected             	"] = 0
+numCall["SteamServersDisconnected          	"] = 0
+numCall["TurnTimerUpdated                  	"] = 0
+numCall["UpdateGraphicsOptions             	"] = 0
+numCall["UserAcceptsEULA                   	"] = 0
+numCall["UserAcceptsOutdatedDriver         	"] = 0
+numCall["UserAcceptsUnknownDevice          	"] = 0
+numCall["UserConfirmedClose                	"] = 0
+numCall["UserRequestClose                  	"] = 0
+numCall["WorldRenderViewChanged            	"] = 0
+numCall["AppInitComplete                   	"] = 0
+numCall["GameViewStateDone                 	"] = 0
+numCall["LoadGameViewStateDone             	"] = 0
+numCall["LoadScreenClose                   	"] = 0
+numCall["LoadScreenContentReady            	"] = 0
+numCall["MainMenuStateDone                 	"] = 0
+numCall["AfterGameplayContentChange        	"] = 0
+numCall["AfterGameplayContentConfigure     	"] = 0
+numCall["AllCitiesDeselected               	"] = 0
+numCall["AllDistrictsDeselected            	"] = 0
+numCall["AllUnitsDeselected                	"] = 0
+numCall["AutomationTestComplete            	"] = 0
+numCall["BeforeGameplayContentChange       	"] = 0
+numCall["BeforeGameplayContentConfigure    	"] = 0
+numCall["BeforeMultiplayerInviteProcessing 	"] = 0
+numCall["CitySelectionChanged              	"] = 0
+numCall["CombatVisBegin                    	"] = 0
+numCall["CombatVisEnd                      	"] = 0
+numCall["CycleUnitSelectionRequest         	"] = 0
+numCall["DemoExit                          	"] = 0
+numCall["DemoTurnLimitReached              	"] = 0
+numCall["DistrictSelectionChanged          	"] = 0
+numCall["FinishedGameplayContentChange     	"] = 0
+numCall["FinishedGameplayContentConfigure  	"] = 0
+numCall["GameConfigurationParameterChanged 	"] = 0
+numCall["GameConfigurationRebuilt          	"] = 0
+numCall["GameConfigurationResolved         	"] = 0
+numCall["GameCoreEventPlaybackComplete     	"] = 0
+numCall["GameCoreEventPublishComplete      	"] = 0
+numCall["InterfaceModeChanged              	"] = 0
+numCall["LensFocusHex                      	"] = 0
+numCall["LensLayerOff                      	"] = 0
+numCall["LensLayerOn                       	"] = 0
+numCall["LensUnFocusHex                    	"] = 0
+numCall["LoadCanceled                      	"] = 0
+numCall["LoadComplete                      	"] = 0
+numCall["MapMaxMajorPlayersChanged         	"] = 0
+numCall["MultiplayerGameInvite             	"] = 0
+numCall["MultiplayerGameLaunched           	"] = 0
+numCall["PreTurnBegin                      	"] = 0
+numCall["RequestLoad                       	"] = 0
+numCall["RequestSave                       	"] = 0
+numCall["SaveCanceled                      	"] = 0
+numCall["SaveComplete                      	"] = 0
+numCall["SubscriptionDownloadStatus        	"] = 0
+numCall["UnitSelectionChanged              	"] = 0
+numCall["UnitSimPositionChanged            	"] = 0
+numCall["UserOptionChanged                 	"] = 0
+numCall["VisualStateRestored               	"] = 0
+numCall["DragCamera                        	"] = 0
+numCall["SystemUpdateUI                    	"] = 0
+
+function OnAnarchyBegins                      (...) if numCall["AnarchyBegins                     	"] &lt; maxCall() then print(" Event :	AnarchyBegins                     	");	getEventArguments(...);	numCall["AnarchyBegins                     	"] = numCall["AnarchyBegins                     	"] + 1;	end;	end;
+function OnAnarchyEnds                        (...) if numCall["AnarchyEnds                       	"] &lt; maxCall() then print(" Event :	AnarchyEnds                       	");	getEventArguments(...);	numCall["AnarchyEnds                       	"] = numCall["AnarchyEnds                       	"] + 1;	end;	end;
+function OnBeliefAdded                        (...) if numCall["BeliefAdded                       	"] &lt; maxCall() then print(" Event :	BeliefAdded                       	");	getEventArguments(...);	numCall["BeliefAdded                       	"] = numCall["BeliefAdded                       	"] + 1;	end;	end;
+function OnBuildingAddedToMap                 (...) if numCall["BuildingAddedToMap                	"] &lt; maxCall() then print(" Event :	BuildingAddedToMap                	");	getEventArguments(...);	numCall["BuildingAddedToMap                	"] = numCall["BuildingAddedToMap                	"] + 1;	end;	end;
+function OnBuildingChanged                    (...) if numCall["BuildingChanged                   	"] &lt; maxCall() then print(" Event :	BuildingChanged                   	");	getEventArguments(...);	numCall["BuildingChanged                   	"] = numCall["BuildingChanged                   	"] + 1;	end;	end;
+function OnBuildingRemovedFromMap             (...) if numCall["BuildingRemovedFromMap            	"] &lt; maxCall() then print(" Event :	BuildingRemovedFromMap            	");	getEventArguments(...);	numCall["BuildingRemovedFromMap            	"] = numCall["BuildingRemovedFromMap            	"] + 1;	end;	end;
+function OnCapitalCityChanged                 (...) if numCall["CapitalCityChanged                	"] &lt; maxCall() then print(" Event :	CapitalCityChanged                	");	getEventArguments(...);	numCall["CapitalCityChanged                	"] = numCall["CapitalCityChanged                	"] + 1;	end;	end;
+function OnCityAddedToMap                     (...) if numCall["CityAddedToMap                    	"] &lt; maxCall() then print(" Event :	CityAddedToMap                    	");	getEventArguments(...);	numCall["CityAddedToMap                    	"] = numCall["CityAddedToMap                    	"] + 1;	end;	end;
+function OnCityCommandStarted                 (...) if numCall["CityCommandStarted                	"] &lt; maxCall() then print(" Event :	CityCommandStarted                	");	getEventArguments(...);	numCall["CityCommandStarted                	"] = numCall["CityCommandStarted                	"] + 1;	end;	end;
+function OnCityDefenseStatusChanged           (...) if numCall["CityDefenseStatusChanged          	"] &lt; maxCall() then print(" Event :	CityDefenseStatusChanged          	");	getEventArguments(...);	numCall["CityDefenseStatusChanged          	"] = numCall["CityDefenseStatusChanged          	"] + 1;	end;	end;
+function OnCityFocusChanged                   (...) if numCall["CityFocusChanged                  	"] &lt; maxCall() then print(" Event :	CityFocusChanged                  	");	getEventArguments(...);	numCall["CityFocusChanged                  	"] = numCall["CityFocusChanged                  	"] + 1;	end;	end;
+function OnCityInitialized                    (...) if numCall["CityInitialized                   	"] &lt; maxCall() then print(" Event :	CityInitialized                   	");	getEventArguments(...);	numCall["CityInitialized                   	"] = numCall["CityInitialized                   	"] + 1;	end;	end;
+function OnCityLiberated                      (...) if numCall["CityLiberated                     	"] &lt; maxCall() then print(" Event :	CityLiberated                     	");	getEventArguments(...);	numCall["CityLiberated                     	"] = numCall["CityLiberated                     	"] + 1;	end;	end;
+function OnCityMadePurchase                   (...) if numCall["CityMadePurchase                  	"] &lt; maxCall() then print(" Event :	CityMadePurchase                  	");	getEventArguments(...);	numCall["CityMadePurchase                  	"] = numCall["CityMadePurchase                  	"] + 1;	end;	end;
+function OnCityPopulationChanged              (...) if numCall["CityPopulationChanged             	"] &lt; maxCall() then print(" Event :	CityPopulationChanged             	");	getEventArguments(...);	numCall["CityPopulationChanged             	"] = numCall["CityPopulationChanged             	"] + 1;	end;	end;
+function OnCityProductionChanged              (...) if numCall["CityProductionChanged             	"] &lt; maxCall() then print(" Event :	CityProductionChanged             	");	getEventArguments(...);	numCall["CityProductionChanged             	"] = numCall["CityProductionChanged             	"] + 1;	end;	end;
+function OnCityProductionCompleted            (...) if numCall["CityProductionCompleted           	"] &lt; maxCall() then print(" Event :	CityProductionCompleted           	");	getEventArguments(...);	numCall["CityProductionCompleted           	"] = numCall["CityProductionCompleted           	"] + 1;	end;	end;
+function OnCityProductionUpdated              (...) if numCall["CityProductionUpdated             	"] &lt; maxCall() then print(" Event :	CityProductionUpdated             	");	getEventArguments(...);	numCall["CityProductionUpdated             	"] = numCall["CityProductionUpdated             	"] + 1;	end;	end;
+function OnCityProjectCompleted               (...) if numCall["CityProjectCompleted              	"] &lt; maxCall() then print(" Event :	CityProjectCompleted              	");	getEventArguments(...);	numCall["CityProjectCompleted              	"] = numCall["CityProjectCompleted              	"] + 1;	end;	end;
+function OnCityReligionChanged                (...) if numCall["CityReligionChanged               	"] &lt; maxCall() then print(" Event :	CityReligionChanged               	");	getEventArguments(...);	numCall["CityReligionChanged               	"] = numCall["CityReligionChanged               	"] + 1;	end;	end;
+function OnCityReligionFollowersChanged       (...) if numCall["CityReligionFollowersChanged      	"] &lt; maxCall() then print(" Event :	CityReligionFollowersChanged      	");	getEventArguments(...);	numCall["CityReligionFollowersChanged      	"] = numCall["CityReligionFollowersChanged      	"] + 1;	end;	end;
+function OnCityRemovedFromMap                 (...) if numCall["CityRemovedFromMap                	"] &lt; maxCall() then print(" Event :	CityRemovedFromMap                	");	getEventArguments(...);	numCall["CityRemovedFromMap                	"] = numCall["CityRemovedFromMap                	"] + 1;	end;	end;
+function OnCitySiegeStatusChanged             (...) if numCall["CitySiegeStatusChanged            	"] &lt; maxCall() then print(" Event :	CitySiegeStatusChanged            	");	getEventArguments(...);	numCall["CitySiegeStatusChanged            	"] = numCall["CitySiegeStatusChanged            	"] + 1;	end;	end;
+function OnCityTileOwnershipChanged           (...) if numCall["CityTileOwnershipChanged          	"] &lt; maxCall() then print(" Event :	CityTileOwnershipChanged          	");	getEventArguments(...);	numCall["CityTileOwnershipChanged          	"] = numCall["CityTileOwnershipChanged          	"] + 1;	end;	end;
+function OnCityUnitsChanged                   (...) if numCall["CityUnitsChanged                  	"] &lt; maxCall() then print(" Event :	CityUnitsChanged                  	");	getEventArguments(...);	numCall["CityUnitsChanged                  	"] = numCall["CityUnitsChanged                  	"] + 1;	end;	end;
+function OnCityVisibilityChanged              (...) if numCall["CityVisibilityChanged             	"] &lt; maxCall() then print(" Event :	CityVisibilityChanged             	");	getEventArguments(...);	numCall["CityVisibilityChanged             	"] = numCall["CityVisibilityChanged             	"] + 1;	end;	end;
+function OnCityWorkerChanged                  (...) if numCall["CityWorkerChanged                 	"] &lt; maxCall() then print(" Event :	CityWorkerChanged                 	");	getEventArguments(...);	numCall["CityWorkerChanged                 	"] = numCall["CityWorkerChanged                 	"] + 1;	end;	end;
+function OnCivicBoostTriggered                (...) if numCall["CivicBoostTriggered               	"] &lt; maxCall() then print(" Event :	CivicBoostTriggered               	");	getEventArguments(...);	numCall["CivicBoostTriggered               	"] = numCall["CivicBoostTriggered               	"] + 1;	end;	end;
+function OnCivicChanged                       (...) if numCall["CivicChanged                      	"] &lt; maxCall() then print(" Event :	CivicChanged                      	");	getEventArguments(...);	numCall["CivicChanged                      	"] = numCall["CivicChanged                      	"] + 1;	end;	end;
+function OnCivicCompleted                     (...) if numCall["CivicCompleted                    	"] &lt; maxCall() then print(" Event :	CivicCompleted                    	");	getEventArguments(...);	numCall["CivicCompleted                    	"] = numCall["CivicCompleted                    	"] + 1;	end;	end;
+function OnCivicQueueChanged                  (...) if numCall["CivicQueueChanged                 	"] &lt; maxCall() then print(" Event :	CivicQueueChanged                 	");	getEventArguments(...);	numCall["CivicQueueChanged                 	"] = numCall["CivicQueueChanged                 	"] + 1;	end;	end;
+function OnCivicsUnlocked                     (...) if numCall["CivicsUnlocked                    	"] &lt; maxCall() then print(" Event :	CivicsUnlocked                    	");	getEventArguments(...);	numCall["CivicsUnlocked                    	"] = numCall["CivicsUnlocked                    	"] + 1;	end;	end;
+function OnCombat                             (...) if numCall["Combat                            	"] &lt; maxCall() then print(" Event :	Combat                            	");	getEventArguments(...);	numCall["Combat                            	"] = numCall["Combat                            	"] + 1;	end;	end;
+function OnCultureChanged                     (...) if numCall["CultureChanged                    	"] &lt; maxCall() then print(" Event :	CultureChanged                    	");	getEventArguments(...);	numCall["CultureChanged                    	"] = numCall["CultureChanged                    	"] + 1;	end;	end;
+function OnCultureYieldChanged                (...) if numCall["CultureYieldChanged               	"] &lt; maxCall() then print(" Event :	CultureYieldChanged               	");	getEventArguments(...);	numCall["CultureYieldChanged               	"] = numCall["CultureYieldChanged               	"] + 1;	end;	end;
+function OnDiplomacyDealEnacted               (...) if numCall["DiplomacyDealEnacted              	"] &lt; maxCall() then print(" Event :	DiplomacyDealEnacted              	");	getEventArguments(...);	numCall["DiplomacyDealEnacted              	"] = numCall["DiplomacyDealEnacted              	"] + 1;	end;	end;
+function OnDiplomacyDealExpired               (...) if numCall["DiplomacyDealExpired              	"] &lt; maxCall() then print(" Event :	DiplomacyDealExpired              	");	getEventArguments(...);	numCall["DiplomacyDealExpired              	"] = numCall["DiplomacyDealExpired              	"] + 1;	end;	end;
+function OnDiplomacyDeclareWar                (...) if numCall["DiplomacyDeclareWar               	"] &lt; maxCall() then print(" Event :	DiplomacyDeclareWar               	");	getEventArguments(...);	numCall["DiplomacyDeclareWar               	"] = numCall["DiplomacyDeclareWar               	"] + 1;	end;	end;
+function OnDiplomacyIncomingDeal              (...) if numCall["DiplomacyIncomingDeal             	"] &lt; maxCall() then print(" Event :	DiplomacyIncomingDeal             	");	getEventArguments(...);	numCall["DiplomacyIncomingDeal             	"] = numCall["DiplomacyIncomingDeal             	"] + 1;	end;	end;
+function OnDiplomacyMakePeace                 (...) if numCall["DiplomacyMakePeace                	"] &lt; maxCall() then print(" Event :	DiplomacyMakePeace                	");	getEventArguments(...);	numCall["DiplomacyMakePeace                	"] = numCall["DiplomacyMakePeace                	"] + 1;	end;	end;
+function OnDiplomacyMeet                      (...) if numCall["DiplomacyMeet                     	"] &lt; maxCall() then print(" Event :	DiplomacyMeet                     	");	getEventArguments(...);	numCall["DiplomacyMeet                     	"] = numCall["DiplomacyMeet                     	"] + 1;	end;	end;
+function OnDiplomacyMeetMajorMinor            (...) if numCall["DiplomacyMeetMajorMinor           	"] &lt; maxCall() then print(" Event :	DiplomacyMeetMajorMinor           	");	getEventArguments(...);	numCall["DiplomacyMeetMajorMinor           	"] = numCall["DiplomacyMeetMajorMinor           	"] + 1;	end;	end;
+function OnDiplomacyMeetMajors                (...) if numCall["DiplomacyMeetMajors               	"] &lt; maxCall() then print(" Event :	DiplomacyMeetMajors               	");	getEventArguments(...);	numCall["DiplomacyMeetMajors               	"] = numCall["DiplomacyMeetMajors               	"] + 1;	end;	end;
+function OnDiplomacyRefusePeace               (...) if numCall["DiplomacyRefusePeace              	"] &lt; maxCall() then print(" Event :	DiplomacyRefusePeace              	");	getEventArguments(...);	numCall["DiplomacyRefusePeace              	"] = numCall["DiplomacyRefusePeace              	"] + 1;	end;	end;
+function OnDiplomacyRelationshipChanged       (...) if numCall["DiplomacyRelationshipChanged      	"] &lt; maxCall() then print(" Event :	DiplomacyRelationshipChanged      	");	getEventArguments(...);	numCall["DiplomacyRelationshipChanged      	"] = numCall["DiplomacyRelationshipChanged      	"] + 1;	end;	end;
+function OnDiplomacySessionClosed             (...) if numCall["DiplomacySessionClosed            	"] &lt; maxCall() then print(" Event :	DiplomacySessionClosed            	");	getEventArguments(...);	numCall["DiplomacySessionClosed            	"] = numCall["DiplomacySessionClosed            	"] + 1;	end;	end;
+function OnDiplomacyStatement                 (...) if numCall["DiplomacyStatement                	"] &lt; maxCall() then print(" Event :	DiplomacyStatement                	");	getEventArguments(...);	numCall["DiplomacyStatement                	"] = numCall["DiplomacyStatement                	"] + 1;	end;	end;
+function OnDistrictAddedToMap                 (...) if numCall["DistrictAddedToMap                	"] &lt; maxCall() then print(" Event :	DistrictAddedToMap                	");	getEventArguments(...);	numCall["DistrictAddedToMap                	"] = numCall["DistrictAddedToMap                	"] + 1;	end;	end;
+function OnDistrictBuildProgressChanged       (...) if numCall["DistrictBuildProgressChanged      	"] &lt; maxCall() then print(" Event :	DistrictBuildProgressChanged      	");	getEventArguments(...);	numCall["DistrictBuildProgressChanged      	"] = numCall["DistrictBuildProgressChanged      	"] + 1;	end;	end;
+function OnDistrictCombatChanged              (...) if numCall["DistrictCombatChanged             	"] &lt; maxCall() then print(" Event :	DistrictCombatChanged             	");	getEventArguments(...);	numCall["DistrictCombatChanged             	"] = numCall["DistrictCombatChanged             	"] + 1;	end;	end;
+function OnDistrictDamageChanged              (...) if numCall["DistrictDamageChanged             	"] &lt; maxCall() then print(" Event :	DistrictDamageChanged             	");	getEventArguments(...);	numCall["DistrictDamageChanged             	"] = numCall["DistrictDamageChanged             	"] + 1;	end;	end;
+function OnDistrictPillaged                   (...) if numCall["DistrictPillaged                  	"] &lt; maxCall() then print(" Event :	DistrictPillaged                  	");	getEventArguments(...);	numCall["DistrictPillaged                  	"] = numCall["DistrictPillaged                  	"] + 1;	end;	end;
+function OnDistrictRemovedFromMap             (...) if numCall["DistrictRemovedFromMap            	"] &lt; maxCall() then print(" Event :	DistrictRemovedFromMap            	");	getEventArguments(...);	numCall["DistrictRemovedFromMap            	"] = numCall["DistrictRemovedFromMap            	"] + 1;	end;	end;
+function OnDistrictUnitsChanged               (...) if numCall["DistrictUnitsChanged              	"] &lt; maxCall() then print(" Event :	DistrictUnitsChanged              	");	getEventArguments(...);	numCall["DistrictUnitsChanged              	"] = numCall["DistrictUnitsChanged              	"] + 1;	end;	end;
+function OnDistrictVisibilityChanged          (...) if numCall["DistrictVisibilityChanged         	"] &lt; maxCall() then print(" Event :	DistrictVisibilityChanged         	");	getEventArguments(...);	numCall["DistrictVisibilityChanged         	"] = numCall["DistrictVisibilityChanged         	"] + 1;	end;	end;
+function OnEndTurnBlockingChanged             (...) if numCall["EndTurnBlockingChanged            	"] &lt; maxCall() then print(" Event :	EndTurnBlockingChanged            	");	getEventArguments(...);	numCall["EndTurnBlockingChanged            	"] = numCall["EndTurnBlockingChanged            	"] + 1;	end;	end;
+function OnEndTurnDirty                       (...) if numCall["EndTurnDirty                      	"] &lt; maxCall() then print(" Event :	EndTurnDirty                      	");	getEventArguments(...);	numCall["EndTurnDirty                      	"] = numCall["EndTurnDirty                      	"] + 1;	end;	end;
+function OnFaithChanged                       (...) if numCall["FaithChanged                      	"] &lt; maxCall() then print(" Event :	FaithChanged                      	");	getEventArguments(...);	numCall["FaithChanged                      	"] = numCall["FaithChanged                      	"] + 1;	end;	end;
+function OnFeatureAddedToMap                  (...) if numCall["FeatureAddedToMap                 	"] &lt; maxCall() then print(" Event :	FeatureAddedToMap                 	");	getEventArguments(...);	numCall["FeatureAddedToMap                 	"] = numCall["FeatureAddedToMap                 	"] + 1;	end;	end;
+function OnFeatureChanged                     (...) if numCall["FeatureChanged                    	"] &lt; maxCall() then print(" Event :	FeatureChanged                    	");	getEventArguments(...);	numCall["FeatureChanged                    	"] = numCall["FeatureChanged                    	"] + 1;	end;	end;
+function OnFeatureRemovedFromMap              (...) if numCall["FeatureRemovedFromMap             	"] &lt; maxCall() then print(" Event :	FeatureRemovedFromMap             	");	getEventArguments(...);	numCall["FeatureRemovedFromMap             	"] = numCall["FeatureRemovedFromMap             	"] + 1;	end;	end;
+function OnGoodyHutReward                     (...) if numCall["GoodyHutReward                    	"] &lt; maxCall() then print(" Event :	GoodyHutReward                    	");	getEventArguments(...);	numCall["GoodyHutReward                    	"] = numCall["GoodyHutReward                    	"] + 1;	end;	end;
+function OnGovernmentChanged                  (...) if numCall["GovernmentChanged                 	"] &lt; maxCall() then print(" Event :	GovernmentChanged                 	");	getEventArguments(...);	numCall["GovernmentChanged                 	"] = numCall["GovernmentChanged                 	"] + 1;	end;	end;
+function OnGovernmentPolicyChanged            (...) if numCall["GovernmentPolicyChanged           	"] &lt; maxCall() then print(" Event :	GovernmentPolicyChanged           	");	getEventArguments(...);	numCall["GovernmentPolicyChanged           	"] = numCall["GovernmentPolicyChanged           	"] + 1;	end;	end;
+function OnGovernmentPolicyObsoleted          (...) if numCall["GovernmentPolicyObsoleted         	"] &lt; maxCall() then print(" Event :	GovernmentPolicyObsoleted         	");	getEventArguments(...);	numCall["GovernmentPolicyObsoleted         	"] = numCall["GovernmentPolicyObsoleted         	"] + 1;	end;	end;
+function OnGreatPeoplePointsChanged           (...) if numCall["GreatPeoplePointsChanged          	"] &lt; maxCall() then print(" Event :	GreatPeoplePointsChanged          	");	getEventArguments(...);	numCall["GreatPeoplePointsChanged          	"] = numCall["GreatPeoplePointsChanged          	"] + 1;	end;	end;
+function OnGreatPeopleTimelineChanged         (...) if numCall["GreatPeopleTimelineChanged        	"] &lt; maxCall() then print(" Event :	GreatPeopleTimelineChanged        	");	getEventArguments(...);	numCall["GreatPeopleTimelineChanged        	"] = numCall["GreatPeopleTimelineChanged        	"] + 1;	end;	end;
+function OnGreatWorkCreated                   (...) if numCall["GreatWorkCreated                  	"] &lt; maxCall() then print(" Event :	GreatWorkCreated                  	");	getEventArguments(...);	numCall["GreatWorkCreated                  	"] = numCall["GreatWorkCreated                  	"] + 1;	end;	end;
+function OnGreatWorkMoved                     (...) if numCall["GreatWorkMoved                    	"] &lt; maxCall() then print(" Event :	GreatWorkMoved                    	");	getEventArguments(...);	numCall["GreatWorkMoved                    	"] = numCall["GreatWorkMoved                    	"] + 1;	end;	end;
+function OnImprovementActivated               (...) if numCall["ImprovementActivated              	"] &lt; maxCall() then print(" Event :	ImprovementActivated              	");	getEventArguments(...);	numCall["ImprovementActivated              	"] = numCall["ImprovementActivated              	"] + 1;	end;	end;
+function OnImprovementAddedToMap              (...) if numCall["ImprovementAddedToMap             	"] &lt; maxCall() then print(" Event :	ImprovementAddedToMap             	");	getEventArguments(...);	numCall["ImprovementAddedToMap             	"] = numCall["ImprovementAddedToMap             	"] + 1;	end;	end;
+function OnImprovementChanged                 (...) if numCall["ImprovementChanged                	"] &lt; maxCall() then print(" Event :	ImprovementChanged                	");	getEventArguments(...);	numCall["ImprovementChanged                	"] = numCall["ImprovementChanged                	"] + 1;	end;	end;
+function OnImprovementOwnershipChanged        (...) if numCall["ImprovementOwnershipChanged       	"] &lt; maxCall() then print(" Event :	ImprovementOwnershipChanged       	");	getEventArguments(...);	numCall["ImprovementOwnershipChanged       	"] = numCall["ImprovementOwnershipChanged       	"] + 1;	end;	end;
+function OnImprovementRemovedFromMap          (...) if numCall["ImprovementRemovedFromMap         	"] &lt; maxCall() then print(" Event :	ImprovementRemovedFromMap         	");	getEventArguments(...);	numCall["ImprovementRemovedFromMap         	"] = numCall["ImprovementRemovedFromMap         	"] + 1;	end;	end;
+function OnImprovementVisibilityChanged       (...) if numCall["ImprovementVisibilityChanged      	"] &lt; maxCall() then print(" Event :	ImprovementVisibilityChanged      	");	getEventArguments(...);	numCall["ImprovementVisibilityChanged      	"] = numCall["ImprovementVisibilityChanged      	"] + 1;	end;	end;
+function OnInfluenceChanged                   (...) if numCall["InfluenceChanged                  	"] &lt; maxCall() then print(" Event :	InfluenceChanged                  	");	getEventArguments(...);	numCall["InfluenceChanged                  	"] = numCall["InfluenceChanged                  	"] + 1;	end;	end;
+function OnInfluenceGiven                     (...) if numCall["InfluenceGiven                    	"] &lt; maxCall() then print(" Event :	InfluenceGiven                    	");	getEventArguments(...);	numCall["InfluenceGiven                    	"] = numCall["InfluenceGiven                    	"] + 1;	end;	end;
+function OnLevyCounterChanged                 (...) if numCall["LevyCounterChanged                	"] &lt; maxCall() then print(" Event :	LevyCounterChanged                	");	getEventArguments(...);	numCall["LevyCounterChanged                	"] = numCall["LevyCounterChanged                	"] + 1;	end;	end;
+function OnLocalPlayerChanged                 (...) if numCall["LocalPlayerChanged                	"] &lt; maxCall() then print(" Event :	LocalPlayerChanged                	");	getEventArguments(...);	numCall["LocalPlayerChanged                	"] = numCall["LocalPlayerChanged                	"] + 1;	end;	end;
+function OnLocalPlayerTurnBegin               (...) if numCall["LocalPlayerTurnBegin              	"] &lt; maxCall() then print(" Event :	LocalPlayerTurnBegin              	");	getEventArguments(...);	numCall["LocalPlayerTurnBegin              	"] = numCall["LocalPlayerTurnBegin              	"] + 1;	end;	end;
+function OnLocalPlayerTurnEnd                 (...) if numCall["LocalPlayerTurnEnd                	"] &lt; maxCall() then print(" Event :	LocalPlayerTurnEnd                	");	getEventArguments(...);	numCall["LocalPlayerTurnEnd                	"] = numCall["LocalPlayerTurnEnd                	"] + 1;	end;	end;
+function OnMapYieldsChanged                   (...) if numCall["MapYieldsChanged                  	"] &lt; maxCall() then print(" Event :	MapYieldsChanged                  	");	getEventArguments(...);	numCall["MapYieldsChanged                  	"] = numCall["MapYieldsChanged                  	"] + 1;	end;	end;
+function OnNationalParkAdded                  (...) if numCall["NationalParkAdded                 	"] &lt; maxCall() then print(" Event :	NationalParkAdded                 	");	getEventArguments(...);	numCall["NationalParkAdded                 	"] = numCall["NationalParkAdded                 	"] + 1;	end;	end;
+function OnNaturalWonderRevealed              (...) if numCall["NaturalWonderRevealed             	"] &lt; maxCall() then print(" Event :	NaturalWonderRevealed             	");	getEventArguments(...);	numCall["NaturalWonderRevealed             	"] = numCall["NaturalWonderRevealed             	"] + 1;	end;	end;
+function OnNotificationAdded                  (...) if numCall["NotificationAdded                 	"] &lt; maxCall() then print(" Event :	NotificationAdded                 	");	getEventArguments(...);	numCall["NotificationAdded                 	"] = numCall["NotificationAdded                 	"] + 1;	end;	end;
+function OnNotificationDismissed              (...) if numCall["NotificationDismissed             	"] &lt; maxCall() then print(" Event :	NotificationDismissed             	");	getEventArguments(...);	numCall["NotificationDismissed             	"] = numCall["NotificationDismissed             	"] + 1;	end;	end;
+function OnNotificationRefreshRequested       (...) if numCall["NotificationRefreshRequested      	"] &lt; maxCall() then print(" Event :	NotificationRefreshRequested      	");	getEventArguments(...);	numCall["NotificationRefreshRequested      	"] = numCall["NotificationRefreshRequested      	"] + 1;	end;	end;
+function OnObjectPairing                      (...) if numCall["ObjectPairing                     	"] &lt; maxCall() then print(" Event :	ObjectPairing                     	");	getEventArguments(...);	numCall["ObjectPairing                     	"] = numCall["ObjectPairing                     	"] + 1;	end;	end;
+function OnOnAiAdvisorUpdated                 (...) if numCall["OnAiAdvisorUpdated                	"] &lt; maxCall() then print(" Event :	OnAiAdvisorUpdated                	");	getEventArguments(...);	numCall["OnAiAdvisorUpdated                	"] = numCall["OnAiAdvisorUpdated                	"] + 1;	end;	end;
+function OnPantheonFounded                    (...) if numCall["PantheonFounded                   	"] &lt; maxCall() then print(" Event :	PantheonFounded                   	");	getEventArguments(...);	numCall["PantheonFounded                   	"] = numCall["PantheonFounded                   	"] + 1;	end;	end;
+function OnPhaseBegin                         (...) if numCall["PhaseBegin                        	"] &lt; maxCall() then print(" Event :	PhaseBegin                        	");	getEventArguments(...);	numCall["PhaseBegin                        	"] = numCall["PhaseBegin                        	"] + 1;	end;	end;
+function OnPhaseEnd                           (...) if numCall["PhaseEnd                          	"] &lt; maxCall() then print(" Event :	PhaseEnd                          	");	getEventArguments(...);	numCall["PhaseEnd                          	"] = numCall["PhaseEnd                          	"] + 1;	end;	end;
+function OnPlayerBordersChanged               (...) if numCall["PlayerBordersChanged              	"] &lt; maxCall() then print(" Event :	PlayerBordersChanged              	");	getEventArguments(...);	numCall["PlayerBordersChanged              	"] = numCall["PlayerBordersChanged              	"] + 1;	end;	end;
+function OnPlayerDefeat                       (...) if numCall["PlayerDefeat                      	"] &lt; maxCall() then print(" Event :	PlayerDefeat                      	");	getEventArguments(...);	numCall["PlayerDefeat                      	"] = numCall["PlayerDefeat                      	"] + 1;	end;	end;
+function OnPlayerDestroyed                    (...) if numCall["PlayerDestroyed                   	"] &lt; maxCall() then print(" Event :	PlayerDestroyed                   	");	getEventArguments(...);	numCall["PlayerDestroyed                   	"] = numCall["PlayerDestroyed                   	"] + 1;	end;	end;
+function OnPlayerEraChanged                   (...) if numCall["PlayerEraChanged                  	"] &lt; maxCall() then print(" Event :	PlayerEraChanged                  	");	getEventArguments(...);	numCall["PlayerEraChanged                  	"] = numCall["PlayerEraChanged                  	"] + 1;	end;	end;
+function OnPlayerOperationComplete            (...) if numCall["PlayerOperationComplete           	"] &lt; maxCall() then print(" Event :	PlayerOperationComplete           	");	getEventArguments(...);	numCall["PlayerOperationComplete           	"] = numCall["PlayerOperationComplete           	"] + 1;	end;	end;
+function OnPlayerTurnActivated                (...) if numCall["PlayerTurnActivated               	"] &lt; maxCall() then print(" Event :	PlayerTurnActivated               	");	getEventArguments(...);	numCall["PlayerTurnActivated               	"] = numCall["PlayerTurnActivated               	"] + 1;	end;	end;
+function OnPlayerTurnDeactivated              (...) if numCall["PlayerTurnDeactivated             	"] &lt; maxCall() then print(" Event :	PlayerTurnDeactivated             	");	getEventArguments(...);	numCall["PlayerTurnDeactivated             	"] = numCall["PlayerTurnDeactivated             	"] + 1;	end;	end;
+function OnPlayerVictory                      (...) if numCall["PlayerVictory                     	"] &lt; maxCall() then print(" Event :	PlayerVictory                     	");	getEventArguments(...);	numCall["PlayerVictory                     	"] = numCall["PlayerVictory                     	"] + 1;	end;	end;
+function OnPlotMarkerChanged                  (...) if numCall["PlotMarkerChanged                 	"] &lt; maxCall() then print(" Event :	PlotMarkerChanged                 	");	getEventArguments(...);	numCall["PlotMarkerChanged                 	"] = numCall["PlotMarkerChanged                 	"] + 1;	end;	end;
+function OnPlotVisibilityChanged              (...) if numCall["PlotVisibilityChanged             	"] &lt; maxCall() then print(" Event :	PlotVisibilityChanged             	");	getEventArguments(...);	numCall["PlotVisibilityChanged             	"] = numCall["PlotVisibilityChanged             	"] + 1;	end;	end;
+function OnPlotYieldChanged                   (...) if numCall["PlotYieldChanged                  	"] &lt; maxCall() then print(" Event :	PlotYieldChanged                  	");	getEventArguments(...);	numCall["PlotYieldChanged                  	"] = numCall["PlotYieldChanged                  	"] + 1;	end;	end;
+function OnQuestChanged                       (...) if numCall["QuestChanged                      	"] &lt; maxCall() then print(" Event :	QuestChanged                      	");	getEventArguments(...);	numCall["QuestChanged                      	"] = numCall["QuestChanged                      	"] + 1;	end;	end;
+function OnReligionFounded                    (...) if numCall["ReligionFounded                   	"] &lt; maxCall() then print(" Event :	ReligionFounded                   	");	getEventArguments(...);	numCall["ReligionFounded                   	"] = numCall["ReligionFounded                   	"] + 1;	end;	end;
+function OnRemotePlayerTurnBegin              (...) if numCall["RemotePlayerTurnBegin             	"] &lt; maxCall() then print(" Event :	RemotePlayerTurnBegin             	");	getEventArguments(...);	numCall["RemotePlayerTurnBegin             	"] = numCall["RemotePlayerTurnBegin             	"] + 1;	end;	end;
+function OnRemotePlayerTurnEnd                (...) if numCall["RemotePlayerTurnEnd               	"] &lt; maxCall() then print(" Event :	RemotePlayerTurnEnd               	");	getEventArguments(...);	numCall["RemotePlayerTurnEnd               	"] = numCall["RemotePlayerTurnEnd               	"] + 1;	end;	end;
+function OnResearchChanged                    (...) if numCall["ResearchChanged                   	"] &lt; maxCall() then print(" Event :	ResearchChanged                   	");	getEventArguments(...);	numCall["ResearchChanged                   	"] = numCall["ResearchChanged                   	"] + 1;	end;	end;
+function OnResearchCompleted                  (...) if numCall["ResearchCompleted                 	"] &lt; maxCall() then print(" Event :	ResearchCompleted                 	");	getEventArguments(...);	numCall["ResearchCompleted                 	"] = numCall["ResearchCompleted                 	"] + 1;	end;	end;
+function OnResearchQueueChanged               (...) if numCall["ResearchQueueChanged              	"] &lt; maxCall() then print(" Event :	ResearchQueueChanged              	");	getEventArguments(...);	numCall["ResearchQueueChanged              	"] = numCall["ResearchQueueChanged              	"] + 1;	end;	end;
+function OnResearchYieldChanged               (...) if numCall["ResearchYieldChanged              	"] &lt; maxCall() then print(" Event :	ResearchYieldChanged              	");	getEventArguments(...);	numCall["ResearchYieldChanged              	"] = numCall["ResearchYieldChanged              	"] + 1;	end;	end;
+function OnResourceAddedToMap                 (...) if numCall["ResourceAddedToMap                	"] &lt; maxCall() then print(" Event :	ResourceAddedToMap                	");	getEventArguments(...);	numCall["ResourceAddedToMap                	"] = numCall["ResourceAddedToMap                	"] + 1;	end;	end;
+function OnResourceChanged                    (...) if numCall["ResourceChanged                   	"] &lt; maxCall() then print(" Event :	ResourceChanged                   	");	getEventArguments(...);	numCall["ResourceChanged                   	"] = numCall["ResourceChanged                   	"] + 1;	end;	end;
+function OnResourceRemovedFromMap             (...) if numCall["ResourceRemovedFromMap            	"] &lt; maxCall() then print(" Event :	ResourceRemovedFromMap            	");	getEventArguments(...);	numCall["ResourceRemovedFromMap            	"] = numCall["ResourceRemovedFromMap            	"] + 1;	end;	end;
+function OnResourceVisibilityChanged          (...) if numCall["ResourceVisibilityChanged         	"] &lt; maxCall() then print(" Event :	ResourceVisibilityChanged         	");	getEventArguments(...);	numCall["ResourceVisibilityChanged         	"] = numCall["ResourceVisibilityChanged         	"] + 1;	end;	end;
+function OnRouteAddedToMap                    (...) if numCall["RouteAddedToMap                   	"] &lt; maxCall() then print(" Event :	RouteAddedToMap                   	");	getEventArguments(...);	numCall["RouteAddedToMap                   	"] = numCall["RouteAddedToMap                   	"] + 1;	end;	end;
+function OnRouteChanged                       (...) if numCall["RouteChanged                      	"] &lt; maxCall() then print(" Event :	RouteChanged                      	");	getEventArguments(...);	numCall["RouteChanged                      	"] = numCall["RouteChanged                      	"] + 1;	end;	end;
+function OnRouteRemovedFromMap                (...) if numCall["RouteRemovedFromMap               	"] &lt; maxCall() then print(" Event :	RouteRemovedFromMap               	");	getEventArguments(...);	numCall["RouteRemovedFromMap               	"] = numCall["RouteRemovedFromMap               	"] + 1;	end;	end;
+function OnSpyAdded                           (...) if numCall["SpyAdded                          	"] &lt; maxCall() then print(" Event :	SpyAdded                          	");	getEventArguments(...);	numCall["SpyAdded                          	"] = numCall["SpyAdded                          	"] + 1;	end;	end;
+function OnSpyMissionUpdated                  (...) if numCall["SpyMissionUpdated                 	"] &lt; maxCall() then print(" Event :	SpyMissionUpdated                 	");	getEventArguments(...);	numCall["SpyMissionUpdated                 	"] = numCall["SpyMissionUpdated                 	"] + 1;	end;	end;
+function OnSpyRemoved                         (...) if numCall["SpyRemoved                        	"] &lt; maxCall() then print(" Event :	SpyRemoved                        	");	getEventArguments(...);	numCall["SpyRemoved                        	"] = numCall["SpyRemoved                        	"] + 1;	end;	end;
+function OnSpyUpdated                         (...) if numCall["SpyUpdated                        	"] &lt; maxCall() then print(" Event :	SpyUpdated                        	");	getEventArguments(...);	numCall["SpyUpdated                        	"] = numCall["SpyUpdated                        	"] + 1;	end;	end;
+function OnStatusMessage                      (...) if numCall["StatusMessage                     	"] &lt; maxCall() then print(" Event :	StatusMessage                     	");	getEventArguments(...);	numCall["StatusMessage                     	"] = numCall["StatusMessage                     	"] + 1;	end;	end;
+function OnTechBoostTriggered                 (...) if numCall["TechBoostTriggered                	"] &lt; maxCall() then print(" Event :	TechBoostTriggered                	");	getEventArguments(...);	numCall["TechBoostTriggered                	"] = numCall["TechBoostTriggered                	"] + 1;	end;	end;
+function OnTerrainTypeChanged                 (...) if numCall["TerrainTypeChanged                	"] &lt; maxCall() then print(" Event :	TerrainTypeChanged                	");	getEventArguments(...);	numCall["TerrainTypeChanged                	"] = numCall["TerrainTypeChanged                	"] + 1;	end;	end;
+function OnTradeRouteActivityChanged          (...) if numCall["TradeRouteActivityChanged         	"] &lt; maxCall() then print(" Event :	TradeRouteActivityChanged         	");	getEventArguments(...);	numCall["TradeRouteActivityChanged         	"] = numCall["TradeRouteActivityChanged         	"] + 1;	end;	end;
+function OnTradeRouteAddedToMap               (...) if numCall["TradeRouteAddedToMap              	"] &lt; maxCall() then print(" Event :	TradeRouteAddedToMap              	");	getEventArguments(...);	numCall["TradeRouteAddedToMap              	"] = numCall["TradeRouteAddedToMap              	"] + 1;	end;	end;
+function OnTradeRouteCapacityChanged          (...) if numCall["TradeRouteCapacityChanged         	"] &lt; maxCall() then print(" Event :	TradeRouteCapacityChanged         	");	getEventArguments(...);	numCall["TradeRouteCapacityChanged         	"] = numCall["TradeRouteCapacityChanged         	"] + 1;	end;	end;
+function OnTradeRouteRangeChanged             (...) if numCall["TradeRouteRangeChanged            	"] &lt; maxCall() then print(" Event :	TradeRouteRangeChanged            	");	getEventArguments(...);	numCall["TradeRouteRangeChanged            	"] = numCall["TradeRouteRangeChanged            	"] + 1;	end;	end;
+function OnTradeRouteRemovedFromMap           (...) if numCall["TradeRouteRemovedFromMap          	"] &lt; maxCall() then print(" Event :	TradeRouteRemovedFromMap          	");	getEventArguments(...);	numCall["TradeRouteRemovedFromMap          	"] = numCall["TradeRouteRemovedFromMap          	"] + 1;	end;	end;
+function OnTreasuryChanged                    (...) if numCall["TreasuryChanged                   	"] &lt; maxCall() then print(" Event :	TreasuryChanged                   	");	getEventArguments(...);	numCall["TreasuryChanged                   	"] = numCall["TreasuryChanged                   	"] + 1;	end;	end;
+function OnTurnBegin                          (...) if numCall["TurnBegin                         	"] &lt; maxCall() then print(" Event :	TurnBegin                         	");	getEventArguments(...);	numCall["TurnBegin                         	"] = numCall["TurnBegin                         	"] + 1;	end;	end;
+function OnTurnEnd                            (...) if numCall["TurnEnd                           	"] &lt; maxCall() then print(" Event :	TurnEnd                           	");	getEventArguments(...);	numCall["TurnEnd                           	"] = numCall["TurnEnd                           	"] + 1;	end;	end;
+function OnUnitActivityChanged                (...) if numCall["UnitActivityChanged               	"] &lt; maxCall() then print(" Event :	UnitActivityChanged               	");	getEventArguments(...);	numCall["UnitActivityChanged               	"] = numCall["UnitActivityChanged               	"] + 1;	end;	end;
+function OnUnitAddedToMap                     (...) if numCall["UnitAddedToMap                    	"] &lt; maxCall() then print(" Event :	UnitAddedToMap                    	");	getEventArguments(...);	numCall["UnitAddedToMap                    	"] = numCall["UnitAddedToMap                    	"] + 1;	end;	end;
+function OnUnitAirlifted                      (...) if numCall["UnitAirlifted                     	"] &lt; maxCall() then print(" Event :	UnitAirlifted                     	");	getEventArguments(...);	numCall["UnitAirlifted                     	"] = numCall["UnitAirlifted                     	"] + 1;	end;	end;
+function OnUnitArtifactChanged                (...) if numCall["UnitArtifactChanged               	"] &lt; maxCall() then print(" Event :	UnitArtifactChanged               	");	getEventArguments(...);	numCall["UnitArtifactChanged               	"] = numCall["UnitArtifactChanged               	"] + 1;	end;	end;
+function OnUnitCaptured                       (...) if numCall["UnitCaptured                      	"] &lt; maxCall() then print(" Event :	UnitCaptured                      	");	getEventArguments(...);	numCall["UnitCaptured                      	"] = numCall["UnitCaptured                      	"] + 1;	end;	end;
+function OnUnitChargesChanged                 (...) if numCall["UnitChargesChanged                	"] &lt; maxCall() then print(" Event :	UnitChargesChanged                	");	getEventArguments(...);	numCall["UnitChargesChanged                	"] = numCall["UnitChargesChanged                	"] + 1;	end;	end;
+function OnUnitCommandStarted                 (...) if numCall["UnitCommandStarted                	"] &lt; maxCall() then print(" Event :	UnitCommandStarted                	");	getEventArguments(...);	numCall["UnitCommandStarted                	"] = numCall["UnitCommandStarted                	"] + 1;	end;	end;
+function OnUnitDamageChanged                  (...) if numCall["UnitDamageChanged                 	"] &lt; maxCall() then print(" Event :	UnitDamageChanged                 	");	getEventArguments(...);	numCall["UnitDamageChanged                 	"] = numCall["UnitDamageChanged                 	"] + 1;	end;	end;
+function OnUnitEmbarkedStateChanged           (...) if numCall["UnitEmbarkedStateChanged          	"] &lt; maxCall() then print(" Event :	UnitEmbarkedStateChanged          	");	getEventArguments(...);	numCall["UnitEmbarkedStateChanged          	"] = numCall["UnitEmbarkedStateChanged          	"] + 1;	end;	end;
+function OnUnitEnterFormation                 (...) if numCall["UnitEnterFormation                	"] &lt; maxCall() then print(" Event :	UnitEnterFormation                	");	getEventArguments(...);	numCall["UnitEnterFormation                	"] = numCall["UnitEnterFormation                	"] + 1;	end;	end;
+function OnUnitExitFormation                  (...) if numCall["UnitExitFormation                 	"] &lt; maxCall() then print(" Event :	UnitExitFormation                 	");	getEventArguments(...);	numCall["UnitExitFormation                 	"] = numCall["UnitExitFormation                 	"] + 1;	end;	end;
+function OnUnitFormArmy                       (...) if numCall["UnitFormArmy                      	"] &lt; maxCall() then print(" Event :	UnitFormArmy                      	");	getEventArguments(...);	numCall["UnitFormArmy                      	"] = numCall["UnitFormArmy                      	"] + 1;	end;	end;
+function OnUnitFormCorps                      (...) if numCall["UnitFormCorps                     	"] &lt; maxCall() then print(" Event :	UnitFormCorps                     	");	getEventArguments(...);	numCall["UnitFormCorps                     	"] = numCall["UnitFormCorps                     	"] + 1;	end;	end;
+function OnUnitFortificationChanged           (...) if numCall["UnitFortificationChanged          	"] &lt; maxCall() then print(" Event :	UnitFortificationChanged          	");	getEventArguments(...);	numCall["UnitFortificationChanged          	"] = numCall["UnitFortificationChanged          	"] + 1;	end;	end;
+function OnUnitGreatPersonActivated           (...) if numCall["UnitGreatPersonActivated          	"] &lt; maxCall() then print(" Event :	UnitGreatPersonActivated          	");	getEventArguments(...);	numCall["UnitGreatPersonActivated          	"] = numCall["UnitGreatPersonActivated          	"] + 1;	end;	end;
+function OnUnitGreatPersonChanged             (...) if numCall["UnitGreatPersonChanged            	"] &lt; maxCall() then print(" Event :	UnitGreatPersonChanged            	");	getEventArguments(...);	numCall["UnitGreatPersonChanged            	"] = numCall["UnitGreatPersonChanged            	"] + 1;	end;	end;
+function OnUnitGreatPersonCreated             (...) if numCall["UnitGreatPersonCreated            	"] &lt; maxCall() then print(" Event :	UnitGreatPersonCreated            	");	getEventArguments(...);	numCall["UnitGreatPersonCreated            	"] = numCall["UnitGreatPersonCreated            	"] + 1;	end;	end;
+function OnUnitKilledInCombat                 (...) if numCall["UnitKilledInCombat                	"] &lt; maxCall() then print(" Event :	UnitKilledInCombat                	");	getEventArguments(...);	numCall["UnitKilledInCombat                	"] = numCall["UnitKilledInCombat                	"] + 1;	end;	end;
+function OnUnitMoveComplete                   (...) if numCall["UnitMoveComplete                  	"] &lt; maxCall() then print(" Event :	UnitMoveComplete                  	");	getEventArguments(...);	numCall["UnitMoveComplete                  	"] = numCall["UnitMoveComplete                  	"] + 1;	end;	end;
+function OnUnitMoved                          (...) if numCall["UnitMoved                         	"] &lt; maxCall() then print(" Event :	UnitMoved                         	");	getEventArguments(...);	numCall["UnitMoved                         	"] = numCall["UnitMoved                         	"] + 1;	end;	end;
+function OnUnitMovementPointsChanged          (...) if numCall["UnitMovementPointsChanged         	"] &lt; maxCall() then print(" Event :	UnitMovementPointsChanged         	");	getEventArguments(...);	numCall["UnitMovementPointsChanged         	"] = numCall["UnitMovementPointsChanged         	"] + 1;	end;	end;
+function OnUnitMovementPointsCleared          (...) if numCall["UnitMovementPointsCleared         	"] &lt; maxCall() then print(" Event :	UnitMovementPointsCleared         	");	getEventArguments(...);	numCall["UnitMovementPointsCleared         	"] = numCall["UnitMovementPointsCleared         	"] + 1;	end;	end;
+function OnUnitMovementPointsRestored         (...) if numCall["UnitMovementPointsRestored        	"] &lt; maxCall() then print(" Event :	UnitMovementPointsRestored        	");	getEventArguments(...);	numCall["UnitMovementPointsRestored        	"] = numCall["UnitMovementPointsRestored        	"] + 1;	end;	end;
+function OnUnitOperationAdded                 (...) if numCall["UnitOperationAdded                	"] &lt; maxCall() then print(" Event :	UnitOperationAdded                	");	getEventArguments(...);	numCall["UnitOperationAdded                	"] = numCall["UnitOperationAdded                	"] + 1;	end;	end;
+function OnUnitOperationDeactivated           (...) if numCall["UnitOperationDeactivated          	"] &lt; maxCall() then print(" Event :	UnitOperationDeactivated          	");	getEventArguments(...);	numCall["UnitOperationDeactivated          	"] = numCall["UnitOperationDeactivated          	"] + 1;	end;	end;
+function OnUnitOperationSegmentComplete       (...) if numCall["UnitOperationSegmentComplete      	"] &lt; maxCall() then print(" Event :	UnitOperationSegmentComplete      	");	getEventArguments(...);	numCall["UnitOperationSegmentComplete      	"] = numCall["UnitOperationSegmentComplete      	"] + 1;	end;	end;
+function OnUnitOperationStarted               (...) if numCall["UnitOperationStarted              	"] &lt; maxCall() then print(" Event :	UnitOperationStarted              	");	getEventArguments(...);	numCall["UnitOperationStarted              	"] = numCall["UnitOperationStarted              	"] + 1;	end;	end;
+function OnUnitOperationsCleared              (...) if numCall["UnitOperationsCleared             	"] &lt; maxCall() then print(" Event :	UnitOperationsCleared             	");	getEventArguments(...);	numCall["UnitOperationsCleared             	"] = numCall["UnitOperationsCleared             	"] + 1;	end;	end;
+function OnUnitPromoted                       (...) if numCall["UnitPromoted                      	"] &lt; maxCall() then print(" Event :	UnitPromoted                      	");	getEventArguments(...);	numCall["UnitPromoted                      	"] = numCall["UnitPromoted                      	"] + 1;	end;	end;
+function OnUnitPromotionAvailable             (...) if numCall["UnitPromotionAvailable            	"] &lt; maxCall() then print(" Event :	UnitPromotionAvailable            	");	getEventArguments(...);	numCall["UnitPromotionAvailable            	"] = numCall["UnitPromotionAvailable            	"] + 1;	end;	end;
+function OnUnitRemovedFromMap                 (...) if numCall["UnitRemovedFromMap                	"] &lt; maxCall() then print(" Event :	UnitRemovedFromMap                	");	getEventArguments(...);	numCall["UnitRemovedFromMap                	"] = numCall["UnitRemovedFromMap                	"] + 1;	end;	end;
+function OnUnitTeleported                     (...) if numCall["UnitTeleported                    	"] &lt; maxCall() then print(" Event :	UnitTeleported                    	");	getEventArguments(...);	numCall["UnitTeleported                    	"] = numCall["UnitTeleported                    	"] + 1;	end;	end;
+function OnUnitUpgraded                       (...) if numCall["UnitUpgraded                      	"] &lt; maxCall() then print(" Event :	UnitUpgraded                      	");	getEventArguments(...);	numCall["UnitUpgraded                      	"] = numCall["UnitUpgraded                      	"] + 1;	end;	end;
+function OnUnitVisibilityChanged              (...) if numCall["UnitVisibilityChanged             	"] &lt; maxCall() then print(" Event :	UnitVisibilityChanged             	");	getEventArguments(...);	numCall["UnitVisibilityChanged             	"] = numCall["UnitVisibilityChanged             	"] + 1;	end;	end;
+function OnWMDCountChanged                    (...) if numCall["WMDCountChanged                   	"] &lt; maxCall() then print(" Event :	WMDCountChanged                   	");	getEventArguments(...);	numCall["WMDCountChanged                   	"] = numCall["WMDCountChanged                   	"] + 1;	end;	end;
+function OnWMDDetonated                       (...) if numCall["WMDDetonated                      	"] &lt; maxCall() then print(" Event :	WMDDetonated                      	");	getEventArguments(...);	numCall["WMDDetonated                      	"] = numCall["WMDDetonated                      	"] + 1;	end;	end;
+function OnWMDFalloutChanged                  (...) if numCall["WMDFalloutChanged                 	"] &lt; maxCall() then print(" Event :	WMDFalloutChanged                 	");	getEventArguments(...);	numCall["WMDFalloutChanged                 	"] = numCall["WMDFalloutChanged                 	"] + 1;	end;	end;
+function OnWMDFalloutVisibilityChanged        (...) if numCall["WMDFalloutVisibilityChanged       	"] &lt; maxCall() then print(" Event :	WMDFalloutVisibilityChanged       	");	getEventArguments(...);	numCall["WMDFalloutVisibilityChanged       	"] = numCall["WMDFalloutVisibilityChanged       	"] + 1;	end;	end;
+function OnWonderCompleted                    (...) if numCall["WonderCompleted                   	"] &lt; maxCall() then print(" Event :	WonderCompleted                   	");	getEventArguments(...);	numCall["WonderCompleted                   	"] = numCall["WonderCompleted                   	"] + 1;	end;	end;
+function OnWorldTextMessage                   (...) if numCall["WorldTextMessage                  	"] &lt; maxCall() then print(" Event :	WorldTextMessage                  	");	getEventArguments(...);	numCall["WorldTextMessage                  	"] = numCall["WorldTextMessage                  	"] + 1;	end;	end;
+function OnARXOrientationChanged              (...) if numCall["ARXOrientationChanged             	"] &lt; maxCall() then print(" Event :	ARXOrientationChanged             	");	getEventArguments(...);	numCall["ARXOrientationChanged             	"] = numCall["ARXOrientationChanged             	"] + 1;	end;	end;
+function OnARXTap                             (...) if numCall["ARXTap                            	"] &lt; maxCall() then print(" Event :	ARXTap                            	");	getEventArguments(...);	numCall["ARXTap                            	"] = numCall["ARXTap                            	"] + 1;	end;	end;
+function OnAchievementProgress                (...) if numCall["AchievementProgress               	"] &lt; maxCall() then print(" Event :	AchievementProgress               	");	getEventArguments(...);	numCall["AchievementProgress               	"] = numCall["AchievementProgress               	"] + 1;	end;	end;
+function OnAchievementUnlocked                (...) if numCall["AchievementUnlocked               	"] &lt; maxCall() then print(" Event :	AchievementUnlocked               	");	getEventArguments(...);	numCall["AchievementUnlocked               	"] = numCall["AchievementUnlocked               	"] + 1;	end;	end;
+function OnBegin2KLoginProcess                (...) if numCall["Begin2KLoginProcess               	"] &lt; maxCall() then print(" Event :	Begin2KLoginProcess               	");	getEventArguments(...);	numCall["Begin2KLoginProcess               	"] = numCall["Begin2KLoginProcess               	"] + 1;	end;	end;
+function OnBeginGameView                      (...) if numCall["BeginGameView                     	"] &lt; maxCall() then print(" Event :	BeginGameView                     	");	getEventArguments(...);	numCall["BeginGameView                     	"] = numCall["BeginGameView                     	"] + 1;	end;	end;
+function OnBeginMy2KLinkAccountProcess        (...) if numCall["BeginMy2KLinkAccountProcess       	"] &lt; maxCall() then print(" Event :	BeginMy2KLinkAccountProcess       	");	getEventArguments(...);	numCall["BeginMy2KLinkAccountProcess       	"] = numCall["BeginMy2KLinkAccountProcess       	"] + 1;	end;	end;
+function OnBeginWonderReveal                  (...) if numCall["BeginWonderReveal                 	"] &lt; maxCall() then print(" Event :	BeginWonderReveal                 	");	getEventArguments(...);	numCall["BeginWonderReveal                 	"] = numCall["BeginWonderReveal                 	"] + 1;	end;	end;
+function OnCamera_Updated                     (...) if numCall["Camera_Updated                    	"] &lt; maxCall() then print(" Event :	Camera_Updated                    	");	getEventArguments(...);	numCall["Camera_Updated                    	"] = numCall["Camera_Updated                    	"] + 1;	end;	end;
+function OnCloudGameInfoUpdated               (...) if numCall["CloudGameInfoUpdated              	"] &lt; maxCall() then print(" Event :	CloudGameInfoUpdated              	");	getEventArguments(...);	numCall["CloudGameInfoUpdated              	"] = numCall["CloudGameInfoUpdated              	"] + 1;	end;	end;
+function OnCloudGameJoinResponse              (...) if numCall["CloudGameJoinResponse             	"] &lt; maxCall() then print(" Event :	CloudGameJoinResponse             	");	getEventArguments(...);	numCall["CloudGameJoinResponse             	"] = numCall["CloudGameJoinResponse             	"] + 1;	end;	end;
+function OnCloudGameListUpdated               (...) if numCall["CloudGameListUpdated              	"] &lt; maxCall() then print(" Event :	CloudGameListUpdated              	");	getEventArguments(...);	numCall["CloudGameListUpdated              	"] = numCall["CloudGameListUpdated              	"] + 1;	end;	end;
+function OnEndGameView                        (...) if numCall["EndGameView                       	"] &lt; maxCall() then print(" Event :	EndGameView                       	");	getEventArguments(...);	numCall["EndGameView                       	"] = numCall["EndGameView                       	"] + 1;	end;	end;
+function OnEndWonderReveal                    (...) if numCall["EndWonderReveal                   	"] &lt; maxCall() then print(" Event :	EndWonderReveal                   	");	getEventArguments(...);	numCall["EndWonderReveal                   	"] = numCall["EndWonderReveal                   	"] + 1;	end;	end;
+function OnExitToMainMenu                     (...) if numCall["ExitToMainMenu                    	"] &lt; maxCall() then print(" Event :	ExitToMainMenu                    	");	getEventArguments(...);	numCall["ExitToMainMenu                    	"] = numCall["ExitToMainMenu                    	"] + 1;	end;	end;
+function OnFiraxisLiveActivate                (...) if numCall["FiraxisLiveActivate               	"] &lt; maxCall() then print(" Event :	FiraxisLiveActivate               	");	getEventArguments(...);	numCall["FiraxisLiveActivate               	"] = numCall["FiraxisLiveActivate               	"] + 1;	end;	end;
+function OnFrontEndPopup                      (...) if numCall["FrontEndPopup                     	"] &lt; maxCall() then print(" Event :	FrontEndPopup                     	");	getEventArguments(...);	numCall["FrontEndPopup                     	"] = numCall["FrontEndPopup                     	"] + 1;	end;	end;
+function OnGameConfigChanged                  (...) if numCall["GameConfigChanged                 	"] &lt; maxCall() then print(" Event :	GameConfigChanged                 	");	getEventArguments(...);	numCall["GameConfigChanged                 	"] = numCall["GameConfigChanged                 	"] + 1;	end;	end;
+function OnHideLeaderScreen                   (...) if numCall["HideLeaderScreen                  	"] &lt; maxCall() then print(" Event :	HideLeaderScreen                  	");	getEventArguments(...);	numCall["HideLeaderScreen                  	"] = numCall["HideLeaderScreen                  	"] + 1;	end;	end;
+function OnInputActionTriggered               (...) if numCall["InputActionTriggered              	"] &lt; maxCall() then print(" Event :	InputActionTriggered              	");	getEventArguments(...);	numCall["InputActionTriggered              	"] = numCall["InputActionTriggered              	"] + 1;	end;	end;
+function OnInputGestureRecorded               (...) if numCall["InputGestureRecorded              	"] &lt; maxCall() then print(" Event :	InputGestureRecorded              	");	getEventArguments(...);	numCall["InputGestureRecorded              	"] = numCall["InputGestureRecorded              	"] + 1;	end;	end;
+function OnLeaderAnimationChanged             (...) if numCall["LeaderAnimationChanged            	"] &lt; maxCall() then print(" Event :	LeaderAnimationChanged            	");	getEventArguments(...);	numCall["LeaderAnimationChanged            	"] = numCall["LeaderAnimationChanged            	"] + 1;	end;	end;
+function OnLeaderAnimationComplete            (...) if numCall["LeaderAnimationComplete           	"] &lt; maxCall() then print(" Event :	LeaderAnimationComplete           	");	getEventArguments(...);	numCall["LeaderAnimationComplete           	"] = numCall["LeaderAnimationComplete           	"] + 1;	end;	end;
+function OnLeaderScreenFinishedLoading        (...) if numCall["LeaderScreenFinishedLoading       	"] &lt; maxCall() then print(" Event :	LeaderScreenFinishedLoading       	");	getEventArguments(...);	numCall["LeaderScreenFinishedLoading       	"] = numCall["LeaderScreenFinishedLoading       	"] + 1;	end;	end;
+function OnLeaveGameComplete                  (...) if numCall["LeaveGameComplete                 	"] &lt; maxCall() then print(" Event :	LeaveGameComplete                 	");	getEventArguments(...);	numCall["LeaveGameComplete                 	"] = numCall["LeaveGameComplete                 	"] + 1;	end;	end;
+function OnModStatusUpdated                   (...) if numCall["ModStatusUpdated                  	"] &lt; maxCall() then print(" Event :	ModStatusUpdated                  	");	getEventArguments(...);	numCall["ModStatusUpdated                  	"] = numCall["ModStatusUpdated                  	"] + 1;	end;	end;
+function OnMultiplayerChat                    (...) if numCall["MultiplayerChat                   	"] &lt; maxCall() then print(" Event :	MultiplayerChat                   	");	getEventArguments(...);	numCall["MultiplayerChat                   	"] = numCall["MultiplayerChat                   	"] + 1;	end;	end;
+function OnMultiplayerGameAbandoned           (...) if numCall["MultiplayerGameAbandoned          	"] &lt; maxCall() then print(" Event :	MultiplayerGameAbandoned          	");	getEventArguments(...);	numCall["MultiplayerGameAbandoned          	"] = numCall["MultiplayerGameAbandoned          	"] + 1;	end;	end;
+function OnMultiplayerGameLastPlayer          (...) if numCall["MultiplayerGameLastPlayer         	"] &lt; maxCall() then print(" Event :	MultiplayerGameLastPlayer         	");	getEventArguments(...);	numCall["MultiplayerGameLastPlayer         	"] = numCall["MultiplayerGameLastPlayer         	"] + 1;	end;	end;
+function OnMultiplayerGameListClear           (...) if numCall["MultiplayerGameListClear          	"] &lt; maxCall() then print(" Event :	MultiplayerGameListClear          	");	getEventArguments(...);	numCall["MultiplayerGameListClear          	"] = numCall["MultiplayerGameListClear          	"] + 1;	end;	end;
+function OnMultiplayerGameListComplete        (...) if numCall["MultiplayerGameListComplete       	"] &lt; maxCall() then print(" Event :	MultiplayerGameListComplete       	");	getEventArguments(...);	numCall["MultiplayerGameListComplete       	"] = numCall["MultiplayerGameListComplete       	"] + 1;	end;	end;
+function OnMultiplayerGameListUpdated         (...) if numCall["MultiplayerGameListUpdated        	"] &lt; maxCall() then print(" Event :	MultiplayerGameListUpdated        	");	getEventArguments(...);	numCall["MultiplayerGameListUpdated        	"] = numCall["MultiplayerGameListUpdated        	"] + 1;	end;	end;
+function OnMultiplayerHostMigrated            (...) if numCall["MultiplayerHostMigrated           	"] &lt; maxCall() then print(" Event :	MultiplayerHostMigrated           	");	getEventArguments(...);	numCall["MultiplayerHostMigrated           	"] = numCall["MultiplayerHostMigrated           	"] + 1;	end;	end;
+function OnMultiplayerJoinGameComplete        (...) if numCall["MultiplayerJoinGameComplete       	"] &lt; maxCall() then print(" Event :	MultiplayerJoinGameComplete       	");	getEventArguments(...);	numCall["MultiplayerJoinGameComplete       	"] = numCall["MultiplayerJoinGameComplete       	"] + 1;	end;	end;
+function OnMultiplayerJoinRoomAttempt         (...) if numCall["MultiplayerJoinRoomAttempt        	"] &lt; maxCall() then print(" Event :	MultiplayerJoinRoomAttempt        	");	getEventArguments(...);	numCall["MultiplayerJoinRoomAttempt        	"] = numCall["MultiplayerJoinRoomAttempt        	"] + 1;	end;	end;
+function OnMultiplayerJoinRoomComplete        (...) if numCall["MultiplayerJoinRoomComplete       	"] &lt; maxCall() then print(" Event :	MultiplayerJoinRoomComplete       	");	getEventArguments(...);	numCall["MultiplayerJoinRoomComplete       	"] = numCall["MultiplayerJoinRoomComplete       	"] + 1;	end;	end;
+function OnMultiplayerJoinRoomFailed          (...) if numCall["MultiplayerJoinRoomFailed         	"] &lt; maxCall() then print(" Event :	MultiplayerJoinRoomFailed         	");	getEventArguments(...);	numCall["MultiplayerJoinRoomFailed         	"] = numCall["MultiplayerJoinRoomFailed         	"] + 1;	end;	end;
+function OnMultiplayerPingTimesChanged        (...) if numCall["MultiplayerPingTimesChanged       	"] &lt; maxCall() then print(" Event :	MultiplayerPingTimesChanged       	");	getEventArguments(...);	numCall["MultiplayerPingTimesChanged       	"] = numCall["MultiplayerPingTimesChanged       	"] + 1;	end;	end;
+function OnMultiplayerPlayerConnected         (...) if numCall["MultiplayerPlayerConnected        	"] &lt; maxCall() then print(" Event :	MultiplayerPlayerConnected        	");	getEventArguments(...);	numCall["MultiplayerPlayerConnected        	"] = numCall["MultiplayerPlayerConnected        	"] + 1;	end;	end;
+function OnMultiplayerPostPlayerDisconnected  (...) if numCall["MultiplayerPostPlayerDisconnected 	"] &lt; maxCall() then print(" Event :	MultiplayerPostPlayerDisconnected 	");	getEventArguments(...);	numCall["MultiplayerPostPlayerDisconnected 	"] = numCall["MultiplayerPostPlayerDisconnected 	"] + 1;	end;	end;
+function OnMultiplayerPrePlayerDisconnected   (...) if numCall["MultiplayerPrePlayerDisconnected  	"] &lt; maxCall() then print(" Event :	MultiplayerPrePlayerDisconnected  	");	getEventArguments(...);	numCall["MultiplayerPrePlayerDisconnected  	"] = numCall["MultiplayerPrePlayerDisconnected  	"] + 1;	end;	end;
+function OnMultiplayerSnapshotProcessed       (...) if numCall["MultiplayerSnapshotProcessed      	"] &lt; maxCall() then print(" Event :	MultiplayerSnapshotProcessed      	");	getEventArguments(...);	numCall["MultiplayerSnapshotProcessed      	"] = numCall["MultiplayerSnapshotProcessed      	"] + 1;	end;	end;
+function OnMy2KActivate                       (...) if numCall["My2KActivate                      	"] &lt; maxCall() then print(" Event :	My2KActivate                      	");	getEventArguments(...);	numCall["My2KActivate                      	"] = numCall["My2KActivate                      	"] + 1;	end;	end;
+function OnMy2KLinkAccountResult              (...) if numCall["My2KLinkAccountResult             	"] &lt; maxCall() then print(" Event :	My2KLinkAccountResult             	");	getEventArguments(...);	numCall["My2KLinkAccountResult             	"] = numCall["My2KLinkAccountResult             	"] + 1;	end;	end;
+function OnOptionChangeRequiresAppRestart     (...) if numCall["OptionChangeRequiresAppRestart    	"] &lt; maxCall() then print(" Event :	OptionChangeRequiresAppRestart    	");	getEventArguments(...);	numCall["OptionChangeRequiresAppRestart    	"] = numCall["OptionChangeRequiresAppRestart    	"] + 1;	end;	end;
+function OnOptionChangeRequiresGameRestart    (...) if numCall["OptionChangeRequiresGameRestart   	"] &lt; maxCall() then print(" Event :	OptionChangeRequiresGameRestart   	");	getEventArguments(...);	numCall["OptionChangeRequiresGameRestart   	"] = numCall["OptionChangeRequiresGameRestart   	"] + 1;	end;	end;
+function OnOptionChangeRequiresResolutionAck  (...) if numCall["OptionChangeRequiresResolutionAck 	"] &lt; maxCall() then print(" Event :	OptionChangeRequiresResolutionAck 	");	getEventArguments(...);	numCall["OptionChangeRequiresResolutionAck 	"] = numCall["OptionChangeRequiresResolutionAck 	"] + 1;	end;	end;
+function OnOptionChanged                      (...) if numCall["OptionChanged                     	"] &lt; maxCall() then print(" Event :	OptionChanged                     	");	getEventArguments(...);	numCall["OptionChanged                     	"] = numCall["OptionChanged                     	"] + 1;	end;	end;
+function OnOptionsReset                       (...) if numCall["OptionsReset                      	"] &lt; maxCall() then print(" Event :	OptionsReset                      	");	getEventArguments(...);	numCall["OptionsReset                      	"] = numCall["OptionsReset                      	"] + 1;	end;	end;
+function OnOptionsReverted                    (...) if numCall["OptionsReverted                   	"] &lt; maxCall() then print(" Event :	OptionsReverted                   	");	getEventArguments(...);	numCall["OptionsReverted                   	"] = numCall["OptionsReverted                   	"] + 1;	end;	end;
+function OnOptionsSaved                       (...) if numCall["OptionsSaved                      	"] &lt; maxCall() then print(" Event :	OptionsSaved                      	");	getEventArguments(...);	numCall["OptionsSaved                      	"] = numCall["OptionsSaved                      	"] + 1;	end;	end;
+function OnPlayerInfoChanged                  (...) if numCall["PlayerInfoChanged                 	"] &lt; maxCall() then print(" Event :	PlayerInfoChanged                 	");	getEventArguments(...);	numCall["PlayerInfoChanged                 	"] = numCall["PlayerInfoChanged                 	"] + 1;	end;	end;
+function OnShowLeaderScreen                   (...) if numCall["ShowLeaderScreen                  	"] &lt; maxCall() then print(" Event :	ShowLeaderScreen                  	");	getEventArguments(...);	numCall["ShowLeaderScreen                  	"] = numCall["ShowLeaderScreen                  	"] + 1;	end;	end;
+function OnSteamFriendsPresenceUpdated        (...) if numCall["SteamFriendsPresenceUpdated       	"] &lt; maxCall() then print(" Event :	SteamFriendsPresenceUpdated       	");	getEventArguments(...);	numCall["SteamFriendsPresenceUpdated       	"] = numCall["SteamFriendsPresenceUpdated       	"] + 1;	end;	end;
+function OnSteamFriendsStatusUpdated          (...) if numCall["SteamFriendsStatusUpdated         	"] &lt; maxCall() then print(" Event :	SteamFriendsStatusUpdated         	");	getEventArguments(...);	numCall["SteamFriendsStatusUpdated         	"] = numCall["SteamFriendsStatusUpdated         	"] + 1;	end;	end;
+function OnSteamServersConnected              (...) if numCall["SteamServersConnected             	"] &lt; maxCall() then print(" Event :	SteamServersConnected             	");	getEventArguments(...);	numCall["SteamServersConnected             	"] = numCall["SteamServersConnected             	"] + 1;	end;	end;
+function OnSteamServersDisconnected           (...) if numCall["SteamServersDisconnected          	"] &lt; maxCall() then print(" Event :	SteamServersDisconnected          	");	getEventArguments(...);	numCall["SteamServersDisconnected          	"] = numCall["SteamServersDisconnected          	"] + 1;	end;	end;
+function OnTurnTimerUpdated                   (...) if numCall["TurnTimerUpdated                  	"] &lt; maxCall() then print(" Event :	TurnTimerUpdated                  	");	getEventArguments(...);	numCall["TurnTimerUpdated                  	"] = numCall["TurnTimerUpdated                  	"] + 1;	end;	end;
+function OnUpdateGraphicsOptions              (...) if numCall["UpdateGraphicsOptions             	"] &lt; maxCall() then print(" Event :	UpdateGraphicsOptions             	");	getEventArguments(...);	numCall["UpdateGraphicsOptions             	"] = numCall["UpdateGraphicsOptions             	"] + 1;	end;	end;
+function OnUserAcceptsEULA                    (...) if numCall["UserAcceptsEULA                   	"] &lt; maxCall() then print(" Event :	UserAcceptsEULA                   	");	getEventArguments(...);	numCall["UserAcceptsEULA                   	"] = numCall["UserAcceptsEULA                   	"] + 1;	end;	end;
+function OnUserAcceptsOutdatedDriver          (...) if numCall["UserAcceptsOutdatedDriver         	"] &lt; maxCall() then print(" Event :	UserAcceptsOutdatedDriver         	");	getEventArguments(...);	numCall["UserAcceptsOutdatedDriver         	"] = numCall["UserAcceptsOutdatedDriver         	"] + 1;	end;	end;
+function OnUserAcceptsUnknownDevice           (...) if numCall["UserAcceptsUnknownDevice          	"] &lt; maxCall() then print(" Event :	UserAcceptsUnknownDevice          	");	getEventArguments(...);	numCall["UserAcceptsUnknownDevice          	"] = numCall["UserAcceptsUnknownDevice          	"] + 1;	end;	end;
+function OnUserConfirmedClose                 (...) if numCall["UserConfirmedClose                	"] &lt; maxCall() then print(" Event :	UserConfirmedClose                	");	getEventArguments(...);	numCall["UserConfirmedClose                	"] = numCall["UserConfirmedClose                	"] + 1;	end;	end;
+function OnUserRequestClose                   (...) if numCall["UserRequestClose                  	"] &lt; maxCall() then print(" Event :	UserRequestClose                  	");	getEventArguments(...);	numCall["UserRequestClose                  	"] = numCall["UserRequestClose                  	"] + 1;	end;	end;
+function OnWorldRenderViewChanged             (...) if numCall["WorldRenderViewChanged            	"] &lt; maxCall() then print(" Event :	WorldRenderViewChanged            	");	getEventArguments(...);	numCall["WorldRenderViewChanged            	"] = numCall["WorldRenderViewChanged            	"] + 1;	end;	end;
+function OnAppInitComplete                    (...) if numCall["AppInitComplete                   	"] &lt; maxCall() then print(" Event :	AppInitComplete                   	");	getEventArguments(...);	numCall["AppInitComplete                   	"] = numCall["AppInitComplete                   	"] + 1;	end;	end;
+function OnGameViewStateDone                  (...) if numCall["GameViewStateDone                 	"] &lt; maxCall() then print(" Event :	GameViewStateDone                 	");	getEventArguments(...);	numCall["GameViewStateDone                 	"] = numCall["GameViewStateDone                 	"] + 1;	end;	end;
+function OnLoadGameViewStateDone              (...) if numCall["LoadGameViewStateDone             	"] &lt; maxCall() then print(" Event :	LoadGameViewStateDone             	");	getEventArguments(...);	numCall["LoadGameViewStateDone             	"] = numCall["LoadGameViewStateDone             	"] + 1;	end;	end;
+function OnLoadScreenClose                    (...) if numCall["LoadScreenClose                   	"] &lt; maxCall() then print(" Event :	LoadScreenClose                   	");	getEventArguments(...);	numCall["LoadScreenClose                   	"] = numCall["LoadScreenClose                   	"] + 1;	end;	end;
+function OnLoadScreenContentReady             (...) if numCall["LoadScreenContentReady            	"] &lt; maxCall() then print(" Event :	LoadScreenContentReady            	");	getEventArguments(...);	numCall["LoadScreenContentReady            	"] = numCall["LoadScreenContentReady            	"] + 1;	end;	end;
+function OnMainMenuStateDone                  (...) if numCall["MainMenuStateDone                 	"] &lt; maxCall() then print(" Event :	MainMenuStateDone                 	");	getEventArguments(...);	numCall["MainMenuStateDone                 	"] = numCall["MainMenuStateDone                 	"] + 1;	end;	end;
+function OnAfterGameplayContentChange         (...) if numCall["AfterGameplayContentChange        	"] &lt; maxCall() then print(" Event :	AfterGameplayContentChange        	");	getEventArguments(...);	numCall["AfterGameplayContentChange        	"] = numCall["AfterGameplayContentChange        	"] + 1;	end;	end;
+function OnAfterGameplayContentConfigure      (...) if numCall["AfterGameplayContentConfigure     	"] &lt; maxCall() then print(" Event :	AfterGameplayContentConfigure     	");	getEventArguments(...);	numCall["AfterGameplayContentConfigure     	"] = numCall["AfterGameplayContentConfigure     	"] + 1;	end;	end;
+function OnAllCitiesDeselected                (...) if numCall["AllCitiesDeselected               	"] &lt; maxCall() then print(" Event :	AllCitiesDeselected               	");	getEventArguments(...);	numCall["AllCitiesDeselected               	"] = numCall["AllCitiesDeselected               	"] + 1;	end;	end;
+function OnAllDistrictsDeselected             (...) if numCall["AllDistrictsDeselected            	"] &lt; maxCall() then print(" Event :	AllDistrictsDeselected            	");	getEventArguments(...);	numCall["AllDistrictsDeselected            	"] = numCall["AllDistrictsDeselected            	"] + 1;	end;	end;
+function OnAllUnitsDeselected                 (...) if numCall["AllUnitsDeselected                	"] &lt; maxCall() then print(" Event :	AllUnitsDeselected                	");	getEventArguments(...);	numCall["AllUnitsDeselected                	"] = numCall["AllUnitsDeselected                	"] + 1;	end;	end;
+function OnAutomationTestComplete             (...) if numCall["AutomationTestComplete            	"] &lt; maxCall() then print(" Event :	AutomationTestComplete            	");	getEventArguments(...);	numCall["AutomationTestComplete            	"] = numCall["AutomationTestComplete            	"] + 1;	end;	end;
+function OnBeforeGameplayContentChange        (...) if numCall["BeforeGameplayContentChange       	"] &lt; maxCall() then print(" Event :	BeforeGameplayContentChange       	");	getEventArguments(...);	numCall["BeforeGameplayContentChange       	"] = numCall["BeforeGameplayContentChange       	"] + 1;	end;	end;
+function OnBeforeGameplayContentConfigure     (...) if numCall["BeforeGameplayContentConfigure    	"] &lt; maxCall() then print(" Event :	BeforeGameplayContentConfigure    	");	getEventArguments(...);	numCall["BeforeGameplayContentConfigure    	"] = numCall["BeforeGameplayContentConfigure    	"] + 1;	end;	end;
+function OnBeforeMultiplayerInviteProcessing  (...) if numCall["BeforeMultiplayerInviteProcessing 	"] &lt; maxCall() then print(" Event :	BeforeMultiplayerInviteProcessing 	");	getEventArguments(...);	numCall["BeforeMultiplayerInviteProcessing 	"] = numCall["BeforeMultiplayerInviteProcessing 	"] + 1;	end;	end;
+function OnCitySelectionChanged               (...) if numCall["CitySelectionChanged              	"] &lt; maxCall() then print(" Event :	CitySelectionChanged              	");	getEventArguments(...);	numCall["CitySelectionChanged              	"] = numCall["CitySelectionChanged              	"] + 1;	end;	end;
+function OnCombatVisBegin                     (...) if numCall["CombatVisBegin                    	"] &lt; maxCall() then print(" Event :	CombatVisBegin                    	");	getEventArguments(...);	numCall["CombatVisBegin                    	"] = numCall["CombatVisBegin                    	"] + 1;	end;	end;
+function OnCombatVisEnd                       (...) if numCall["CombatVisEnd                      	"] &lt; maxCall() then print(" Event :	CombatVisEnd                      	");	getEventArguments(...);	numCall["CombatVisEnd                      	"] = numCall["CombatVisEnd                      	"] + 1;	end;	end;
+function OnCycleUnitSelectionRequest          (...) if numCall["CycleUnitSelectionRequest         	"] &lt; maxCall() then print(" Event :	CycleUnitSelectionRequest         	");	getEventArguments(...);	numCall["CycleUnitSelectionRequest         	"] = numCall["CycleUnitSelectionRequest         	"] + 1;	end;	end;
+function OnDemoExit                           (...) if numCall["DemoExit                          	"] &lt; maxCall() then print(" Event :	DemoExit                          	");	getEventArguments(...);	numCall["DemoExit                          	"] = numCall["DemoExit                          	"] + 1;	end;	end;
+function OnDemoTurnLimitReached               (...) if numCall["DemoTurnLimitReached              	"] &lt; maxCall() then print(" Event :	DemoTurnLimitReached              	");	getEventArguments(...);	numCall["DemoTurnLimitReached              	"] = numCall["DemoTurnLimitReached              	"] + 1;	end;	end;
+function OnDistrictSelectionChanged           (...) if numCall["DistrictSelectionChanged          	"] &lt; maxCall() then print(" Event :	DistrictSelectionChanged          	");	getEventArguments(...);	numCall["DistrictSelectionChanged          	"] = numCall["DistrictSelectionChanged          	"] + 1;	end;	end;
+function OnFinishedGameplayContentChange      (...) if numCall["FinishedGameplayContentChange     	"] &lt; maxCall() then print(" Event :	FinishedGameplayContentChange     	");	getEventArguments(...);	numCall["FinishedGameplayContentChange     	"] = numCall["FinishedGameplayContentChange     	"] + 1;	end;	end;
+function OnFinishedGameplayContentConfigure   (...) if numCall["FinishedGameplayContentConfigure  	"] &lt; maxCall() then print(" Event :	FinishedGameplayContentConfigure  	");	getEventArguments(...);	numCall["FinishedGameplayContentConfigure  	"] = numCall["FinishedGameplayContentConfigure  	"] + 1;	end;	end;
+function OnGameConfigurationParameterChanged  (...) if numCall["GameConfigurationParameterChanged 	"] &lt; maxCall() then print(" Event :	GameConfigurationParameterChanged 	");	getEventArguments(...);	numCall["GameConfigurationParameterChanged 	"] = numCall["GameConfigurationParameterChanged 	"] + 1;	end;	end;
+function OnGameConfigurationRebuilt           (...) if numCall["GameConfigurationRebuilt          	"] &lt; maxCall() then print(" Event :	GameConfigurationRebuilt          	");	getEventArguments(...);	numCall["GameConfigurationRebuilt          	"] = numCall["GameConfigurationRebuilt          	"] + 1;	end;	end;
+function OnGameConfigurationResolved          (...) if numCall["GameConfigurationResolved         	"] &lt; maxCall() then print(" Event :	GameConfigurationResolved         	");	getEventArguments(...);	numCall["GameConfigurationResolved         	"] = numCall["GameConfigurationResolved         	"] + 1;	end;	end;
+function OnGameCoreEventPlaybackComplete      (...) if numCall["GameCoreEventPlaybackComplete     	"] &lt; maxCall() then print(" Event :	GameCoreEventPlaybackComplete     	");	getEventArguments(...);	numCall["GameCoreEventPlaybackComplete     	"] = numCall["GameCoreEventPlaybackComplete     	"] + 1;	end;	end;
+function OnGameCoreEventPublishComplete       (...) if numCall["GameCoreEventPublishComplete      	"] &lt; maxCall() then print(" Event :	GameCoreEventPublishComplete      	");	getEventArguments(...);	numCall["GameCoreEventPublishComplete      	"] = numCall["GameCoreEventPublishComplete      	"] + 1;	end;	end;
+function OnInterfaceModeChanged               (...) if numCall["InterfaceModeChanged              	"] &lt; maxCall() then print(" Event :	InterfaceModeChanged              	");	getEventArguments(...);	numCall["InterfaceModeChanged              	"] = numCall["InterfaceModeChanged              	"] + 1;	end;	end;
+function OnLensFocusHex                       (...) if numCall["LensFocusHex                      	"] &lt; maxCall() then print(" Event :	LensFocusHex                      	");	getEventArguments(...);	numCall["LensFocusHex                      	"] = numCall["LensFocusHex                      	"] + 1;	end;	end;
+function OnLensLayerOff                       (...) if numCall["LensLayerOff                      	"] &lt; maxCall() then print(" Event :	LensLayerOff                      	");	getEventArguments(...);	numCall["LensLayerOff                      	"] = numCall["LensLayerOff                      	"] + 1;	end;	end;
+function OnLensLayerOn                        (...) if numCall["LensLayerOn                       	"] &lt; maxCall() then print(" Event :	LensLayerOn                       	");	getEventArguments(...);	numCall["LensLayerOn                       	"] = numCall["LensLayerOn                       	"] + 1;	end;	end;
+function OnLensUnFocusHex                     (...) if numCall["LensUnFocusHex                    	"] &lt; maxCall() then print(" Event :	LensUnFocusHex                    	");	getEventArguments(...);	numCall["LensUnFocusHex                    	"] = numCall["LensUnFocusHex                    	"] + 1;	end;	end;
+function OnLoadCanceled                       (...) if numCall["LoadCanceled                      	"] &lt; maxCall() then print(" Event :	LoadCanceled                      	");	getEventArguments(...);	numCall["LoadCanceled                      	"] = numCall["LoadCanceled                      	"] + 1;	end;	end;
+function OnLoadComplete                       (...) if numCall["LoadComplete                      	"] &lt; maxCall() then print(" Event :	LoadComplete                      	");	getEventArguments(...);	numCall["LoadComplete                      	"] = numCall["LoadComplete                      	"] + 1;	end;	end;
+function OnMapMaxMajorPlayersChanged          (...) if numCall["MapMaxMajorPlayersChanged         	"] &lt; maxCall() then print(" Event :	MapMaxMajorPlayersChanged         	");	getEventArguments(...);	numCall["MapMaxMajorPlayersChanged         	"] = numCall["MapMaxMajorPlayersChanged         	"] + 1;	end;	end;
+function OnMultiplayerGameInvite              (...) if numCall["MultiplayerGameInvite             	"] &lt; maxCall() then print(" Event :	MultiplayerGameInvite             	");	getEventArguments(...);	numCall["MultiplayerGameInvite             	"] = numCall["MultiplayerGameInvite             	"] + 1;	end;	end;
+function OnMultiplayerGameLaunched            (...) if numCall["MultiplayerGameLaunched           	"] &lt; maxCall() then print(" Event :	MultiplayerGameLaunched           	");	getEventArguments(...);	numCall["MultiplayerGameLaunched           	"] = numCall["MultiplayerGameLaunched           	"] + 1;	end;	end;
+function OnPreTurnBegin                       (...) if numCall["PreTurnBegin                      	"] &lt; maxCall() then print(" Event :	PreTurnBegin                      	");	getEventArguments(...);	numCall["PreTurnBegin                      	"] = numCall["PreTurnBegin                      	"] + 1;	end;	end;
+function OnRequestLoad                        (...) if numCall["RequestLoad                       	"] &lt; maxCall() then print(" Event :	RequestLoad                       	");	getEventArguments(...);	numCall["RequestLoad                       	"] = numCall["RequestLoad                       	"] + 1;	end;	end;
+function OnRequestSave                        (...) if numCall["RequestSave                       	"] &lt; maxCall() then print(" Event :	RequestSave                       	");	getEventArguments(...);	numCall["RequestSave                       	"] = numCall["RequestSave                       	"] + 1;	end;	end;
+function OnSaveCanceled                       (...) if numCall["SaveCanceled                      	"] &lt; maxCall() then print(" Event :	SaveCanceled                      	");	getEventArguments(...);	numCall["SaveCanceled                      	"] = numCall["SaveCanceled                      	"] + 1;	end;	end;
+function OnSaveComplete                       (...) if numCall["SaveComplete                      	"] &lt; maxCall() then print(" Event :	SaveComplete                      	");	getEventArguments(...);	numCall["SaveComplete                      	"] = numCall["SaveComplete                      	"] + 1;	end;	end;
+function OnSubscriptionDownloadStatus         (...) if numCall["SubscriptionDownloadStatus        	"] &lt; maxCall() then print(" Event :	SubscriptionDownloadStatus        	");	getEventArguments(...);	numCall["SubscriptionDownloadStatus        	"] = numCall["SubscriptionDownloadStatus        	"] + 1;	end;	end;
+function OnUnitSelectionChanged               (...) if numCall["UnitSelectionChanged              	"] &lt; maxCall() then print(" Event :	UnitSelectionChanged              	");	getEventArguments(...);	numCall["UnitSelectionChanged              	"] = numCall["UnitSelectionChanged              	"] + 1;	end;	end;
+function OnUnitSimPositionChanged             (...) if numCall["UnitSimPositionChanged            	"] &lt; maxCall() then print(" Event :	UnitSimPositionChanged            	");	getEventArguments(...);	numCall["UnitSimPositionChanged            	"] = numCall["UnitSimPositionChanged            	"] + 1;	end;	end;
+function OnUserOptionChanged                  (...) if numCall["UserOptionChanged                 	"] &lt; maxCall() then print(" Event :	UserOptionChanged                 	");	getEventArguments(...);	numCall["UserOptionChanged                 	"] = numCall["UserOptionChanged                 	"] + 1;	end;	end;
+function OnVisualStateRestored                (...) if numCall["VisualStateRestored               	"] &lt; maxCall() then print(" Event :	VisualStateRestored               	");	getEventArguments(...);	numCall["VisualStateRestored               	"] = numCall["VisualStateRestored               	"] + 1;	end;	end;
+function OnDragCamera                         (...) if numCall["DragCamera                        	"] &lt; maxCall() then print(" Event :	DragCamera                        	");	getEventArguments(...);	numCall["DragCamera                        	"] = numCall["DragCamera                        	"] + 1;	end;	end;
+function OnSystemUpdateUI                     (...) if numCall["SystemUpdateUI                    	"] &lt; maxCall() then print(" Event :	SystemUpdateUI                    	");	getEventArguments(...);	numCall["SystemUpdateUI                    	"] = numCall["SystemUpdateUI                    	"] + 1;	end;	end;
+
+Events.AnarchyBegins.Add( OnAnarchyBegins )
+Events.AnarchyEnds.Add( OnAnarchyEnds )
+Events.BeliefAdded.Add( OnBeliefAdded )
+Events.BuildingAddedToMap.Add( OnBuildingAddedToMap )
+Events.BuildingChanged.Add( OnBuildingChanged )
+Events.BuildingRemovedFromMap.Add( OnBuildingRemovedFromMap )
+Events.CapitalCityChanged.Add( OnCapitalCityChanged )
+Events.CityAddedToMap.Add( OnCityAddedToMap )
+Events.CityCommandStarted.Add( OnCityCommandStarted )
+Events.CityDefenseStatusChanged.Add( OnCityDefenseStatusChanged )
+Events.CityFocusChanged.Add( OnCityFocusChanged )
+Events.CityInitialized.Add( OnCityInitialized )
+Events.CityLiberated.Add( OnCityLiberated )
+Events.CityMadePurchase.Add( OnCityMadePurchase )
+Events.CityPopulationChanged.Add( OnCityPopulationChanged )
+Events.CityProductionChanged.Add( OnCityProductionChanged )
+Events.CityProductionCompleted.Add( OnCityProductionCompleted )
+Events.CityProductionUpdated.Add( OnCityProductionUpdated )
+Events.CityProjectCompleted.Add( OnCityProjectCompleted )
+Events.CityReligionChanged.Add( OnCityReligionChanged )
+Events.CityReligionFollowersChanged.Add( OnCityReligionFollowersChanged )
+Events.CityRemovedFromMap.Add( OnCityRemovedFromMap )
+Events.CitySiegeStatusChanged.Add( OnCitySiegeStatusChanged )
+Events.CityTileOwnershipChanged.Add( OnCityTileOwnershipChanged )
+Events.CityUnitsChanged.Add( OnCityUnitsChanged )
+Events.CityVisibilityChanged.Add( OnCityVisibilityChanged )
+Events.CityWorkerChanged.Add( OnCityWorkerChanged )
+Events.CivicBoostTriggered.Add( OnCivicBoostTriggered )
+Events.CivicChanged.Add( OnCivicChanged )
+Events.CivicCompleted.Add( OnCivicCompleted )
+Events.CivicQueueChanged.Add( OnCivicQueueChanged )
+Events.CivicsUnlocked.Add( OnCivicsUnlocked )
+Events.Combat.Add( OnCombat )
+Events.CultureChanged.Add( OnCultureChanged )
+Events.CultureYieldChanged.Add( OnCultureYieldChanged )
+Events.DiplomacyDealEnacted.Add( OnDiplomacyDealEnacted )
+Events.DiplomacyDealExpired.Add( OnDiplomacyDealExpired )
+Events.DiplomacyDeclareWar.Add( OnDiplomacyDeclareWar )
+Events.DiplomacyIncomingDeal.Add( OnDiplomacyIncomingDeal )
+Events.DiplomacyMakePeace.Add( OnDiplomacyMakePeace )
+Events.DiplomacyMeet.Add( OnDiplomacyMeet )
+Events.DiplomacyMeetMajorMinor.Add( OnDiplomacyMeetMajorMinor )
+Events.DiplomacyMeetMajors.Add( OnDiplomacyMeetMajors )
+Events.DiplomacyRefusePeace.Add( OnDiplomacyRefusePeace )
+Events.DiplomacyRelationshipChanged.Add( OnDiplomacyRelationshipChanged )
+Events.DiplomacySessionClosed.Add( OnDiplomacySessionClosed )
+Events.DiplomacyStatement.Add( OnDiplomacyStatement )
+Events.DistrictAddedToMap.Add( OnDistrictAddedToMap )
+Events.DistrictBuildProgressChanged.Add( OnDistrictBuildProgressChanged )
+Events.DistrictCombatChanged.Add( OnDistrictCombatChanged )
+Events.DistrictDamageChanged.Add( OnDistrictDamageChanged )
+Events.DistrictPillaged.Add( OnDistrictPillaged )
+Events.DistrictRemovedFromMap.Add( OnDistrictRemovedFromMap )
+Events.DistrictUnitsChanged.Add( OnDistrictUnitsChanged )
+Events.DistrictVisibilityChanged.Add( OnDistrictVisibilityChanged )
+Events.EndTurnBlockingChanged.Add( OnEndTurnBlockingChanged )
+Events.EndTurnDirty.Add( OnEndTurnDirty )
+Events.FaithChanged.Add( OnFaithChanged )
+Events.FeatureAddedToMap.Add( OnFeatureAddedToMap )
+Events.FeatureChanged.Add( OnFeatureChanged )
+Events.FeatureRemovedFromMap.Add( OnFeatureRemovedFromMap )
+Events.GoodyHutReward.Add( OnGoodyHutReward )
+Events.GovernmentChanged.Add( OnGovernmentChanged )
+Events.GovernmentPolicyChanged.Add( OnGovernmentPolicyChanged )
+Events.GovernmentPolicyObsoleted.Add( OnGovernmentPolicyObsoleted )
+Events.GreatPeoplePointsChanged.Add( OnGreatPeoplePointsChanged )
+Events.GreatPeopleTimelineChanged.Add( OnGreatPeopleTimelineChanged )
+Events.GreatWorkCreated.Add( OnGreatWorkCreated )
+Events.GreatWorkMoved.Add( OnGreatWorkMoved )
+Events.ImprovementActivated.Add( OnImprovementActivated )
+Events.ImprovementAddedToMap.Add( OnImprovementAddedToMap )
+Events.ImprovementChanged.Add( OnImprovementChanged )
+Events.ImprovementOwnershipChanged.Add( OnImprovementOwnershipChanged )
+Events.ImprovementRemovedFromMap.Add( OnImprovementRemovedFromMap )
+Events.ImprovementVisibilityChanged.Add( OnImprovementVisibilityChanged )
+Events.InfluenceChanged.Add( OnInfluenceChanged )
+Events.InfluenceGiven.Add( OnInfluenceGiven )
+Events.LevyCounterChanged.Add( OnLevyCounterChanged )
+Events.LocalPlayerChanged.Add( OnLocalPlayerChanged )
+Events.LocalPlayerTurnBegin.Add( OnLocalPlayerTurnBegin )
+Events.LocalPlayerTurnEnd.Add( OnLocalPlayerTurnEnd )
+Events.MapYieldsChanged.Add( OnMapYieldsChanged )
+Events.NationalParkAdded.Add( OnNationalParkAdded )
+Events.NaturalWonderRevealed.Add( OnNaturalWonderRevealed )
+Events.NotificationAdded.Add( OnNotificationAdded )
+Events.NotificationDismissed.Add( OnNotificationDismissed )
+Events.NotificationRefreshRequested.Add( OnNotificationRefreshRequested )
+Events.ObjectPairing.Add( OnObjectPairing )
+Events.OnAiAdvisorUpdated.Add( OnOnAiAdvisorUpdated )
+Events.PantheonFounded.Add( OnPantheonFounded )
+Events.PhaseBegin.Add( OnPhaseBegin )
+Events.PhaseEnd.Add( OnPhaseEnd )
+Events.PlayerBordersChanged.Add( OnPlayerBordersChanged )
+Events.PlayerDefeat.Add( OnPlayerDefeat )
+Events.PlayerDestroyed.Add( OnPlayerDestroyed )
+Events.PlayerEraChanged.Add( OnPlayerEraChanged )
+Events.PlayerOperationComplete.Add( OnPlayerOperationComplete )
+Events.PlayerTurnActivated.Add( OnPlayerTurnActivated )
+Events.PlayerTurnDeactivated.Add( OnPlayerTurnDeactivated )
+Events.PlayerVictory.Add( OnPlayerVictory )
+Events.PlotMarkerChanged.Add( OnPlotMarkerChanged )
+Events.PlotVisibilityChanged.Add( OnPlotVisibilityChanged )
+Events.PlotYieldChanged.Add( OnPlotYieldChanged )
+Events.QuestChanged.Add( OnQuestChanged )
+Events.ReligionFounded.Add( OnReligionFounded )
+Events.RemotePlayerTurnBegin.Add( OnRemotePlayerTurnBegin )
+Events.RemotePlayerTurnEnd.Add( OnRemotePlayerTurnEnd )
+Events.ResearchChanged.Add( OnResearchChanged )
+Events.ResearchCompleted.Add( OnResearchCompleted )
+Events.ResearchQueueChanged.Add( OnResearchQueueChanged )
+Events.ResearchYieldChanged.Add( OnResearchYieldChanged )
+Events.ResourceAddedToMap.Add( OnResourceAddedToMap )
+Events.ResourceChanged.Add( OnResourceChanged )
+Events.ResourceRemovedFromMap.Add( OnResourceRemovedFromMap )
+Events.ResourceVisibilityChanged.Add( OnResourceVisibilityChanged )
+Events.RouteAddedToMap.Add( OnRouteAddedToMap )
+Events.RouteChanged.Add( OnRouteChanged )
+Events.RouteRemovedFromMap.Add( OnRouteRemovedFromMap )
+Events.SpyAdded.Add( OnSpyAdded )
+Events.SpyMissionUpdated.Add( OnSpyMissionUpdated )
+Events.SpyRemoved.Add( OnSpyRemoved )
+Events.SpyUpdated.Add( OnSpyUpdated )
+Events.StatusMessage.Add( OnStatusMessage )
+Events.TechBoostTriggered.Add( OnTechBoostTriggered )
+Events.TerrainTypeChanged.Add( OnTerrainTypeChanged )
+Events.TradeRouteActivityChanged.Add( OnTradeRouteActivityChanged )
+Events.TradeRouteAddedToMap.Add( OnTradeRouteAddedToMap )
+Events.TradeRouteCapacityChanged.Add( OnTradeRouteCapacityChanged )
+Events.TradeRouteRangeChanged.Add( OnTradeRouteRangeChanged )
+Events.TradeRouteRemovedFromMap.Add( OnTradeRouteRemovedFromMap )
+Events.TreasuryChanged.Add( OnTreasuryChanged )
+Events.TurnBegin.Add( OnTurnBegin )
+Events.TurnEnd.Add( OnTurnEnd )
+Events.UnitActivityChanged.Add( OnUnitActivityChanged )
+Events.UnitAddedToMap.Add( OnUnitAddedToMap )
+Events.UnitAirlifted.Add( OnUnitAirlifted )
+Events.UnitArtifactChanged.Add( OnUnitArtifactChanged )
+Events.UnitCaptured.Add( OnUnitCaptured )
+Events.UnitChargesChanged.Add( OnUnitChargesChanged )
+Events.UnitCommandStarted.Add( OnUnitCommandStarted )
+Events.UnitDamageChanged.Add( OnUnitDamageChanged )
+Events.UnitEmbarkedStateChanged.Add( OnUnitEmbarkedStateChanged )
+Events.UnitEnterFormation.Add( OnUnitEnterFormation )
+Events.UnitExitFormation.Add( OnUnitExitFormation )
+Events.UnitFormArmy.Add( OnUnitFormArmy )
+Events.UnitFormCorps.Add( OnUnitFormCorps )
+Events.UnitFortificationChanged.Add( OnUnitFortificationChanged )
+Events.UnitGreatPersonActivated.Add( OnUnitGreatPersonActivated )
+Events.UnitGreatPersonChanged.Add( OnUnitGreatPersonChanged )
+Events.UnitGreatPersonCreated.Add( OnUnitGreatPersonCreated )
+Events.UnitKilledInCombat.Add( OnUnitKilledInCombat )
+Events.UnitMoveComplete.Add( OnUnitMoveComplete )
+Events.UnitMoved.Add( OnUnitMoved )
+Events.UnitMovementPointsChanged.Add( OnUnitMovementPointsChanged )
+Events.UnitMovementPointsCleared.Add( OnUnitMovementPointsCleared )
+Events.UnitMovementPointsRestored.Add( OnUnitMovementPointsRestored )
+Events.UnitOperationAdded.Add( OnUnitOperationAdded )
+Events.UnitOperationDeactivated.Add( OnUnitOperationDeactivated )
+Events.UnitOperationSegmentComplete.Add( OnUnitOperationSegmentComplete )
+Events.UnitOperationStarted.Add( OnUnitOperationStarted )
+Events.UnitOperationsCleared.Add( OnUnitOperationsCleared )
+Events.UnitPromoted.Add( OnUnitPromoted )
+Events.UnitPromotionAvailable.Add( OnUnitPromotionAvailable )
+Events.UnitRemovedFromMap.Add( OnUnitRemovedFromMap )
+Events.UnitTeleported.Add( OnUnitTeleported )
+Events.UnitUpgraded.Add( OnUnitUpgraded )
+Events.UnitVisibilityChanged.Add( OnUnitVisibilityChanged )
+Events.WMDCountChanged.Add( OnWMDCountChanged )
+Events.WMDDetonated.Add( OnWMDDetonated )
+Events.WMDFalloutChanged.Add( OnWMDFalloutChanged )
+Events.WMDFalloutVisibilityChanged.Add( OnWMDFalloutVisibilityChanged )
+Events.WonderCompleted.Add( OnWonderCompleted )
+Events.WorldTextMessage.Add( OnWorldTextMessage )
+Events.ARXOrientationChanged.Add( OnARXOrientationChanged )
+Events.ARXTap.Add( OnARXTap )
+Events.AchievementProgress.Add( OnAchievementProgress )
+Events.AchievementUnlocked.Add( OnAchievementUnlocked )
+Events.Begin2KLoginProcess.Add( OnBegin2KLoginProcess )
+Events.BeginGameView.Add( OnBeginGameView )
+Events.BeginMy2KLinkAccountProcess.Add( OnBeginMy2KLinkAccountProcess )
+Events.BeginWonderReveal.Add( OnBeginWonderReveal )
+Events.Camera_Updated.Add( OnCamera_Updated )
+Events.CloudGameInfoUpdated.Add( OnCloudGameInfoUpdated )
+Events.CloudGameJoinResponse.Add( OnCloudGameJoinResponse )
+Events.CloudGameListUpdated.Add( OnCloudGameListUpdated )
+Events.EndGameView.Add( OnEndGameView )
+Events.EndWonderReveal.Add( OnEndWonderReveal )
+Events.ExitToMainMenu.Add( OnExitToMainMenu )
+Events.FiraxisLiveActivate.Add( OnFiraxisLiveActivate )
+Events.FrontEndPopup.Add( OnFrontEndPopup )
+Events.GameConfigChanged.Add( OnGameConfigChanged )
+Events.HideLeaderScreen.Add( OnHideLeaderScreen )
+Events.InputActionTriggered.Add( OnInputActionTriggered )
+Events.InputGestureRecorded.Add( OnInputGestureRecorded )
+Events.LeaderAnimationChanged.Add( OnLeaderAnimationChanged )
+Events.LeaderAnimationComplete.Add( OnLeaderAnimationComplete )
+Events.LeaderScreenFinishedLoading.Add( OnLeaderScreenFinishedLoading )
+Events.LeaveGameComplete.Add( OnLeaveGameComplete )
+Events.ModStatusUpdated.Add( OnModStatusUpdated )
+Events.MultiplayerChat.Add( OnMultiplayerChat )
+Events.MultiplayerGameAbandoned.Add( OnMultiplayerGameAbandoned )
+Events.MultiplayerGameLastPlayer.Add( OnMultiplayerGameLastPlayer )
+Events.MultiplayerGameListClear.Add( OnMultiplayerGameListClear )
+Events.MultiplayerGameListComplete.Add( OnMultiplayerGameListComplete )
+Events.MultiplayerGameListUpdated.Add( OnMultiplayerGameListUpdated )
+Events.MultiplayerHostMigrated.Add( OnMultiplayerHostMigrated )
+Events.MultiplayerJoinGameComplete.Add( OnMultiplayerJoinGameComplete )
+Events.MultiplayerJoinRoomAttempt.Add( OnMultiplayerJoinRoomAttempt )
+Events.MultiplayerJoinRoomComplete.Add( OnMultiplayerJoinRoomComplete )
+Events.MultiplayerJoinRoomFailed.Add( OnMultiplayerJoinRoomFailed )
+Events.MultiplayerPingTimesChanged.Add( OnMultiplayerPingTimesChanged )
+Events.MultiplayerPlayerConnected.Add( OnMultiplayerPlayerConnected )
+Events.MultiplayerPostPlayerDisconnected.Add( OnMultiplayerPostPlayerDisconnected )
+Events.MultiplayerPrePlayerDisconnected.Add( OnMultiplayerPrePlayerDisconnected )
+Events.MultiplayerSnapshotProcessed.Add( OnMultiplayerSnapshotProcessed )
+Events.My2KActivate.Add( OnMy2KActivate )
+Events.My2KLinkAccountResult.Add( OnMy2KLinkAccountResult )
+Events.OptionChangeRequiresAppRestart.Add( OnOptionChangeRequiresAppRestart )
+Events.OptionChangeRequiresGameRestart.Add( OnOptionChangeRequiresGameRestart )
+Events.OptionChangeRequiresResolutionAck.Add( OnOptionChangeRequiresResolutionAck )
+Events.OptionChanged.Add( OnOptionChanged )
+Events.OptionsReset.Add( OnOptionsReset )
+Events.OptionsReverted.Add( OnOptionsReverted )
+Events.OptionsSaved.Add( OnOptionsSaved )
+Events.PlayerInfoChanged.Add( OnPlayerInfoChanged )
+Events.ShowLeaderScreen.Add( OnShowLeaderScreen )
+Events.SteamFriendsPresenceUpdated.Add( OnSteamFriendsPresenceUpdated )
+Events.SteamFriendsStatusUpdated.Add( OnSteamFriendsStatusUpdated )
+Events.SteamServersConnected.Add( OnSteamServersConnected )
+Events.SteamServersDisconnected.Add( OnSteamServersDisconnected )
+Events.TurnTimerUpdated.Add( OnTurnTimerUpdated )
+Events.UpdateGraphicsOptions.Add( OnUpdateGraphicsOptions )
+Events.UserAcceptsEULA.Add( OnUserAcceptsEULA )
+Events.UserAcceptsOutdatedDriver.Add( OnUserAcceptsOutdatedDriver )
+Events.UserAcceptsUnknownDevice.Add( OnUserAcceptsUnknownDevice )
+Events.UserConfirmedClose.Add( OnUserConfirmedClose )
+Events.UserRequestClose.Add( OnUserRequestClose )
+Events.WorldRenderViewChanged.Add( OnWorldRenderViewChanged )
+Events.AppInitComplete.Add( OnAppInitComplete )
+Events.GameViewStateDone.Add( OnGameViewStateDone )
+Events.LoadGameViewStateDone.Add( OnLoadGameViewStateDone )
+Events.LoadScreenClose.Add( OnLoadScreenClose )
+Events.LoadScreenContentReady.Add( OnLoadScreenContentReady )
+Events.MainMenuStateDone.Add( OnMainMenuStateDone )
+Events.AfterGameplayContentChange.Add( OnAfterGameplayContentChange )
+Events.AfterGameplayContentConfigure.Add( OnAfterGameplayContentConfigure )
+Events.AllCitiesDeselected.Add( OnAllCitiesDeselected )
+Events.AllDistrictsDeselected.Add( OnAllDistrictsDeselected )
+Events.AllUnitsDeselected.Add( OnAllUnitsDeselected )
+Events.AutomationTestComplete.Add( OnAutomationTestComplete )
+Events.BeforeGameplayContentChange.Add( OnBeforeGameplayContentChange )
+Events.BeforeGameplayContentConfigure.Add( OnBeforeGameplayContentConfigure )
+Events.BeforeMultiplayerInviteProcessing.Add( OnBeforeMultiplayerInviteProcessing )
+Events.CitySelectionChanged.Add( OnCitySelectionChanged )
+Events.CombatVisBegin.Add( OnCombatVisBegin )
+Events.CombatVisEnd.Add( OnCombatVisEnd )
+Events.CycleUnitSelectionRequest.Add( OnCycleUnitSelectionRequest )
+Events.DemoExit.Add( OnDemoExit )
+Events.DemoTurnLimitReached.Add( OnDemoTurnLimitReached )
+Events.DistrictSelectionChanged.Add( OnDistrictSelectionChanged )
+Events.FinishedGameplayContentChange.Add( OnFinishedGameplayContentChange )
+Events.FinishedGameplayContentConfigure.Add( OnFinishedGameplayContentConfigure )
+Events.GameConfigurationParameterChanged.Add( OnGameConfigurationParameterChanged )
+Events.GameConfigurationRebuilt.Add( OnGameConfigurationRebuilt )
+Events.GameConfigurationResolved.Add( OnGameConfigurationResolved )
+Events.GameCoreEventPlaybackComplete.Add( OnGameCoreEventPlaybackComplete )
+Events.GameCoreEventPublishComplete.Add( OnGameCoreEventPublishComplete )
+Events.InterfaceModeChanged.Add( OnInterfaceModeChanged )
+Events.LensFocusHex.Add( OnLensFocusHex )
+Events.LensLayerOff.Add( OnLensLayerOff )
+Events.LensLayerOn.Add( OnLensLayerOn )
+Events.LensUnFocusHex.Add( OnLensUnFocusHex )
+Events.LoadCanceled.Add( OnLoadCanceled )
+Events.LoadComplete.Add( OnLoadComplete )
+Events.MapMaxMajorPlayersChanged.Add( OnMapMaxMajorPlayersChanged )
+Events.MultiplayerGameInvite.Add( OnMultiplayerGameInvite )
+Events.MultiplayerGameLaunched.Add( OnMultiplayerGameLaunched )
+Events.PreTurnBegin.Add( OnPreTurnBegin )
+Events.RequestLoad.Add( OnRequestLoad )
+Events.RequestSave.Add( OnRequestSave )
+Events.SaveCanceled.Add( OnSaveCanceled )
+Events.SaveComplete.Add( OnSaveComplete )
+Events.SubscriptionDownloadStatus.Add( OnSubscriptionDownloadStatus )
+Events.UnitSelectionChanged.Add( OnUnitSelectionChanged )
+Events.UnitSimPositionChanged.Add( OnUnitSimPositionChanged )
+Events.UserOptionChanged.Add( OnUserOptionChanged )
+Events.VisualStateRestored.Add( OnVisualStateRestored )
+Events.DragCamera.Add( OnDragCamera )
+Events.SystemUpdateUI.Add( OnSystemUpdateUI )</Action>
+      <Location>
+        <X>110</X>
+        <Y>68</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove Listen to all Events</Name>
+      <Action>Events.AnarchyBegins.Remove( OnAnarchyBegins )
+Events.AnarchyEnds.Remove( OnAnarchyEnds )
+Events.BeliefAdded.Remove( OnBeliefAdded )
+Events.BuildingAddedToMap.Remove( OnBuildingAddedToMap )
+Events.BuildingChanged.Remove( OnBuildingChanged )
+Events.BuildingRemovedFromMap.Remove( OnBuildingRemovedFromMap )
+Events.CapitalCityChanged.Remove( OnCapitalCityChanged )
+Events.CityAddedToMap.Remove( OnCityAddedToMap )
+Events.CityCommandStarted.Remove( OnCityCommandStarted )
+Events.CityDefenseStatusChanged.Remove( OnCityDefenseStatusChanged )
+Events.CityFocusChanged.Remove( OnCityFocusChanged )
+Events.CityInitialized.Remove( OnCityInitialized )
+Events.CityLiberated.Remove( OnCityLiberated )
+Events.CityMadePurchase.Remove( OnCityMadePurchase )
+Events.CityPopulationChanged.Remove( OnCityPopulationChanged )
+Events.CityProductionChanged.Remove( OnCityProductionChanged )
+Events.CityProductionCompleted.Remove( OnCityProductionCompleted )
+Events.CityProductionUpdated.Remove( OnCityProductionUpdated )
+Events.CityProjectCompleted.Remove( OnCityProjectCompleted )
+Events.CityReligionChanged.Remove( OnCityReligionChanged )
+Events.CityReligionFollowersChanged.Remove( OnCityReligionFollowersChanged )
+Events.CityRemovedFromMap.Remove( OnCityRemovedFromMap )
+Events.CitySiegeStatusChanged.Remove( OnCitySiegeStatusChanged )
+Events.CityTileOwnershipChanged.Remove( OnCityTileOwnershipChanged )
+Events.CityUnitsChanged.Remove( OnCityUnitsChanged )
+Events.CityVisibilityChanged.Remove( OnCityVisibilityChanged )
+Events.CityWorkerChanged.Remove( OnCityWorkerChanged )
+Events.CivicBoostTriggered.Remove( OnCivicBoostTriggered )
+Events.CivicChanged.Remove( OnCivicChanged )
+Events.CivicCompleted.Remove( OnCivicCompleted )
+Events.CivicQueueChanged.Remove( OnCivicQueueChanged )
+Events.CivicsUnlocked.Remove( OnCivicsUnlocked )
+Events.Combat.Remove( OnCombat )
+Events.CultureChanged.Remove( OnCultureChanged )
+Events.CultureYieldChanged.Remove( OnCultureYieldChanged )
+Events.DiplomacyDealEnacted.Remove( OnDiplomacyDealEnacted )
+Events.DiplomacyDealExpired.Remove( OnDiplomacyDealExpired )
+Events.DiplomacyDeclareWar.Remove( OnDiplomacyDeclareWar )
+Events.DiplomacyIncomingDeal.Remove( OnDiplomacyIncomingDeal )
+Events.DiplomacyMakePeace.Remove( OnDiplomacyMakePeace )
+Events.DiplomacyMeet.Remove( OnDiplomacyMeet )
+Events.DiplomacyMeetMajorMinor.Remove( OnDiplomacyMeetMajorMinor )
+Events.DiplomacyMeetMajors.Remove( OnDiplomacyMeetMajors )
+Events.DiplomacyRefusePeace.Remove( OnDiplomacyRefusePeace )
+Events.DiplomacyRelationshipChanged.Remove( OnDiplomacyRelationshipChanged )
+Events.DiplomacySessionClosed.Remove( OnDiplomacySessionClosed )
+Events.DiplomacyStatement.Remove( OnDiplomacyStatement )
+Events.DistrictAddedToMap.Remove( OnDistrictAddedToMap )
+Events.DistrictBuildProgressChanged.Remove( OnDistrictBuildProgressChanged )
+Events.DistrictCombatChanged.Remove( OnDistrictCombatChanged )
+Events.DistrictDamageChanged.Remove( OnDistrictDamageChanged )
+Events.DistrictPillaged.Remove( OnDistrictPillaged )
+Events.DistrictRemovedFromMap.Remove( OnDistrictRemovedFromMap )
+Events.DistrictUnitsChanged.Remove( OnDistrictUnitsChanged )
+Events.DistrictVisibilityChanged.Remove( OnDistrictVisibilityChanged )
+Events.EndTurnBlockingChanged.Remove( OnEndTurnBlockingChanged )
+Events.EndTurnDirty.Remove( OnEndTurnDirty )
+Events.FaithChanged.Remove( OnFaithChanged )
+Events.FeatureAddedToMap.Remove( OnFeatureAddedToMap )
+Events.FeatureChanged.Remove( OnFeatureChanged )
+Events.FeatureRemovedFromMap.Remove( OnFeatureRemovedFromMap )
+Events.GoodyHutReward.Remove( OnGoodyHutReward )
+Events.GovernmentChanged.Remove( OnGovernmentChanged )
+Events.GovernmentPolicyChanged.Remove( OnGovernmentPolicyChanged )
+Events.GovernmentPolicyObsoleted.Remove( OnGovernmentPolicyObsoleted )
+Events.GreatPeoplePointsChanged.Remove( OnGreatPeoplePointsChanged )
+Events.GreatPeopleTimelineChanged.Remove( OnGreatPeopleTimelineChanged )
+Events.GreatWorkCreated.Remove( OnGreatWorkCreated )
+Events.GreatWorkMoved.Remove( OnGreatWorkMoved )
+Events.ImprovementActivated.Remove( OnImprovementActivated )
+Events.ImprovementAddedToMap.Remove( OnImprovementAddedToMap )
+Events.ImprovementChanged.Remove( OnImprovementChanged )
+Events.ImprovementOwnershipChanged.Remove( OnImprovementOwnershipChanged )
+Events.ImprovementRemovedFromMap.Remove( OnImprovementRemovedFromMap )
+Events.ImprovementVisibilityChanged.Remove( OnImprovementVisibilityChanged )
+Events.InfluenceChanged.Remove( OnInfluenceChanged )
+Events.InfluenceGiven.Remove( OnInfluenceGiven )
+Events.LevyCounterChanged.Remove( OnLevyCounterChanged )
+Events.LocalPlayerChanged.Remove( OnLocalPlayerChanged )
+Events.LocalPlayerTurnBegin.Remove( OnLocalPlayerTurnBegin )
+Events.LocalPlayerTurnEnd.Remove( OnLocalPlayerTurnEnd )
+Events.MapYieldsChanged.Remove( OnMapYieldsChanged )
+Events.NationalParkAdded.Remove( OnNationalParkAdded )
+Events.NaturalWonderRevealed.Remove( OnNaturalWonderRevealed )
+Events.NotificationAdded.Remove( OnNotificationAdded )
+Events.NotificationDismissed.Remove( OnNotificationDismissed )
+Events.NotificationRefreshRequested.Remove( OnNotificationRefreshRequested )
+Events.ObjectPairing.Remove( OnObjectPairing )
+Events.OnAiAdvisorUpdated.Remove( OnOnAiAdvisorUpdated )
+Events.PantheonFounded.Remove( OnPantheonFounded )
+Events.PhaseBegin.Remove( OnPhaseBegin )
+Events.PhaseEnd.Remove( OnPhaseEnd )
+Events.PlayerBordersChanged.Remove( OnPlayerBordersChanged )
+Events.PlayerDefeat.Remove( OnPlayerDefeat )
+Events.PlayerDestroyed.Remove( OnPlayerDestroyed )
+Events.PlayerEraChanged.Remove( OnPlayerEraChanged )
+Events.PlayerOperationComplete.Remove( OnPlayerOperationComplete )
+Events.PlayerTurnActivated.Remove( OnPlayerTurnActivated )
+Events.PlayerTurnDeactivated.Remove( OnPlayerTurnDeactivated )
+Events.PlayerVictory.Remove( OnPlayerVictory )
+Events.PlotMarkerChanged.Remove( OnPlotMarkerChanged )
+Events.PlotVisibilityChanged.Remove( OnPlotVisibilityChanged )
+Events.PlotYieldChanged.Remove( OnPlotYieldChanged )
+Events.QuestChanged.Remove( OnQuestChanged )
+Events.ReligionFounded.Remove( OnReligionFounded )
+Events.RemotePlayerTurnBegin.Remove( OnRemotePlayerTurnBegin )
+Events.RemotePlayerTurnEnd.Remove( OnRemotePlayerTurnEnd )
+Events.ResearchChanged.Remove( OnResearchChanged )
+Events.ResearchCompleted.Remove( OnResearchCompleted )
+Events.ResearchQueueChanged.Remove( OnResearchQueueChanged )
+Events.ResearchYieldChanged.Remove( OnResearchYieldChanged )
+Events.ResourceAddedToMap.Remove( OnResourceAddedToMap )
+Events.ResourceChanged.Remove( OnResourceChanged )
+Events.ResourceRemovedFromMap.Remove( OnResourceRemovedFromMap )
+Events.ResourceVisibilityChanged.Remove( OnResourceVisibilityChanged )
+Events.RouteAddedToMap.Remove( OnRouteAddedToMap )
+Events.RouteChanged.Remove( OnRouteChanged )
+Events.RouteRemovedFromMap.Remove( OnRouteRemovedFromMap )
+Events.SpyAdded.Remove( OnSpyAdded )
+Events.SpyMissionUpdated.Remove( OnSpyMissionUpdated )
+Events.SpyRemoved.Remove( OnSpyRemoved )
+Events.SpyUpdated.Remove( OnSpyUpdated )
+Events.StatusMessage.Remove( OnStatusMessage )
+Events.TechBoostTriggered.Remove( OnTechBoostTriggered )
+Events.TerrainTypeChanged.Remove( OnTerrainTypeChanged )
+Events.TradeRouteActivityChanged.Remove( OnTradeRouteActivityChanged )
+Events.TradeRouteAddedToMap.Remove( OnTradeRouteAddedToMap )
+Events.TradeRouteCapacityChanged.Remove( OnTradeRouteCapacityChanged )
+Events.TradeRouteRangeChanged.Remove( OnTradeRouteRangeChanged )
+Events.TradeRouteRemovedFromMap.Remove( OnTradeRouteRemovedFromMap )
+Events.TreasuryChanged.Remove( OnTreasuryChanged )
+Events.TurnBegin.Remove( OnTurnBegin )
+Events.TurnEnd.Remove( OnTurnEnd )
+Events.UnitActivityChanged.Remove( OnUnitActivityChanged )
+Events.UnitAddedToMap.Remove( OnUnitAddedToMap )
+Events.UnitAirlifted.Remove( OnUnitAirlifted )
+Events.UnitArtifactChanged.Remove( OnUnitArtifactChanged )
+Events.UnitCaptured.Remove( OnUnitCaptured )
+Events.UnitChargesChanged.Remove( OnUnitChargesChanged )
+Events.UnitCommandStarted.Remove( OnUnitCommandStarted )
+Events.UnitDamageChanged.Remove( OnUnitDamageChanged )
+Events.UnitEmbarkedStateChanged.Remove( OnUnitEmbarkedStateChanged )
+Events.UnitEnterFormation.Remove( OnUnitEnterFormation )
+Events.UnitExitFormation.Remove( OnUnitExitFormation )
+Events.UnitFormArmy.Remove( OnUnitFormArmy )
+Events.UnitFormCorps.Remove( OnUnitFormCorps )
+Events.UnitFortificationChanged.Remove( OnUnitFortificationChanged )
+Events.UnitGreatPersonActivated.Remove( OnUnitGreatPersonActivated )
+Events.UnitGreatPersonChanged.Remove( OnUnitGreatPersonChanged )
+Events.UnitGreatPersonCreated.Remove( OnUnitGreatPersonCreated )
+Events.UnitKilledInCombat.Remove( OnUnitKilledInCombat )
+Events.UnitMoveComplete.Remove( OnUnitMoveComplete )
+Events.UnitMoved.Remove( OnUnitMoved )
+Events.UnitMovementPointsChanged.Remove( OnUnitMovementPointsChanged )
+Events.UnitMovementPointsCleared.Remove( OnUnitMovementPointsCleared )
+Events.UnitMovementPointsRestored.Remove( OnUnitMovementPointsRestored )
+Events.UnitOperationAdded.Remove( OnUnitOperationAdded )
+Events.UnitOperationDeactivated.Remove( OnUnitOperationDeactivated )
+Events.UnitOperationSegmentComplete.Remove( OnUnitOperationSegmentComplete )
+Events.UnitOperationStarted.Remove( OnUnitOperationStarted )
+Events.UnitOperationsCleared.Remove( OnUnitOperationsCleared )
+Events.UnitPromoted.Remove( OnUnitPromoted )
+Events.UnitPromotionAvailable.Remove( OnUnitPromotionAvailable )
+Events.UnitRemovedFromMap.Remove( OnUnitRemovedFromMap )
+Events.UnitTeleported.Remove( OnUnitTeleported )
+Events.UnitUpgraded.Remove( OnUnitUpgraded )
+Events.UnitVisibilityChanged.Remove( OnUnitVisibilityChanged )
+Events.WMDCountChanged.Remove( OnWMDCountChanged )
+Events.WMDDetonated.Remove( OnWMDDetonated )
+Events.WMDFalloutChanged.Remove( OnWMDFalloutChanged )
+Events.WMDFalloutVisibilityChanged.Remove( OnWMDFalloutVisibilityChanged )
+Events.WonderCompleted.Remove( OnWonderCompleted )
+Events.WorldTextMessage.Remove( OnWorldTextMessage )
+Events.ARXOrientationChanged.Remove( OnARXOrientationChanged )
+Events.ARXTap.Remove( OnARXTap )
+Events.AchievementProgress.Remove( OnAchievementProgress )
+Events.AchievementUnlocked.Remove( OnAchievementUnlocked )
+Events.Begin2KLoginProcess.Remove( OnBegin2KLoginProcess )
+Events.BeginGameView.Remove( OnBeginGameView )
+Events.BeginMy2KLinkAccountProcess.Remove( OnBeginMy2KLinkAccountProcess )
+Events.BeginWonderReveal.Remove( OnBeginWonderReveal )
+Events.Camera_Updated.Remove( OnCamera_Updated )
+Events.CloudGameInfoUpdated.Remove( OnCloudGameInfoUpdated )
+Events.CloudGameJoinResponse.Remove( OnCloudGameJoinResponse )
+Events.CloudGameListUpdated.Remove( OnCloudGameListUpdated )
+Events.EndGameView.Remove( OnEndGameView )
+Events.EndWonderReveal.Remove( OnEndWonderReveal )
+Events.ExitToMainMenu.Remove( OnExitToMainMenu )
+Events.FiraxisLiveActivate.Remove( OnFiraxisLiveActivate )
+Events.FrontEndPopup.Remove( OnFrontEndPopup )
+Events.GameConfigChanged.Remove( OnGameConfigChanged )
+Events.HideLeaderScreen.Remove( OnHideLeaderScreen )
+Events.InputActionTriggered.Remove( OnInputActionTriggered )
+Events.InputGestureRecorded.Remove( OnInputGestureRecorded )
+Events.LeaderAnimationChanged.Remove( OnLeaderAnimationChanged )
+Events.LeaderAnimationComplete.Remove( OnLeaderAnimationComplete )
+Events.LeaderScreenFinishedLoading.Remove( OnLeaderScreenFinishedLoading )
+Events.LeaveGameComplete.Remove( OnLeaveGameComplete )
+Events.ModStatusUpdated.Remove( OnModStatusUpdated )
+Events.MultiplayerChat.Remove( OnMultiplayerChat )
+Events.MultiplayerGameAbandoned.Remove( OnMultiplayerGameAbandoned )
+Events.MultiplayerGameLastPlayer.Remove( OnMultiplayerGameLastPlayer )
+Events.MultiplayerGameListClear.Remove( OnMultiplayerGameListClear )
+Events.MultiplayerGameListComplete.Remove( OnMultiplayerGameListComplete )
+Events.MultiplayerGameListUpdated.Remove( OnMultiplayerGameListUpdated )
+Events.MultiplayerHostMigrated.Remove( OnMultiplayerHostMigrated )
+Events.MultiplayerJoinGameComplete.Remove( OnMultiplayerJoinGameComplete )
+Events.MultiplayerJoinRoomAttempt.Remove( OnMultiplayerJoinRoomAttempt )
+Events.MultiplayerJoinRoomComplete.Remove( OnMultiplayerJoinRoomComplete )
+Events.MultiplayerJoinRoomFailed.Remove( OnMultiplayerJoinRoomFailed )
+Events.MultiplayerPingTimesChanged.Remove( OnMultiplayerPingTimesChanged )
+Events.MultiplayerPlayerConnected.Remove( OnMultiplayerPlayerConnected )
+Events.MultiplayerPostPlayerDisconnected.Remove( OnMultiplayerPostPlayerDisconnected )
+Events.MultiplayerPrePlayerDisconnected.Remove( OnMultiplayerPrePlayerDisconnected )
+Events.MultiplayerSnapshotProcessed.Remove( OnMultiplayerSnapshotProcessed )
+Events.My2KActivate.Remove( OnMy2KActivate )
+Events.My2KLinkAccountResult.Remove( OnMy2KLinkAccountResult )
+Events.OptionChangeRequiresAppRestart.Remove( OnOptionChangeRequiresAppRestart )
+Events.OptionChangeRequiresGameRestart.Remove( OnOptionChangeRequiresGameRestart )
+Events.OptionChangeRequiresResolutionAck.Remove( OnOptionChangeRequiresResolutionAck )
+Events.OptionChanged.Remove( OnOptionChanged )
+Events.OptionsReset.Remove( OnOptionsReset )
+Events.OptionsReverted.Remove( OnOptionsReverted )
+Events.OptionsSaved.Remove( OnOptionsSaved )
+Events.PlayerInfoChanged.Remove( OnPlayerInfoChanged )
+Events.ShowLeaderScreen.Remove( OnShowLeaderScreen )
+Events.SteamFriendsPresenceUpdated.Remove( OnSteamFriendsPresenceUpdated )
+Events.SteamFriendsStatusUpdated.Remove( OnSteamFriendsStatusUpdated )
+Events.SteamServersConnected.Remove( OnSteamServersConnected )
+Events.SteamServersDisconnected.Remove( OnSteamServersDisconnected )
+Events.TurnTimerUpdated.Remove( OnTurnTimerUpdated )
+Events.UpdateGraphicsOptions.Remove( OnUpdateGraphicsOptions )
+Events.UserAcceptsEULA.Remove( OnUserAcceptsEULA )
+Events.UserAcceptsOutdatedDriver.Remove( OnUserAcceptsOutdatedDriver )
+Events.UserAcceptsUnknownDevice.Remove( OnUserAcceptsUnknownDevice )
+Events.UserConfirmedClose.Remove( OnUserConfirmedClose )
+Events.UserRequestClose.Remove( OnUserRequestClose )
+Events.WorldRenderViewChanged.Remove( OnWorldRenderViewChanged )
+Events.AppInitComplete.Remove( OnAppInitComplete )
+Events.GameViewStateDone.Remove( OnGameViewStateDone )
+Events.LoadGameViewStateDone.Remove( OnLoadGameViewStateDone )
+Events.LoadScreenClose.Remove( OnLoadScreenClose )
+Events.LoadScreenContentReady.Remove( OnLoadScreenContentReady )
+Events.MainMenuStateDone.Remove( OnMainMenuStateDone )
+Events.AfterGameplayContentChange.Remove( OnAfterGameplayContentChange )
+Events.AfterGameplayContentConfigure.Remove( OnAfterGameplayContentConfigure )
+Events.AllCitiesDeselected.Remove( OnAllCitiesDeselected )
+Events.AllDistrictsDeselected.Remove( OnAllDistrictsDeselected )
+Events.AllUnitsDeselected.Remove( OnAllUnitsDeselected )
+Events.AutomationTestComplete.Remove( OnAutomationTestComplete )
+Events.BeforeGameplayContentChange.Remove( OnBeforeGameplayContentChange )
+Events.BeforeGameplayContentConfigure.Remove( OnBeforeGameplayContentConfigure )
+Events.BeforeMultiplayerInviteProcessing.Remove( OnBeforeMultiplayerInviteProcessing )
+Events.CitySelectionChanged.Remove( OnCitySelectionChanged )
+Events.CombatVisBegin.Remove( OnCombatVisBegin )
+Events.CombatVisEnd.Remove( OnCombatVisEnd )
+Events.CycleUnitSelectionRequest.Remove( OnCycleUnitSelectionRequest )
+Events.DemoExit.Remove( OnDemoExit )
+Events.DemoTurnLimitReached.Remove( OnDemoTurnLimitReached )
+Events.DistrictSelectionChanged.Remove( OnDistrictSelectionChanged )
+Events.FinishedGameplayContentChange.Remove( OnFinishedGameplayContentChange )
+Events.FinishedGameplayContentConfigure.Remove( OnFinishedGameplayContentConfigure )
+Events.GameConfigurationParameterChanged.Remove( OnGameConfigurationParameterChanged )
+Events.GameConfigurationRebuilt.Remove( OnGameConfigurationRebuilt )
+Events.GameConfigurationResolved.Remove( OnGameConfigurationResolved )
+Events.GameCoreEventPlaybackComplete.Remove( OnGameCoreEventPlaybackComplete )
+Events.GameCoreEventPublishComplete.Remove( OnGameCoreEventPublishComplete )
+Events.InterfaceModeChanged.Remove( OnInterfaceModeChanged )
+Events.LensFocusHex.Remove( OnLensFocusHex )
+Events.LensLayerOff.Remove( OnLensLayerOff )
+Events.LensLayerOn.Remove( OnLensLayerOn )
+Events.LensUnFocusHex.Remove( OnLensUnFocusHex )
+Events.LoadCanceled.Remove( OnLoadCanceled )
+Events.LoadComplete.Remove( OnLoadComplete )
+Events.MapMaxMajorPlayersChanged.Remove( OnMapMaxMajorPlayersChanged )
+Events.MultiplayerGameInvite.Remove( OnMultiplayerGameInvite )
+Events.MultiplayerGameLaunched.Remove( OnMultiplayerGameLaunched )
+Events.PreTurnBegin.Remove( OnPreTurnBegin )
+Events.RequestLoad.Remove( OnRequestLoad )
+Events.RequestSave.Remove( OnRequestSave )
+Events.SaveCanceled.Remove( OnSaveCanceled )
+Events.SaveComplete.Remove( OnSaveComplete )
+Events.SubscriptionDownloadStatus.Remove( OnSubscriptionDownloadStatus )
+Events.UnitSelectionChanged.Remove( OnUnitSelectionChanged )
+Events.UnitSimPositionChanged.Remove( OnUnitSimPositionChanged )
+Events.UserOptionChanged.Remove( OnUserOptionChanged )
+Events.VisualStateRestored.Remove( OnVisualStateRestored )
+Events.DragCamera.Remove( OnDragCamera )
+Events.SystemUpdateUI.Remove( OnSystemUpdateUI )</Action>
+      <Location>
+        <X>90</X>
+        <Y>106</Y>
+      </Location>
+    </ActionData>
+  </Actions>
+  <StringControls />
+  <IntegerControls />
+  <FloatControls />
+  <BooleanControls />
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists />
+  <MultiselectLists />
+</PanelData>

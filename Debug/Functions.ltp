@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Functions</Name>
+  <App>Civ6</App>
+  <EnterAction />
+  <ExitAction />
+  <CompatibleStates>
+    <string>GameCore_Tuner</string>
+    <string>StrategicView</string>
+    <string>InGame</string>
+  </CompatibleStates>
+  <LoadStates />
+  <Actions>
+    <ActionData>
+      <Name>MANUAL</Name>
+      <Action>g_FunctionsText = g_FunctionsManual</Action>
+      <Location>
+        <X>20</X>
+        <Y>37</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>SELECTED</Name>
+      <Action>g_FunctionsText = g_FunctionsSelected</Action>
+      <Location>
+        <X>20</X>
+        <Y>70</Y>
+      </Location>
+    </ActionData>
+  </Actions>
+  <StringControls>
+    <StringControlData>
+      <Name>Expression</Name>
+      <GetFunction>function()
+	return g_FunctionsText;
+end</GetFunction>
+      <SetFunction>function(value)
+ g_FunctionsText = value;
+end</SetFunction>
+      <Location>
+        <X>20</X>
+        <Y>119</Y>
+      </Location>
+    </StringControlData>
+    <StringControlData>
+      <Name>Manual</Name>
+      <GetFunction>function()
+	return g_FunctionsManual;
+end</GetFunction>
+      <SetFunction>function(value)
+ g_FunctionsManual = value;
+end</SetFunction>
+      <Location>
+        <X>100</X>
+        <Y>33</Y>
+      </Location>
+    </StringControlData>
+    <StringControlData>
+      <Name>Selected</Name>
+      <GetFunction>function()
+	return g_FunctionsSelected;
+end</GetFunction>
+      <SetFunction>function(value)
+ g_FunctionsSelected = value;
+end</SetFunction>
+      <Location>
+        <X>100</X>
+        <Y>68</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
+  <IntegerControls />
+  <FloatControls />
+  <BooleanControls />
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists>
+    <SelectionListData>
+      <Location>
+        <X>20</X>
+        <Y>155</Y>
+      </Location>
+      <Size>
+        <Width>670</Width>
+        <Height>523</Height>
+      </Size>
+      <Name>Key:200;Value:200</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local val = assert(loadstring("return "..g_FunctionsText))();
+	listItems[#listItems+1] = "expression"..";"..tostring(val);
+	if type(val) ~= "table" then
+  return listItems;
+	end
+ if val.__instance then
+   for k,v in pairs(getmetatable(val).__index) do
+    listItems[#listItems+1] = tostring(k)..";"..tostring(v);
+   end
+ else
+  for k,v in pairs(val) do
+   listItems[#listItems+1] = tostring(k)..";"..tostring(v);
+  end
+ end
+ return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+	if tonumber(selection) then
+  g_FunctionsSelected = g_FunctionsText.."["..selection.."]";
+ else
+  g_FunctionsSelected = g_FunctionsText..":"..selection.."()";
+ end
+end</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+  </SelectionLists>
+  <MultiselectLists />
+</PanelData>

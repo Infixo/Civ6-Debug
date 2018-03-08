@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Asset Preview</Name>
+  <App>Civ6</App>
+  <EnterAction>g_PanelHasFocus = true;
+if (g_PlacementSettings.Active) then
+		LuaEvents.TunerEnterDebugMode();
+end
+</EnterAction>
+  <ExitAction>if (g_PanelHasFocus) then
+	g_PanelHasFocus = false;
+	if (g_PlacementSettings.Active) then
+			LuaEvents.TunerExitDebugMode();
+	end
+end
+</ExitAction>
+  <CompatibleStates>
+    <string>TunerAssetPreviewPanel</string>
+  </CompatibleStates>
+  <LoadStates>
+    <string>UI:TunerAssetPreviewPanel</string>
+  </LoadStates>
+  <Actions>
+    <ActionData>
+      <Name>+</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstanceScale(g_SelectedInstanceID, info.scale + 0.5);
+end</Action>
+      <Location>
+        <X>1020</X>
+        <Y>46</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	local scale = info.scale - 0.5;
+	if (scale &lt; 0.5) then
+		scale = 0.5;
+	end
+	AssetPreview.SetInstanceScale(g_SelectedInstanceID, scale);
+end</Action>
+      <Location>
+        <X>1060</X>
+        <Y>46</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation + 0.1745329);
+end</Action>
+      <Location>
+        <X>910</X>
+        <Y>44</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation - 0.1745329);
+end</Action>
+      <Location>
+        <X>940</X>
+        <Y>43</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x + 1.0, info.y);
+end</Action>
+      <Location>
+        <X>610</X>
+        <Y>45</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x - 1.0, info.y);
+end</Action>
+      <Location>
+        <X>640</X>
+        <Y>45</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y + 1.0);
+end</Action>
+      <Location>
+        <X>710</X>
+        <Y>45</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y - 1.0);
+end</Action>
+      <Location>
+        <X>740</X>
+        <Y>46</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z + 0.5);
+end</Action>
+      <Location>
+        <X>810</X>
+        <Y>45</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z - 0.5);
+end
+</Action>
+      <Location>
+        <X>840</X>
+        <Y>45</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	AssetPreview.Destroy(g_SelectedInstanceID);
+end</Action>
+      <Location>
+        <X>350</X>
+        <Y>43</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove All</Name>
+      <Action>AssetPreview.DestroyAll()</Action>
+      <Location>
+        <X>410</X>
+        <Y>42</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Recreate</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+		local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+  --for k,v in pairs(info) do print(k,v); end
+		--local orientationDeg = info.orientation / 0.01745329251994329576923690768489;
+		--local str = tostring(info.id) .. ";" .. info.type .. ";" .. tostring(info.x) .. ";" .. tostring(info.y) .. ";" .. tostring(info.z) .. ";" .. tostring(orientationDeg) .. ";" .. tostring(info.scale);
+  AssetPreview.Destroy(g_SelectedInstanceID);
+  local id = AssetPreview.Create(info.type,info.x,info.y,info.z);
+  if (id &gt;= 0) then
+    --print("Created!");
+    AssetPreview.SetInstanceScale(id, info.scale);
+			AssetPreview.SetInstanceOrientation(id, info.orientation);
+  end
+	
+end</Action>
+      <Location>
+        <X>500</X>
+        <Y>44</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>1</Name>
+      <Action>if (g_SelectedInstanceID &gt;= 0) then
+	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
+	AssetPreview.SetInstanceScale(g_SelectedInstanceID, 1.0);
+end</Action>
+      <Location>
+        <X>1110</X>
+        <Y>46</Y>
+      </Location>
+    </ActionData>
+  </Actions>
+  <StringControls />
+  <IntegerControls />
+  <FloatControls>
+    <FloatControlData>
+      <Name>Scale</Name>
+      <GetFunction>function()
+	return g_AssetPlacement.Scale;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_AssetPlacement.Scale = value;
+end</SetFunction>
+      <Location>
+        <X>0</X>
+        <Y>72</Y>
+      </Location>
+      <DefaultValue>1</DefaultValue>
+    </FloatControlData>
+    <FloatControlData>
+      <Name>Orientation</Name>
+      <GetFunction>function()
+	return g_AssetPlacement.Orientation;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_AssetPlacement.Orientation = value;
+end</SetFunction>
+      <Location>
+        <X>110</X>
+        <Y>72</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </FloatControlData>
+  </FloatControls>
+  <BooleanControls>
+    <BooleanControlData>
+      <Name>Asset Placement Enabled</Name>
+      <GetFunction>function()
+	return g_PlacementSettings.Active and
+	       g_PlacementSettings.PlacementHandler == g_AssetPlacement;
+end</GetFunction>
+      <SetFunction>function(value)
+	if value then
+		LuaEvents.TunerEnterDebugMode();
+		g_PlacementSettings.PlacementHandler = g_AssetPlacement;
+	else
+		if (g_PlacementSettings.PlacementHandler == g_AssetPlacement) then
+			g_PlacementSettings.Active = false;
+			LuaEvents.TunerExitDebugMode();
+		end
+	end
+end</SetFunction>
+      <Location>
+        <X>0</X>
+        <Y>37</Y>
+      </Location>
+    </BooleanControlData>
+    <BooleanControlData>
+      <Name>Sort List</Name>
+      <GetFunction>function()
+	return g_SortList;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_SortList = value;
+end</SetFunction>
+      <Location>
+        <X>0</X>
+        <Y>107</Y>
+      </Location>
+    </BooleanControlData>
+  </BooleanControls>
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists>
+    <SelectionListData>
+      <Location>
+        <X>0</X>
+        <Y>139</Y>
+      </Location>
+      <Size>
+        <Width>260</Width>
+        <Height>580</Height>
+      </Size>
+      <Name>Assets</Name>
+      <PopulateList>function()
+	listItems = {};
+	
+	local count = AssetPreview.GetAssetCount();
+
+	for i=1, count do
+		listItems [i] = AssetPreview.GetAssetName(i-1);
+	end
+	
+	if (g_SortList) then
+		table.sort(listItems);
+	end
+	
+	return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+ g_AssetPlacement.Type = tostring(selection);
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>270</X>
+        <Y>76</Y>
+      </Location>
+      <Size>
+        <Width>900</Width>
+        <Height>645</Height>
+      </Size>
+      <Name>ID:80;Type:250;x:100;y:100;z:100;Orientation:100;Scale:50</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local i = 0;
+	local z = 1;
+	local count = AssetPreview.GetInstanceCount();
+	for i = 0, count-1, 1 do
+		local info = AssetPreview.GetInstanceInfoByIndex(i);
+		local orientationDeg = info.orientation / 0.01745329251994329576923690768489;
+		local str = tostring(info.id) .. ";" .. info.type .. ";" .. tostring(info.x) .. ";" .. tostring(info.y) .. ";" .. tostring(info.z) .. ";" .. tostring(orientationDeg) .. ";" .. tostring(info.scale);
+		listItems[z] = str;
+		z = z + 1;			
+	end
+
+  return listItems;
+end
+</PopulateList>
+      <OnSelection>function(selection)
+   local selectedIDStr = string.match(selection, "%d+");
+	  g_SelectedInstanceID = tonumber(selectedIDStr);
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+  </SelectionLists>
+  <MultiselectLists />
+</PanelData>

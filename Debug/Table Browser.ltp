@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Table Browser</Name>
+  <App>Civ5</App>
+  <EnterAction />
+  <ExitAction />
+  <CompatibleStates>
+    <string>Main State</string>
+    <string>GameCore_Tuner</string>
+    <string>EventListener</string>
+    <string>CityBannerManager</string>
+    <string>UnitFlagManager</string>
+    <string>NotificationPanel</string>
+    <string>MinimapPanel</string>
+    <string>UnitPanel</string>
+    <string>TopPanel</string>
+    <string>LaunchBar</string>
+    <string>BoostUnlockedPopup</string>
+    <string>Options</string>
+    <string>InGame</string>
+    <string>TestA</string>
+    <string>TestB</string>
+    <string>TestC</string>
+    <string>DebugCivProgress</string>
+    <string>DebugGameProgress</string>
+    <string>DebugShowMap</string>
+    <string>RealNaturalDisasters</string>
+    <string>RNDInfoPopup</string>
+    <string>HelloWorldPopup</string>
+    <string>WorldPicker</string>
+    <string>MultiplayerDebug</string>
+    <string>OptionsMenu</string>
+    <string>GridExamples</string>
+    <string>UITestMenu</string>
+    <string>LoadGame</string>
+    <string>StagingRoom</string>
+    <string>LANLobby</string>
+    <string>InternetLobby</string>
+    <string>MultiplayerSelect</string>
+    <string>MainMenu</string>
+    <string>YieldIconManager</string>
+    <string>ResourceIconManager</string>
+    <string>EnemyUnitPanel</string>
+    <string>PlotHelpText</string>
+    <string>ActionInfoPanel</string>
+    <string>DiplomacyPopup</string>
+    <string>DiploAndAdvisors</string>
+    <string>Tutorial</string>
+    <string>UnitMemberOverlay</string>
+    <string>WorldView</string>
+    <string>SpecialistsPopup</string>
+    <string>CityView</string>
+    <string>TechPopup</string>
+    <string>TechPanel</string>
+    <string>ProductionPopup</string>
+    <string>CityPurchasePopup</string>
+    <string>GenericPopup</string>
+    <string>SocialPolicyPopup</string>
+    <string>NotificationLogPopup</string>
+    <string>MinorCivsListPopup</string>
+    <string>GraphicsPanel</string>
+    <string>DebugMenu</string>
+    <string>LoadMenu</string>
+    <string>GameMenu</string>
+    <string>DiscussLeader</string>
+    <string>DiscussionDialog</string>
+    <string>LeaderHeadRoot</string>
+  </CompatibleStates>
+  <LoadStates />
+  <Actions />
+  <StringControls />
+  <IntegerControls />
+  <FloatControls />
+  <BooleanControls />
+  <TableViews>
+    <TableViewData>
+      <Table />
+      <Fixed>false</Fixed>
+      <OnRefresh />
+      <Location>
+        <X>20</X>
+        <Y>31</Y>
+      </Location>
+      <Size>
+        <Width>896</Width>
+        <Height>650</Height>
+      </Size>
+    </TableViewData>
+  </TableViews>
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists />
+  <MultiselectLists />
+</PanelData>

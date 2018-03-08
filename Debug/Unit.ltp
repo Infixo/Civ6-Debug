@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Unit</Name>
+  <App>Civ6</App>
+  <EnterAction>g_PanelHasFocus = true;
+
+</EnterAction>
+  <ExitAction>if (g_PanelHasFocus) then
+	g_PanelHasFocus = false;
+end
+</ExitAction>
+  <CompatibleStates>
+    <string>TunerUnitPanel</string>
+  </CompatibleStates>
+  <LoadStates>
+    <string>TunerUnitPanel</string>
+  </LoadStates>
+  <Actions>
+    <ActionData>
+      <Name>Restore Movement</Name>
+      <Action>local pUnit = GetSelectedUnit();
+	
+if (pUnit ~= nil) then
+	UnitManager.RestoreMovementToFormation(pUnit);
+	UnitManager.RestoreUnitAttacks(pUnit);
+end
+</Action>
+      <Location>
+        <X>40</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 XP</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	pUnit:GetExperience():ChangeExperience(10);
+end</Action>
+      <Location>
+        <X>500</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+25 Dmg</Name>
+      <Action>local pUnit = GetSelectedUnit();
+
+if (pUnit ~= nil) then
+  if ( (pUnit:GetDamage() + 25) &gt;= 100) then
+    pUnit:SetDamage(100);
+    UnitManager.Kill(pUnit, false);
+  else
+    pUnit:ChangeDamage(25);
+  end
+end</Action>
+      <Location>
+        <X>380</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Kill Unit</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	UnitManager.Kill(pUnit, false);
+end</Action>
+      <Location>
+        <X>780</X>
+        <Y>37</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>-25 Dmg</Name>
+      <Action>local pUnit = GetSelectedUnit();
+
+if (pUnit ~= nil) then
+    pUnit:ChangeDamage(-25);
+end</Action>
+      <Location>
+        <X>440</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Fortify +1</Name>
+      <Action>local pUnit = GetSelectedUnit();
+
+if (pUnit ~= nil) then
+	pUnit:SetFortifyTurns(pUnit:GetFortifyTurns() + 1);
+end</Action>
+      <Location>
+        <X>710</X>
+        <Y>37</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Restore Movement All</Name>
+      <Action>local listItems = {};
+local i = 0;
+local z = 1;
+for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
+		local pPlayer = Players[i];
+		local pPlayerConfig = PlayerConfigurations[i];
+
+		if pPlayer:WasEverAlive()  then
+			local strPlayer = pPlayerConfig:GetCivilizationShortDescription();
+			if (#strPlayer == 0) then
+				strPlayer = "Player " .. tostring(i);
+			end
+			
+			local pUnits = pPlayer:GetUnits();
+			local pUnit;
+			for ii, pUnit in pUnits:Members() do
+				UnitManager.RestoreMovementToFormation(pUnit);
+				UnitManager.RestoreUnitAttacks(pUnit);
+				z = z + 1;			
+			end		
+		end
+	end
+
+
+</Action>
+      <Location>
+        <X>150</X>
+        <Y>35</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Restore Health All</Name>
+      <Action>local listItems = {};
+local i = 0;
+local z = 1;
+for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
+		local pPlayer = Players[i];
+		local pPlayerConfig = PlayerConfigurations[i];
+
+		if pPlayer:WasEverAlive()  then
+			local strPlayer = pPlayerConfig:GetCivilizationShortDescription();
+			if (#strPlayer == 0) then
+				strPlayer = "Player " .. tostring(i);
+			end
+			
+			local pUnits = pPlayer:GetUnits();
+			local pUnit;
+			for ii, pUnit in pUnits:Members() do
+				UnitManager.RestoreMovementToFormation(pUnit);
+			 pUnit:SetDamage(0);
+				z = z + 1;			
+			end		
+		end
+	end
+
+
+</Action>
+      <Location>
+        <X>270</X>
+        <Y>35</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+25 XP</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	pUnit:GetExperience():ChangeExperience(25);
+end</Action>
+      <Location>
+        <X>550</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+100 XP</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	pUnit:GetExperience():ChangeExperience(100);
+end</Action>
+      <Location>
+        <X>600</X>
+        <Y>34</Y>
+      </Location>
+    </ActionData>
+  </Actions>
+  <StringControls />
+  <IntegerControls />
+  <FloatControls />
+  <BooleanControls />
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists>
+    <SelectionListData>
+      <Location>
+        <X>12</X>
+        <Y>73</Y>
+      </Location>
+      <Size>
+        <Width>1139</Width>
+        <Height>348</Height>
+      </Size>
+      <Name>ID:60;Type:220;X:40;Y:40;Damage:56;Fortify:40;XP:40;Owner:140;Orig Owner:140;Activity;Operation:180</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local i = 0;
+	local z = 1;
+	for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
+		local pPlayer = Players[i];
+		local pPlayerConfig = PlayerConfigurations[i];
+
+		if pPlayer:WasEverAlive()  then
+			local strPlayer = pPlayerConfig:GetCivilizationShortDescription();
+			if (#strPlayer == 0) then
+				strPlayer = "Player " .. tostring(i);
+			end
+			strPlayer = Locale.Lookup(strPlayer);
+			local pUnits = pPlayer:GetUnits();
+			local pUnit;
+			for ii, pUnit in pUnits:Members() do
+				local origOwner = pUnit:GetOriginalOwner();
+				local origOwnerStr = "none";
+				if origOwner ~= -1 then
+					origOwnerStr = PlayerConfigurations[origOwner]:GetCivilizationShortDescription();
+					if (#origOwnerStr == 0) then
+						origOwnerStr = "Player " .. tostring(origOwner);
+					end
+				end
+				local typeName = string.gsub(GameInfo.Units[pUnit:GetType()].UnitType, "UNIT_", "");
+				local unitXP = pUnit:GetExperience();
+				local fortifyTurns = pUnit:GetFortifyTurns();
+--				local activity = UnitManager.GetActivityType(pUnit);
+				local str = pPlayer:GetID()..","..pUnit:GetID()..";"..typeName..";"..pUnit:GetX()..";"..pUnit:GetY()..";".. pUnit:GetDamage().. ";" .. fortifyTurns .. ";" .. unitXP:GetExperiencePoints() .. ";" .. strPlayer .. ";" .. origOwnerStr.. ";"..UnitManager.GetOperationTypeName(pUnit);
+				listItems[z] = str;
+				z = z + 1;			
+			end		
+		end
+	end
+
+  return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+	local selectionParts = {};
+	-- No split available?
+	local str1 = string.match(selection, "%d+");
+	local str2 = string.match(selection, "%d+", string.len(str1) + 1);
+	
+	g_SelectedPlayer = tonumber(str1);
+	g_SelectedUnitID = tonumber(str2);	
+end</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+  </SelectionLists>
+  <MultiselectLists>
+    <MultiselectListData>
+      <Location>
+        <X>552</X>
+        <Y>434</Y>
+      </Location>
+      <Size>
+        <Width>236</Width>
+        <Height>136</Height>
+      </Size>
+      <Name>Promotion</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	local unitExperience = unit:GetExperience();
+	if unitExperience == nil then return; end
+	
+	local ID = 0;
+	for promotion in GameInfo.UnitPromotions() do
+		if (GameInfo.Units[unit:GetType()].PromotionClass == promotion.PromotionClass) then	
+			local item = {};
+			item["Text"] = string.gsub( promotion.UnitPromotionType, "PROMOTION_", "" );
+			if(unitExperience:HasPromotion(promotion.Index) ) then
+				item["Selected"] = true;
+			else
+				item["Selected"] = false;
+			end
+			listItems[ID] = item;
+		end
+		ID = ID + 1;
+	end
+
+	return listItems;
+end</PopulateList>
+      <OnSelected>function(selection)
+	local unit = GetSelectedUnit();
+		if (unit == nil) then return; end
+	local unitExperience = unit:GetExperience();	
+	
+	if unitExperience == nil then return; end
+	
+	local promotionType = "PROMOTION_" .. tostring(selection);
+	local promotion = GameInfo.UnitPromotions[promotionType];
+	if (promotion ~= nil) then
+		unitExperience:SetPromotion(promotion.Index);
+	end
+end
+</OnSelected>
+      <OnDeselected>function(selection)
+
+end</OnDeselected>
+    </MultiselectListData>
+    <MultiselectListData>
+      <Location>
+        <X>802</X>
+        <Y>435</Y>
+      </Location>
+      <Size>
+        <Width>229</Width>
+        <Height>287</Height>
+      </Size>
+      <Name>Religion</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	local unitReligion = unit:GetReligion();
+	if unitReligion == nil then return; end
+	
+	local ID = 0;
+	for religion in GameInfo.Religions() do
+		
+		local item = {};
+		item["Text"] = string.gsub( religion.ReligionType, "RELIGION_", "" );
+		if(unitReligion:GetReligionType() == religion.Index) then
+			item["Selected"] = true;
+		else
+			item["Selected"] = false;
+		end
+		listItems[ID] = item;
+		ID = ID + 1;
+	end
+
+	return listItems;
+end</PopulateList>
+      <OnSelected>function(selection)
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	local unitReligion = unit:GetReligion();	
+	if unitReligion == nil then return; end
+	
+	local religionType = "RELIGION_" .. tostring(selection);
+	unitReligion:SetReligionType(religionType);
+end</OnSelected>
+      <OnDeselected>function(selection)
+
+end
+</OnDeselected>
+    </MultiselectListData>
+  </MultiselectLists>
+</PanelData>
