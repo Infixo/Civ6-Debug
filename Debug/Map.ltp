@@ -81,6 +81,42 @@ end</Action>
         <Y>86</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Remove All Resources</Name>
+      <Action>local maptype = Map.GetMapSize();
+local mapx = GameInfo.Maps[maptype].GridWidth;
+local mapy = GameInfo.Maps[maptype].GridHeight;
+for y = 0, mapy-1, 1 do
+	for x = 0, mapx-1, 1 do
+		local plot = Map.GetPlot(x, y);
+		if ( not plot:IsImpassable() ) then
+			ResourceBuilder.SetResourceType(plot, -1);
+		end
+	end
+end</Action>
+      <Location>
+        <X>0</X>
+        <Y>111</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove All Features</Name>
+      <Action>local maptype = Map.GetMapSize();
+local mapx = GameInfo.Maps[maptype].GridWidth;
+local mapy = GameInfo.Maps[maptype].GridHeight;
+for y = 0, mapy-1, 1 do
+	for x = 0, mapx-1, 1 do
+		local plot = Map.GetPlot(x, y);
+		if ( not plot:IsImpassable() ) then
+			TerrainBuilder.SetFeatureType(plot, -1);
+		end
+	end
+end</Action>
+      <Location>
+        <X>0</X>
+        <Y>137</Y>
+      </Location>
+    </ActionData>
   </Actions>
   <StringControls />
   <IntegerControls>
@@ -233,8 +269,8 @@ end</GetFunction>
 	end
 end</SetFunction>
       <Location>
-        <X>530</X>
-        <Y>514</Y>
+        <X>910</X>
+        <Y>19</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
@@ -246,8 +282,8 @@ end</GetFunction>
 	g_RoutePlacement.Pillaged = value;
 end</SetFunction>
       <Location>
-        <X>530</X>
-        <Y>549</Y>
+        <X>910</X>
+        <Y>54</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
@@ -268,8 +304,8 @@ end</GetFunction>
 	end
 end</SetFunction>
       <Location>
-        <X>900</X>
-        <Y>25</Y>
+        <X>1090</X>
+        <Y>19</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
@@ -434,8 +470,8 @@ end</OnSelection>
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>530</X>
-        <Y>584</Y>
+        <X>910</X>
+        <Y>89</Y>
       </Location>
       <Size>
         <Width>171</Width>
@@ -465,12 +501,12 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>900</X>
-        <Y>57</Y>
+        <X>1090</X>
+        <Y>90</Y>
       </Location>
       <Size>
-        <Width>182</Width>
-        <Height>372</Height>
+        <Width>205</Width>
+        <Height>346</Height>
       </Size>
       <Name>Features</Name>
       <PopulateList>function()
@@ -502,8 +538,8 @@ end</OnSelection>
         <Y>514</Y>
       </Location>
       <Size>
-        <Width>376</Width>
-        <Height>267</Height>
+        <Width>300</Width>
+        <Height>400</Height>
       </Size>
       <Name>Great Person:200;Type</Name>
       <PopulateList>function()

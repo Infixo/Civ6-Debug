@@ -19,14 +19,14 @@
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>10</X>
-        <Y>35</Y>
+        <X>60</X>
+        <Y>48</Y>
       </Location>
       <Size>
-        <Width>857</Width>
-        <Height>349</Height>
+        <Width>1029</Width>
+        <Height>419</Height>
       </Size>
-      <Name>Player:60;Alive:60;Turn Active:60;Civilization:200;Nick Name:200;Handicap:200;Human?:50;Major?:50</Name>
+      <Name>Player:60;Alive:60;Turn Active:60;Civilization:200;Nick Name:200;Handicap:200;Human?:50;Major?:50;Team:50</Name>
       <PopulateList>function()
 	local listItems = {};
 	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
@@ -66,6 +66,8 @@
 				str = str .. ";" .. "N";
 			end
 						
+			str = str .. ";" .. tostring(pPlayer:GetTeam());
+			
 			table.insert(listItems, str);
 		end
    end
