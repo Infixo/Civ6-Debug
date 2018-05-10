@@ -25,48 +25,48 @@ end
       <Name>+</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstanceScale(g_SelectedInstanceID, info.scale + 0.5);
+	AssetPreview.SetInstanceScale(g_SelectedInstanceID, info.scale + 0.1);
 end</Action>
       <Location>
-        <X>1020</X>
-        <Y>46</Y>
+        <X>1050</X>
+        <Y>48</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>-</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	local scale = info.scale - 0.5;
-	if (scale &lt; 0.5) then
-		scale = 0.5;
+	local scale = info.scale - 0.1;
+	if (scale &lt; 0.1) then
+		scale = 0.1;
 	end
 	AssetPreview.SetInstanceScale(g_SelectedInstanceID, scale);
 end</Action>
       <Location>
-        <X>1060</X>
-        <Y>46</Y>
+        <X>1080</X>
+        <Y>48</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>+</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation + 0.1745329);
+	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation + 0.01745329);
 end</Action>
       <Location>
-        <X>910</X>
-        <Y>44</Y>
+        <X>940</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>-</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation - 0.1745329);
+	AssetPreview.SetInstanceOrientation(g_SelectedInstanceID, info.orientation - 0.01745329);
 end</Action>
       <Location>
-        <X>940</X>
-        <Y>43</Y>
+        <X>970</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -76,8 +76,8 @@ end</Action>
 	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x + 1.0, info.y);
 end</Action>
       <Location>
-        <X>610</X>
-        <Y>45</Y>
+        <X>640</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -87,8 +87,8 @@ end</Action>
 	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x - 1.0, info.y);
 end</Action>
       <Location>
-        <X>640</X>
-        <Y>45</Y>
+        <X>670</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -98,8 +98,8 @@ end</Action>
 	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y + 1.0);
 end</Action>
       <Location>
-        <X>710</X>
-        <Y>45</Y>
+        <X>730</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -109,31 +109,31 @@ end</Action>
 	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y - 1.0);
 end</Action>
       <Location>
-        <X>740</X>
-        <Y>46</Y>
+        <X>760</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>+</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z + 0.5);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z + 1.0);
 end</Action>
       <Location>
-        <X>810</X>
-        <Y>45</Y>
+        <X>830</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>-</Name>
       <Action>if (g_SelectedInstanceID &gt;= 0) then
 	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z - 0.5);
+	AssetPreview.SetInstancePosition(g_SelectedInstanceID, info.x, info.y, info.z - 1.0);
 end
 </Action>
       <Location>
-        <X>840</X>
-        <Y>45</Y>
+        <X>860</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -142,48 +142,16 @@ end
 	AssetPreview.Destroy(g_SelectedInstanceID);
 end</Action>
       <Location>
-        <X>350</X>
-        <Y>43</Y>
+        <X>300</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
     <ActionData>
       <Name>Remove All</Name>
       <Action>AssetPreview.DestroyAll()</Action>
       <Location>
-        <X>410</X>
-        <Y>42</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>Recreate</Name>
-      <Action>if (g_SelectedInstanceID &gt;= 0) then
-		local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-  --for k,v in pairs(info) do print(k,v); end
-		--local orientationDeg = info.orientation / 0.01745329251994329576923690768489;
-		--local str = tostring(info.id) .. ";" .. info.type .. ";" .. tostring(info.x) .. ";" .. tostring(info.y) .. ";" .. tostring(info.z) .. ";" .. tostring(orientationDeg) .. ";" .. tostring(info.scale);
-  AssetPreview.Destroy(g_SelectedInstanceID);
-  local id = AssetPreview.Create(info.type,info.x,info.y,info.z);
-  if (id &gt;= 0) then
-    --print("Created!");
-    AssetPreview.SetInstanceScale(id, info.scale);
-			AssetPreview.SetInstanceOrientation(id, info.orientation);
-  end
-	
-end</Action>
-      <Location>
-        <X>500</X>
-        <Y>44</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>1</Name>
-      <Action>if (g_SelectedInstanceID &gt;= 0) then
-	local info = AssetPreview.GetInstanceInfoByID(g_SelectedInstanceID);
-	AssetPreview.SetInstanceScale(g_SelectedInstanceID, 1.0);
-end</Action>
-      <Location>
-        <X>1110</X>
-        <Y>46</Y>
+        <X>370</X>
+        <Y>47</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -199,7 +167,7 @@ end</GetFunction>
 	g_AssetPlacement.Scale = value;
 end</SetFunction>
       <Location>
-        <X>0</X>
+        <X>20</X>
         <Y>72</Y>
       </Location>
       <DefaultValue>1</DefaultValue>
@@ -213,7 +181,7 @@ end</GetFunction>
 	g_AssetPlacement.Orientation = value;
 end</SetFunction>
       <Location>
-        <X>110</X>
+        <X>130</X>
         <Y>72</Y>
       </Location>
       <DefaultValue>0</DefaultValue>
@@ -238,7 +206,7 @@ end</GetFunction>
 	end
 end</SetFunction>
       <Location>
-        <X>0</X>
+        <X>20</X>
         <Y>37</Y>
       </Location>
     </BooleanControlData>
@@ -251,7 +219,7 @@ end</GetFunction>
 	g_SortList = value;
 end</SetFunction>
       <Location>
-        <X>0</X>
+        <X>20</X>
         <Y>107</Y>
       </Location>
     </BooleanControlData>
@@ -262,12 +230,12 @@ end</SetFunction>
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>0</X>
+        <X>20</X>
         <Y>139</Y>
       </Location>
       <Size>
-        <Width>260</Width>
-        <Height>580</Height>
+        <Width>259</Width>
+        <Height>581</Height>
       </Size>
       <Name>Assets</Name>
       <PopulateList>function()
@@ -293,11 +261,11 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>270</X>
+        <X>290</X>
         <Y>76</Y>
       </Location>
       <Size>
-        <Width>900</Width>
+        <Width>908</Width>
         <Height>645</Height>
       </Size>
       <Name>ID:80;Type:250;x:100;y:100;z:100;Orientation:100;Scale:50</Name>

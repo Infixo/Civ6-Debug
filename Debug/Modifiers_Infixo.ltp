@@ -36,8 +36,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>900</X>
-        <Y>38</Y>
+        <X>600</X>
+        <Y>170</Y>
       </Location>
     </StringControlData>
     <StringControlData>
@@ -145,8 +145,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>1000</X>
-        <Y>38</Y>
+        <X>600</X>
+        <Y>201</Y>
       </Location>
     </StringControlData>
     <StringControlData>
@@ -258,7 +258,7 @@ end</SetFunction>
       </Location>
       <Size>
         <Width>587</Width>
-        <Height>553</Height>
+        <Height>763</Height>
       </Size>
       <Name>Inst:40;Modifier Id:280;Owner:120;# Subjects:40;Active:40;</Name>
       <PopulateList>function()
@@ -304,13 +304,13 @@ end
     <SelectionListData>
       <Location>
         <X>600</X>
-        <Y>275</Y>
+        <Y>443</Y>
       </Location>
       <Size>
         <Width>522</Width>
         <Height>219</Height>
       </Size>
-      <Name>Inst:60;Subjects:100;Type:60;Debug:120;Met:40</Name>
+      <Name>Inst:60;Subjects:90;Type:60;Debug:170;Met:40</Name>
       <PopulateList>function()
 	local listItems = {};
 	if(g_ModifierId ~= nil and tonumber(g_ModifierId) ~= 0) then
@@ -351,7 +351,7 @@ end
     <SelectionListData>
       <Location>
         <X>600</X>
-        <Y>173</Y>
+        <Y>339</Y>
       </Location>
       <Size>
         <Width>522</Width>
@@ -384,11 +384,11 @@ end
     <SelectionListData>
       <Location>
         <X>600</X>
-        <Y>495</Y>
+        <Y>665</Y>
       </Location>
       <Size>
-        <Width>522</Width>
-        <Height>130</Height>
+        <Width>520</Width>
+        <Height>169</Height>
       </Size>
       <Name>Inst:60;SubjectReqId:280;State:40</Name>
       <PopulateList>function()
@@ -407,6 +407,41 @@ end
 	
 	return items;
 end</PopulateList>
+      <OnSelection>function(selection)
+
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>810</X>
+        <Y>171</Y>
+      </Location>
+      <Size>
+        <Width>311</Width>
+        <Height>164</Height>
+      </Size>
+      <Name>Name:90;Value:60</Name>
+      <PopulateList>function()
+  local listItems = {};
+	
+  if(g_ModifierId ~= nil and tonumber(g_ModifierId) ~= 0) then
+    local definition = GameEffects.GetModifierDefinition(g_ModifierId);
+    if(definition ~= nil) then
+			  if definition.Arguments then
+        for nam,val in pairs(definition.Arguments) do
+						  table.insert(listItems,nam..";"..val);
+        end
+      else
+				   table.insert(listItems,"No arguments");
+      end
+    end
+  end
+
+  return listItems;
+end
+</PopulateList>
       <OnSelection>function(selection)
 
 end

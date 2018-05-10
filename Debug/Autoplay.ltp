@@ -17,46 +17,6 @@
         <Y>460</Y>
       </Location>
     </ActionData>
-    <ActionData>
-      <Name>Map Reveal All</Name>
-      <Action>if (Game.GetLocalPlayer() ~= -1) then
-	local pVis = PlayersVisibility[Game.GetLocalPlayer()];
-	for iPlotIndex = 0, Map.GetPlotCount()-1, 1 do
-			pVis:ChangeVisibilityCount(iPlotIndex, 1);
-	end
-end</Action>
-      <Location>
-        <X>290</X>
-        <Y>458</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>Map Explore All</Name>
-      <Action>if (Game.GetLocalPlayer() ~= -1) then
-	local pVis = PlayersVisibility[Game.GetLocalPlayer()];
-	for iPlotIndex = 0, Map.GetPlotCount()-1, 1 do
-			pVis:ChangeVisibilityCount(iPlotIndex, 0);
-	end
-end
-</Action>
-      <Location>
-        <X>380</X>
-        <Y>458</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>Map Unreveal All</Name>
-      <Action>if (Game.GetLocalPlayer() ~= -1) then
-	local pVis = PlayersVisibility[Game.GetLocalPlayer()];
-	for iPlotIndex = 0, Map.GetPlotCount()-1, 1 do
-			pVis:ChangeVisibilityCount(iPlotIndex, -1);
-	end
-end</Action>
-      <Location>
-        <X>480</X>
-        <Y>458</Y>
-      </Location>
-    </ActionData>
   </Actions>
   <StringControls />
   <IntegerControls>
@@ -123,22 +83,28 @@ end</SetFunction>
       </Size>
       <Name>Return As:60;Civilization:360</Name>
       <PopulateList>function()
- local listItems = {};
-	
- for playerID = 0, GameDefines.MAX_PLAYERS-1, 1 do
-  local pPlayer = Players[playerID];
-	
-  if pPlayer:IsAlive() then
-   local str = playerID..";"..Locale.Lookup(PlayerConfigurations[playerID]:GetCivilizationShortDescription(playerID));
-   listItems[#listItems+1] = str;
-   if (AutoplayManager.GetReturnAsPlayer() == playerID) then
-    listItems["selected"] = #listItems;
-   end
-  end
 
- end
-
- return listItems;
+		
+	local listItems = {};
+	local i = 1;
+	local playerID = 0
+	for playerID = 0, GameDefines.MAX_PLAYERS-1, 1 do
+			local pPlayer = Players[playerID];
+			local pPlayerConfig = PlayerConfigurations[playerID];
+		
+			if (pPlayer:IsAlive()) then
+				local str = tostring(playerID) .. ";";
+				str = str .. pPlayerConfig:GetCivilizationShortDescription(playerID);
+				
+				listItems[i] = str;
+			 if (AutoplayManager.GetReturnAsPlayer() == playerID) then
+					listItems["selected"] = i;
+			 end
+				i = i + 1;
+			end
+	end
+	
+	return listItems;
 end</PopulateList>
       <OnSelection>function(selection)
 	if (not Automation.IsActive()) then

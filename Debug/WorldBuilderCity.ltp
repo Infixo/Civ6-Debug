@@ -16,7 +16,6 @@ end</EnterAction>
 end
 </ExitAction>
   <CompatibleStates>
-    <string>GameCore_Tuner</string>
     <string>TunerWorldBuilderCityPanel</string>
   </CompatibleStates>
   <LoadStates>

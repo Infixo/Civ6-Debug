@@ -479,18 +479,21 @@ end</SetFunction>
 	if (g_TunerSelectedPlayer == nil) then
 		g_TunerSelectedPlayer = 0;
 	end
-
+		
 	local listItems = {};
+	local i = 1;
+	local aPlayers = PlayerManager.GetAlive();
+	for _, pPlayer in ipairs(aPlayers) do
+		
+			local pPlayerConfig = PlayerConfigurations[pPlayer:GetID()];
+			local str = tostring(pPlayer:GetID()) .. ";";
+			str = str .. pPlayerConfig:GetNickName();
+				
+			listItems[i] = str;
+		 i = i + 1;
+	end
 	
- for playerID = 0, GameDefines.MAX_PLAYERS-1, 1 do
-  local pPlayer = Players[playerID];
-  if pPlayer and pPlayer:IsAlive() then
-   local str = playerID..";"..Locale.Lookup(PlayerConfigurations[playerID]:GetCivilizationShortDescription(playerID));
-   listItems[#listItems+1] = str;
-  end
- end
-
- return listItems;
+	return listItems;
 end</PopulateList>
       <OnSelection>function(selection)
    local selectedPlayerIDStr = string.match(selection, "%d+");
