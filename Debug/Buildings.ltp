@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Buildings</Name>
+  <App>Civ5</App>
+  <EnterAction />
+  <ExitAction />
+  <CompatibleStates>
+    <string>GameCore_Tuner</string>
+    <string>WorldView</string>
+  </CompatibleStates>
+  <LoadStates />
+  <Actions />
+  <StringControls>
+    <StringControlData>
+      <Name>Selected</Name>
+      <GetFunction>function()
+	if g_BuildingsOnlySelected then
+		return string.upper(g_BuildingsSelectedPlayer);
+	else
+		return g_BuildingsSelectedPlayer;
+	end
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>210</X>
+        <Y>31</Y>
+      </Location>
+    </StringControlData>
+    <StringControlData>
+      <Name>Building</Name>
+      <GetFunction>function()
+	return g_BuildingsSelectedBuilding;
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>480</X>
+        <Y>32</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
+  <IntegerControls>
+    <IntegerControlData>
+      <Name>#All Buildings</Name>
+      <GetFunction>function()
+	return g_BuildingsNumBuildings;
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>10</X>
+        <Y>30</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+  </IntegerControls>
+  <FloatControls />
+  <BooleanControls>
+    <BooleanControlData>
+      <Name>Only</Name>
+      <GetFunction>function()
+	return g_BuildingsOnlySelected;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_BuildingsOnlySelected = value;
+end</SetFunction>
+      <Location>
+        <X>140</X>
+        <Y>30</Y>
+      </Location>
+    </BooleanControlData>
+    <BooleanControlData>
+      <Name>Not built</Name>
+      <GetFunction>function()
+	return g_BuildingsNotBuilt;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_BuildingsNotBuilt = value;
+end</SetFunction>
+      <Location>
+        <X>390</X>
+        <Y>32</Y>
+      </Location>
+    </BooleanControlData>
+    <BooleanControlData>
+      <Name>No WW</Name>
+      <GetFunction>function()
+	return g_BuildingsNoWW;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_BuildingsNoWW = value;
+end</SetFunction>
+      <Location>
+        <X>310</X>
+        <Y>32</Y>
+      </Location>
+    </BooleanControlData>
+  </BooleanControls>
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists>
+    <SelectionListData>
+      <Location>
+        <X>10</X>
+        <Y>67</Y>
+      </Location>
+      <Size>
+        <Width>297</Width>
+        <Height>414</Height>
+      </Size>
+      <Name>PID:30;Name:100;Cities:40;Buildings:40</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local numAdded = 1;
+	local iCities = 0;
+	local iBuildings = 0;
+	g_BuildingsNumBuildings = 0;
+	
+  for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+		
+    local sPlayerName = Locale.Lookup(PlayerConfigurations[ePlayer]:GetCivilizationShortDescription())
+    -- get # cities
+    iCities = Players[ePlayer]:GetCities():GetCount()
+			-- count buildings for a player
+			iBuildings = 0;
+			for _,city in Players[ePlayer]:GetCities():Members() do
+      for building in GameInfo.Buildings() do
+        if city:GetBuildings():HasBuilding(building.Index) then iBuildings = iBuildings + 1; end
+      end
+			end	
+				
+    listItems[#listItems+1] = tostring(ePlayer)..";"..sPlayerName..";"..tostring(iCities)..";"..tostring(iBuildings)
+    g_BuildingsNumBuildings = g_BuildingsNumBuildings + iBuildings
+  end
+	
+  return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+  g_BuildingsSelectedPlayer = tonumber(string.sub(selection, 1, string.find(selection, ";")))
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>310</X>
+        <Y>66</Y>
+      </Location>
+      <Size>
+        <Width>307</Width>
+        <Height>414</Height>
+      </Size>
+      <Name>Building:160;Num:40;</Name>
+      <PopulateList>function()
+ local listItems = {};
+ local tNumBuildings = {};
+	
+	-- populate building names and init counters
+	for building in GameInfo.Buildings() do
+		tNumBuildings[building.BuildingType] = 0;
+	end
+	
+ -- count buildings for each player
+ for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+  if not g_BuildingsOnlySelected or ePlayer == g_BuildingsSelectedPlayer then
+  -- count buildings for a player
+  for _,city in Players[ePlayer]:GetCities():Members() do
+   for building in GameInfo.Buildings() do
+    if city:GetBuildings():HasBuilding(building.Index) then
+			 tNumBuildings[building.BuildingType] = tNumBuildings[building.BuildingType] + 1;
+			end -- if has
+   end -- buildings							
+  end -- cities
+  end -- if player
+ end -- players
+
+	-- populate output list
+ for k, v in pairs(tNumBuildings) do
+  if (not g_BuildingsNotBuilt and v &gt; 0) or (g_BuildingsNotBuilt and v == 0) then
+   local bShow = true
+   if g_BuildingsNoWW and GameInfo.Buildings[k].IsWonder then bShow = false end
+   if bShow then
+    listItems[#listItems+1] = string.gsub(k, "BUILDING_", "")..";"..v;
+   end	
+  end
+ end
+	
+ return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+ g_BuildingsSelectedBuilding = "BUILDING_"..string.sub(selection, 1, string.find(selection, ";"))
+end
+</OnSelection>
+      <Sorted>true</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>620</X>
+        <Y>65</Y>
+      </Location>
+      <Size>
+        <Width>271</Width>
+        <Height>415</Height>
+      </Size>
+      <Name>City:100;Civ:100;</Name>
+      <PopulateList>function()
+ local listItems = {}
+ if g_BuildingsSelectedBuilding == nil then return {} end
+ if GameInfo.Buildings[g_BuildingsSelectedBuilding] == nil then return {} end
+
+ for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+  if not g_BuildingsOnlySelected or ePlayer == g_BuildingsSelectedPlayer then
+   -- count buildings for a player
+   for _,city in Players[ePlayer]:GetCities():Members() do
+    if city:GetBuildings():HasBuilding( GameInfo.Buildings[g_BuildingsSelectedBuilding].Index ) then
+     listItems[#listItems+1] = Locale.Lookup(city:GetName())..";"..Locale.Lookup(PlayerConfigurations[ePlayer]:GetCivilizationShortDescription())
+			end -- if has
+   end -- cities
+  end -- if player
+ end -- players
+
+ return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+  </SelectionLists>
+  <MultiselectLists />
+</PanelData>
