@@ -55,7 +55,7 @@ end
 end</Action>
       <Location>
         <X>520</X>
-        <Y>439</Y>
+        <Y>437</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -64,8 +64,8 @@ end</Action>
 		PlayerManager.SetLocalObserverTo(PlayerTypes.OBSERVER);
 end</Action>
       <Location>
-        <X>520</X>
-        <Y>466</Y>
+        <X>510</X>
+        <Y>463</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -118,7 +118,21 @@ end</Action>
       </Location>
     </ActionData>
   </Actions>
-  <StringControls />
+  <StringControls>
+    <StringControlData>
+      <Name>Filter:166</Name>
+      <GetFunction>function()
+	return g_UnitPlacement.UnitFilter;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_UnitPlacement.UnitFilter = value;
+end</SetFunction>
+      <Location>
+        <X>680</X>
+        <Y>33</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
   <IntegerControls>
     <IntegerControlData>
       <Name>Res. Amount</Name>
@@ -138,7 +152,7 @@ end</SetFunction>
   <FloatControls />
   <BooleanControls>
     <BooleanControlData>
-      <Name>Improvement Placement Enabled</Name>
+      <Name>Placing Improvement</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_ImprovementPlacement;
@@ -156,11 +170,11 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>130</X>
-        <Y>20</Y>
+        <Y>29</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Resource Placement Enabled</Name>
+      <Name>Placing Resource</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_ResourcePlacement;
@@ -178,11 +192,11 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>330</X>
-        <Y>19</Y>
+        <Y>29</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>City Placement Enabled</Name>
+      <Name>Placing City</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_CityPlacement;
@@ -204,7 +218,7 @@ end</SetFunction>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Unit Placement Enabled</Name>
+      <Name>Placing Unit</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_UnitPlacement;
@@ -222,7 +236,7 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>520</X>
-        <Y>19</Y>
+        <Y>29</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
@@ -234,8 +248,8 @@ end</GetFunction>
 	g_ImprovementPlacement.Pillaged = value;
 end</SetFunction>
       <Location>
-        <X>240</X>
-        <Y>57</Y>
+        <X>130</X>
+        <Y>59</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
@@ -247,12 +261,12 @@ end</GetFunction>
 	g_UnitPlacement.Embarked = value;
 end</SetFunction>
       <Location>
-        <X>680</X>
-        <Y>433</Y>
+        <X>710</X>
+        <Y>486</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Route Placement Enabled</Name>
+      <Name>Placing Route</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_RoutePlacement;
@@ -270,11 +284,11 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>910</X>
-        <Y>19</Y>
+        <Y>29</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Place Route Pillaged</Name>
+      <Name>Pillaged Routes</Name>
       <GetFunction>function()
 	return g_RoutePlacement.Pillaged;
 end</GetFunction>
@@ -283,11 +297,11 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>910</X>
-        <Y>54</Y>
+        <Y>58</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Feature Placement Enabled</Name>
+      <Name>Placing Feature</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_FeaturePlacement;
@@ -305,11 +319,11 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>1090</X>
-        <Y>19</Y>
+        <Y>31</Y>
       </Location>
     </BooleanControlData>
     <BooleanControlData>
-      <Name>Great Person Placement Enabled</Name>
+      <Name>Placing Great Person</Name>
       <GetFunction>function()
 	return g_PlacementSettings.Active and
 	       g_PlacementSettings.PlacementHandler == g_GreatPersonPlacement;
@@ -346,16 +360,12 @@ end</SetFunction>
       </Size>
       <Name>Improvements</Name>
       <PopulateList>function()
-	listItems = {};
-	
-	local i = 0;		
-
+	items = {};
 	for improvement in GameInfo.Improvements() do
-		listItems [i + 1] = string.gsub( improvement.ImprovementType, "IMPROVEMENT_", "" );
-		i = i + 1;
+		local name = string.gsub( improvement.ImprovementType, "IMPROVEMENT_", "" );
+		table.insert( items, name );
 	end
-		
-	return listItems;
+	return items;
 end</PopulateList>
       <OnSelection>function(selection)
 	-- Searching by the type name, change back to the full text key and look for it.
@@ -371,7 +381,7 @@ end</OnSelection>
     <SelectionListData>
       <Location>
         <X>330</X>
-        <Y>92</Y>
+        <Y>93</Y>
       </Location>
       <Size>
         <Width>176</Width>
@@ -410,24 +420,23 @@ end</OnSelection>
         <Width>144</Width>
         <Height>336</Height>
       </Size>
-      <Name>ID:30;Player</Name>
+      <Name>ID;Player</Name>
       <PopulateList>function()
+	local items = {};
+	local aPlayers = PlayerManager.GetAlive();
+	for _, pPlayer in ipairs(aPlayers) do
+		local pPlayerConfig = PlayerConfigurations[pPlayer:GetID()];
+		local strPlrID = tostring(pPlayer:GetID())
+		local strPlrName = pPlayerConfig:GetNickName();
 		
-	local listItems = {};
-	local i = 0;
-	for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
-			local pPlayer = Players[i];
-			local pPlayerConfig = PlayerConfigurations[i];
+		if ( #strPlrName == 0 ) then
+			strPlrName = Locale.Lookup(pPlayerConfig:GetCivilizationShortDescription()):upper();
+			strPlrName = strPlrName:gsub("LOC_CIVILIZATION_", "");
+		end
 		
-			if (pPlayer:IsAlive()) then
-				local str = tostring(i) .. ";";
-				str = str .. pPlayerConfig:GetNickName(i);
-				
-				listItems[i + 1] = str;
-			end
+		table.insert( items, pPlayer:GetID() .. ";" .. strPlrName );
 	end
-	
-	return listItems;
+	return items;
 end</PopulateList>
       <OnSelection>function(selection)
    local selectedPlayerIDStr = string.match(selection, "%d+");
@@ -438,7 +447,7 @@ end</OnSelection>
     <SelectionListData>
       <Location>
         <X>680</X>
-        <Y>18</Y>
+        <Y>68</Y>
       </Location>
       <Size>
         <Width>214</Width>
@@ -446,16 +455,21 @@ end</OnSelection>
       </Size>
       <Name>Units</Name>
       <PopulateList>function()
-	listItems = {};
+	items = {};
 	
-	local i = 0;		
-
-	for unit in GameInfo.Units() do
-		listItems [i + 1] = string.gsub( unit.UnitType, "UNIT_", "" );
-		i = i + 1;
+	local strFilter = "";
+	if ( g_UnitPlacement.UnitFilter ~= nil ) then
+		strFilter = string.lower(g_UnitPlacement.UnitFilter);
 	end
 		
-	return listItems;
+	for unit in GameInfo.Units() do
+		local name = string.gsub( unit.UnitType, "UNIT_", "" );
+		if ( strFilter == nil or string.find( string.lower(name), strFilter ) ~= nil ) then
+			table.insert( items, name );
+		end
+	end
+		
+	return items;
 end</PopulateList>
       <OnSelection>function(selection)
 	-- Searching by the type name, change back to the full text key and look for it.

@@ -157,8 +157,51 @@ for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
         <Y>35</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Form Army</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	pUnit:SetMilitaryFormation(MilitaryFormationTypes.ARMY_FORMATION);
+end</Action>
+      <Location>
+        <X>470</X>
+        <Y>464</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Form Corps</Name>
+      <Action>local pUnit = GetSelectedUnit();
+if (pUnit ~= nil) then
+	pUnit:SetMilitaryFormation(MilitaryFormationTypes.CORPS_FORMATION);
+end</Action>
+      <Location>
+        <X>470</X>
+        <Y>434</Y>
+      </Location>
+    </ActionData>
   </Actions>
-  <StringControls />
+  <StringControls>
+    <StringControlData>
+      <Name>Parent ID</Name>
+      <GetFunction>function()
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return ""; end
+	local parentID = unit:GetParentID();
+	if parentID == nil then return ""; end
+	
+	local str = tostring(parentID.player) .. "," .. tostring(parentID.id);
+
+	return str;
+end</GetFunction>
+      <SetFunction>function(value)
+
+end</SetFunction>
+      <Location>
+        <X>1050</X>
+        <Y>434</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
   <IntegerControls />
   <FloatControls />
   <BooleanControls />
@@ -222,6 +265,36 @@ end</PopulateList>
 	g_SelectedPlayer = tonumber(str1);
 	g_SelectedUnitID = tonumber(str2);	
 end</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>1050</X>
+        <Y>465</Y>
+      </Location>
+      <Size>
+        <Width>150</Width>
+        <Height>258</Height>
+      </Size>
+      <Name>Children</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	local children = unit:GetChildIDs();
+	if children == nil then return; end
+	
+	for i, child in ipairs(children) do		
+		local str = tostring(child.player) .. "," .. tostring(child.id);
+		table.insert( listItems, str );
+	end
+
+	return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+
+end
+</OnSelection>
       <Sorted>false</Sorted>
     </SelectionListData>
   </SelectionLists>

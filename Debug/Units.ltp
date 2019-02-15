@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<PanelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Units</Name>
+  <App>Civ5</App>
+  <EnterAction />
+  <ExitAction />
+  <CompatibleStates>
+    <string>GameCore_Tuner</string>
+    <string>WorldView</string>
+  </CompatibleStates>
+  <LoadStates />
+  <Actions />
+  <StringControls>
+    <StringControlData>
+      <Name>Selected</Name>
+      <GetFunction>function()
+	if g_UnitsOnlySelected then
+		return string.upper(g_UnitsSelectedPlayer);
+	else
+		return g_UnitsSelectedPlayer;
+	end
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>210</X>
+        <Y>31</Y>
+      </Location>
+    </StringControlData>
+    <StringControlData>
+      <Name>Unit</Name>
+      <GetFunction>function()
+	return g_UnitsSelectedUnit;
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>480</X>
+        <Y>32</Y>
+      </Location>
+    </StringControlData>
+  </StringControls>
+  <IntegerControls>
+    <IntegerControlData>
+      <Name>#All Units</Name>
+      <GetFunction>function()
+	return g_UnitsNumUnits;
+end</GetFunction>
+      <SetFunction />
+      <Location>
+        <X>10</X>
+        <Y>30</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+  </IntegerControls>
+  <FloatControls />
+  <BooleanControls>
+    <BooleanControlData>
+      <Name>Only</Name>
+      <GetFunction>function()
+	return g_UnitsOnlySelected;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_UnitsOnlySelected = value;
+end</SetFunction>
+      <Location>
+        <X>140</X>
+        <Y>30</Y>
+      </Location>
+    </BooleanControlData>
+    <BooleanControlData>
+      <Name>Not built</Name>
+      <GetFunction>function()
+	return g_UnitsNotBuilt;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_UnitsNotBuilt = value;
+end</SetFunction>
+      <Location>
+        <X>390</X>
+        <Y>32</Y>
+      </Location>
+    </BooleanControlData>
+    <BooleanControlData>
+      <Name>No Civ</Name>
+      <GetFunction>function()
+	return g_UnitsNoCiv;
+end</GetFunction>
+      <SetFunction>function(value)
+	g_UnitsNoCiv = value;
+end</SetFunction>
+      <Location>
+        <X>310</X>
+        <Y>32</Y>
+      </Location>
+    </BooleanControlData>
+  </BooleanControls>
+  <TableViews />
+  <DataViews />
+  <StatTrackers />
+  <SelectionLists>
+    <SelectionListData>
+      <Location>
+        <X>10</X>
+        <Y>65</Y>
+      </Location>
+      <Size>
+        <Width>450</Width>
+        <Height>450</Height>
+      </Size>
+      <Name>PID:30;Name:100;SumCS:40;#Mil:40;#Lnd:40;#Nav:40;#Air:40;#Sup:40;#Civ:40</Name>
+      <PopulateList>function()
+  local listItems = {};
+  g_UnitsNumUnits = 0;
+  local iCST, iMilT, iLndT, iNavT, iAirT, iSupT, iCivT = 0,0,0,0,0,0,0;
+  for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+    local sPlayerName = Locale.Lookup(PlayerConfigurations[ePlayer]:GetCivilizationShortDescription());
+    local iCS, iMil, iLnd, iNav, iAir, iSup, iCiv = 0,0,0,0,0,0,0;
+	for _,unit in Players[ePlayer]:GetUnits():Members() do
+	  local info = GameInfo.Units[unit:GetType()];
+	  if info.FormationClass == "FORMATION_CLASS_CIVILIAN" then
+	    iCiv = iCiv + 1;
+	  else
+	    iMil = iMil + 1;
+		if     info.FormationClass == "FORMATION_CLASS_AIR"         then iAir = iAir + 1;
+		elseif info.FormationClass == "FORMATION_CLASS_LAND_COMBAT" then iLnd = iLnd + 1;
+		elseif info.FormationClass == "FORMATION_CLASS_NAVAL"       then iNav = iNav + 1;
+		elseif info.FormationClass == "FORMATION_CLASS_SUPPORT"     then iSup = iSup + 1; end
+	    iCS = iCS + math.max(info.Combat,info.RangedCombat,info.Bombard);
+	  end
+	end
+    table.insert(listItems, tostring(ePlayer)..";"..sPlayerName..";"..tostring(iCS)..";"..tostring(iMil)..";"..tostring(iLnd)..";"..tostring(iNav)..";"..tostring(iAir)..";"..tostring(iSup)..";"..tostring(iCiv));
+    g_UnitsNumUnits = g_UnitsNumUnits + iMil + iCiv;
+  if ePlayer &lt; 62 then
+		iCST = iCST + iCS; iMilT = iMilT + iMil; iCivT = iCivT + iCiv;
+		iLndT = iLndT + iLnd; iNavT = iNavT + iNav; iAirT = iAirT + iAir; iSupT = iSupT + iSup;
+  end
+  end
+  table.insert(listItems, "0"..";".."TOTAL"..";"..tostring(iCST)..";"..tostring(iMilT)..";"..tostring(iLndT)..";"..tostring(iNavT)..";"..tostring(iAirT)..";"..tostring(iSupT)..";"..tostring(iCivT));
+  return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+  g_UnitsSelectedPlayer = tonumber(string.sub(selection, 1, string.find(selection, ";")))
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>460</X>
+        <Y>65</Y>
+      </Location>
+      <Size>
+        <Width>307</Width>
+        <Height>450</Height>
+      </Size>
+      <Name>Building:160;Num:40;</Name>
+      <PopulateList>function()
+  local listItems = {};
+  local tNumUnits = {};
+  -- populate unit names and init counters
+  for unit in GameInfo.Units() do
+    tNumUnits[unit.UnitType] = 0;
+  end
+	
+  -- count units for each player
+  for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+    if not g_UnitsOnlySelected or ePlayer == g_UnitsSelectedPlayer then
+      -- count units for a player
+      for _,unit in Players[ePlayer]:GetUnits():Members() do
+	    local info = GameInfo.Units[unit:GetType()];
+		tNumUnits[info.UnitType] = tNumUnits[info.UnitType] + 1;
+	  end
+    end -- if player
+  end -- players
+
+  -- populate output list
+  for k, v in pairs(tNumUnits) do
+    if (not g_UnitsNotBuilt and v &gt; 0) or (g_UnitsNotBuilt and v == 0) then
+      local bShow = true;
+      if g_UnitsNoCiv and GameInfo.Units[k].FormationClass == "FORMATION_CLASS_CIVILIAN" then bShow = false; end
+      if bShow then
+        listItems[#listItems+1] = string.gsub(k, "UNIT_", "")..";"..v;
+      end	
+    end
+  end
+  return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+ g_UnitsSelectedUnit = "UNIT_"..string.sub(selection, 1, string.find(selection, ";"))
+end
+</OnSelection>
+      <Sorted>true</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>770</X>
+        <Y>65</Y>
+      </Location>
+      <Size>
+        <Width>271</Width>
+        <Height>450</Height>
+      </Size>
+      <Name>Name:100;Num:40;</Name>
+      <PopulateList>function()
+  local listItems = {}
+  if g_UnitsSelectedUnit == nil then return {} end
+  if GameInfo.Units[g_UnitsSelectedUnit] == nil then return {} end
+  local tNum = {}
+  -- init counters
+  for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+    tNum[ePlayer] = 0;
+  end
+  for _,ePlayer in ipairs(PlayerManager.GetAliveIDs()) do
+    local sPlayerName = Locale.Lookup(PlayerConfigurations[ePlayer]:GetCivilizationShortDescription());
+    local iNum = 0;
+    for _,unit in Players[ePlayer]:GetUnits():Members() do
+      local info = GameInfo.Units[unit:GetType()];
+      if info.UnitType == g_UnitsSelectedUnit then iNum = iNum + 1; end
+    end
+    if iNum &gt; 0 then listItems[#listItems+1] = sPlayerName..";"..tostring(iNum); end
+  end -- players
+  return listItems
+end
+</PopulateList>
+      <OnSelection>function(selection)
+
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+  </SelectionLists>
+  <MultiselectLists />
+</PanelData>

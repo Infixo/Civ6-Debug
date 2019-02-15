@@ -30,7 +30,7 @@ local playerTechs = player:GetTechs();
 local ID = 0;		
 
 for tech in GameInfo.Technologies() do
-	playerTechs:SetTech(ID, true);
+	playerTechs:SetTech(ID, false);
 	ID = ID + 1;
 end
 </Action>
@@ -188,7 +188,7 @@ end</Action>
       </Location>
     </ActionData>
     <ActionData>
-      <Name>Grant All Cultures</Name>
+      <Name>Grant All Civics</Name>
       <Action>if (g_TunerSelectedPlayer ~= -1) then
 	local player = Players[g_TunerSelectedPlayer];
 	local playerCulture = player:GetCulture();
@@ -201,8 +201,8 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>580</X>
-        <Y>482</Y>
+        <X>700</X>
+        <Y>190</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -286,13 +286,29 @@ end</Action>
       </Location>
     </ActionData>
     <ActionData>
+      <Name>Grant Governor Point</Name>
+      <Action>
+			  local player = Players[g_TunerSelectedPlayer];
+			  if (player ~= nil) then
+			  local playerGovernors = player:GetGovernors();
+			  if (playerGovernors ~= nil) then
+			  playerGovernors:ChangeGovernorPoints(1);
+			  end
+			  end
+		  </Action>
+      <Location>
+        <X>1090</X>
+        <Y>110</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
       <Name>+5 Era Score</Name>
       <Action>if (Game.ChangePlayerEraScore ~= nil) then
 	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, 5);
 end</Action>
       <Location>
-        <X>790</X>
-        <Y>163</Y>
+        <X>830</X>
+        <Y>94</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -301,8 +317,8 @@ end</Action>
 	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, 1);
 end</Action>
       <Location>
-        <X>790</X>
-        <Y>190</Y>
+        <X>830</X>
+        <Y>117</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -311,8 +327,8 @@ end</Action>
 	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, -1);
 end</Action>
       <Location>
-        <X>790</X>
-        <Y>216</Y>
+        <X>830</X>
+        <Y>139</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -321,8 +337,130 @@ end</Action>
 	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, -5);
 end</Action>
       <Location>
-        <X>790</X>
-        <Y>242</Y>
+        <X>830</X>
+        <Y>161</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove All Civics</Name>
+      <Action>local player = Players[g_TunerSelectedPlayer];
+local playerCulture = player:GetCulture();
+local ID = 0;		
+
+for tech in GameInfo.Civics() do
+	playerCulture:SetCivic(ID, false);
+	ID = ID + 1;
+end
+</Action>
+      <Location>
+        <X>690</X>
+        <Y>216</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Favor</Name>
+      <Action>Players[g_TunerSelectedPlayer]:ChangeDiplomaticFavor(10);
+</Action>
+      <Location>
+        <X>1190</X>
+        <Y>161</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+1000 Favor</Name>
+      <Action>Players[g_TunerSelectedPlayer]:ChangeDiplomaticFavor(1000);
+</Action>
+      <Location>
+        <X>1190</X>
+        <Y>189</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Horses</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_HORSES"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>270</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Iron</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_IRON"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>300</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Niter</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_NITER"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>329</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Coal</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_COAL"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>359</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Oil</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_OIL"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1210</X>
+        <Y>269</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Aluminum</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_ALUMINUM"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1210</X>
+        <Y>300</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+10 Uranium</Name>
+      <Action>local resourceInfo = GameInfo.Resources["RESOURCE_URANIUM"];
+local playerResources = Players[g_TunerSelectedPlayer]:GetResources();
+playerResources:ChangeResourceAmount(resourceInfo.Index, 10);</Action>
+      <Location>
+        <X>1210</X>
+        <Y>332</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+1 Diplomatic Victory Point</Name>
+      <Action>local playerStats = Players[g_TunerSelectedPlayer]:GetStats();
+playerStats:ChangeDiplomaticVictoryPoints(1);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>419</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>+1 Science Victory Point</Name>
+      <Action>local playerStats = Players[g_TunerSelectedPlayer]:GetStats();
+playerStats:ChangeScienceVictoryPoints(1);</Action>
+      <Location>
+        <X>1120</X>
+        <Y>444</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -457,6 +595,62 @@ end</SetFunction>
       </Location>
       <DefaultValue>0</DefaultValue>
     </IntegerControlData>
+    <IntegerControlData>
+      <Name>GovernorPoints</Name>
+      <GetFunction>function()
+	if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
+	local player = Players[g_TunerSelectedPlayer];
+	if (player ~= nil) then
+		local playerGovernors = player:GetGovernors();
+		if (playerGovernors ~= nil) then
+			return playerGovernors:GetGovernorPoints();
+		end
+	else
+		return 0;
+	end
+end</GetFunction>
+      <SetFunction>function(value)
+end</SetFunction>
+      <Location>
+        <X>1090</X>
+        <Y>33</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+    <IntegerControlData>
+      <Name>GovernorPointsSpent</Name>
+      <GetFunction>function()
+	if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
+	local player = Players[g_TunerSelectedPlayer];
+	if (player ~= nil) then
+		local playerGovernors = player:GetGovernors();
+		if (playerGovernors ~= nil) then
+			return playerGovernors:GetGovernorPointsSpent();	
+		end
+	end
+end</GetFunction>
+      <SetFunction>function(value)
+end</SetFunction>
+      <Location>
+        <X>1090</X>
+        <Y>71</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
+    <IntegerControlData>
+      <Name>Favor</Name>
+      <GetFunction>function()
+				if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
+				return Players[g_TunerSelectedPlayer]:GetDiplomaticFavor();
+end</GetFunction>
+      <SetFunction>function(value)
+end</SetFunction>
+      <Location>
+        <X>1090</X>
+        <Y>157</Y>
+      </Location>
+      <DefaultValue>0</DefaultValue>
+    </IntegerControlData>
   </IntegerControls>
   <FloatControls />
   <BooleanControls />
@@ -473,27 +667,28 @@ end</SetFunction>
         <Width>202</Width>
         <Height>462</Height>
       </Size>
-      <Name>PlayerID:60;Player Name:60</Name>
+      <Name>ID;Player Name</Name>
       <PopulateList>function()
-
 	if (g_TunerSelectedPlayer == nil) then
 		g_TunerSelectedPlayer = 0;
 	end
-		
-	local listItems = {};
-	local i = 1;
+	
+	local items = {};
 	local aPlayers = PlayerManager.GetAlive();
 	for _, pPlayer in ipairs(aPlayers) do
+		local pPlayerConfig = PlayerConfigurations[pPlayer:GetID()];
+		local strPlrID = tostring(pPlayer:GetID())
+		local strPlrName = pPlayerConfig:GetNickName();
 		
-			local pPlayerConfig = PlayerConfigurations[pPlayer:GetID()];
-			local str = tostring(pPlayer:GetID()) .. ";";
-			str = str .. pPlayerConfig:GetNickName();
-				
-			listItems[i] = str;
-		 i = i + 1;
+		if ( #strPlrName == 0 ) then
+			strPlrName = Locale.Lookup(pPlayerConfig:GetCivilizationShortDescription()):upper();
+			strPlrName = strPlrName:gsub("LOC_CIVILIZATION_", "");
+		end
+		
+		table.insert( items, pPlayer:GetID() .. ";" .. strPlrName );
 	end
 	
-	return listItems;
+	return items;
 end</PopulateList>
       <OnSelection>function(selection)
    local selectedPlayerIDStr = string.match(selection, "%d+");

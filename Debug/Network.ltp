@@ -11,15 +11,7 @@
   <LoadStates />
   <Actions>
     <ActionData>
-      <Name>Drop Selected Connection</Name>
-      <Action>Network.CloseConnection(g_networkConnectionSelected);</Action>
-      <Location>
-        <X>20</X>
-        <Y>46</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>Force Immediate Resync</Name>
+      <Name>Force Resync at End of Turn</Name>
       <Action>Network.ForceResync();</Action>
       <Location>
         <X>20</X>
@@ -27,11 +19,19 @@
       </Location>
     </ActionData>
     <ActionData>
-      <Name>Request Snapshot</Name>
+      <Name>Request Immediate Snapshot</Name>
       <Action>Network.RequestSnapshot();</Action>
       <Location>
         <X>20</X>
         <Y>206</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Trigger Immediate Sync</Name>
+      <Action>Network.TriggerTestSync();</Action>
+      <Location>
+        <X>20</X>
+        <Y>176</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -42,49 +42,6 @@
   <TableViews />
   <DataViews />
   <StatTrackers />
-  <SelectionLists>
-    <SelectionListData>
-      <Location>
-        <X>180</X>
-        <Y>45</Y>
-      </Location>
-      <Size>
-        <Width>300</Width>
-        <Height>400</Height>
-      </Size>
-      <Name>PlayerID:60;Player Name:60;Host:60;</Name>
-      <PopulateList>function()
-  local listItems = {};
-  local i = 0;
-  for i = 0, GameDefines.MAX_MAJOR_CIVS do
-    if(Network.IsPlayerConnected(i)) then
-      local str = tostring(i) .. ";";
-      local curPlayerCfg = PlayerConfigurations[i];
-			
-      str = str .. curPlayerCfg:GetPlayerName() .. ";";
-			
-      if(Network.GetHostPlayerID() == i) then
-	       str = str .. "true;";
-      else
-        str = str .. "false;";
-			  end
-			
-      listItems[i] = str;
-    end
-		
-    i = i + 1;
-   end
-
-	  return listItems;
-end
-</PopulateList>
-      <OnSelection>function(selection)
-   local selectedPlayerIDstr = string.match(selection, "%d+");
-	  g_networkConnectionSelected = tonumber(selectedPlayerIDstr );
-end
-</OnSelection>
-      <Sorted>false</Sorted>
-    </SelectionListData>
-  </SelectionLists>
+  <SelectionLists />
   <MultiselectLists />
 </PanelData>
