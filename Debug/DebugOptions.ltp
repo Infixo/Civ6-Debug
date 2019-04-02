@@ -28,6 +28,27 @@ AutoProfiler.RunCommand( "screenshot noui" );</Action>
         <Y>32</Y>
       </Location>
     </ActionData>
+	<ActionData>
+      <Name>Unit Focus</Name>
+      <Action>AutoProfiler.RunCommand( "toggle ocean" );
+	  AutoProfiler.RunCommand( "toggle landmarks" );
+	  AutoProfiler.RunCommand( "toggle clutter" );
+	  AutoProfiler.RunCommand( "toggle river" );
+	  AutoProfiler.RunCommand( "toggle naturalwonders" );
+	  AutoProfiler.RunCommand( "toggle coastwaves" );
+	  AutoProfiler.RunCommand( "toggle farms" );
+	  AutoProfiler.RunCommand( "toggle cities" );
+	  AutoProfiler.RunCommand( "toggle wonders" );
+	  AutoProfiler.RunCommand( "toggle dyngeo" );
+	  AutoProfiler.RunCommand( "toggle routes" );
+	  AutoProfiler.RunCommand( "toggle fow" );
+	  AutoProfiler.RunCommand( "commandset discard SkyPlane" );
+AutoProfiler.RunCommand( "commandset discard Terrain Cell Render" );</Action>
+      <Location>
+        <X>290</X>
+        <Y>32</Y>
+      </Location>
+    </ActionData>
     <ActionData>
       <Name>Reset Shaders</Name>
       <Action>AutoProfiler.RunCommand( "shaders reset" );</Action>

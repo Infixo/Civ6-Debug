@@ -420,7 +420,7 @@ end</OnSelection>
         <Width>144</Width>
         <Height>336</Height>
       </Size>
-      <Name>ID;Player</Name>
+      <Name>ID:40;Player</Name>
       <PopulateList>function()
 	local items = {};
 	local aPlayers = PlayerManager.GetAlive();

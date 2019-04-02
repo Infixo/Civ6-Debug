@@ -27,7 +27,7 @@
         <Width>600</Width>
         <Height>250</Height>
       </Size>
-      <Name>ID:25;Leader:100;T#:30;Strategy:70;CON:40;SCI:40;CUL:40;REL:40;Era:30;Mjrs:30;Rel:40;Civs:40;Pan:40</Name>
+      <Name>ID:25;Leader:100;T#:30;Strategy:70;CON:38;SCI:38;CUL:38;REL:38;DIP:38;Era:30;Mjrs:30;Rel:40;Civs:40;Pan:40</Name>
       <PopulateList>function()
   local listItems = {};
 
@@ -48,8 +48,9 @@
       table.insert(tOut, string.format("%d",rec.Priorities.SCIENCE));
       table.insert(tOut, string.format("%d",rec.Priorities.CULTURE));
       table.insert(tOut, string.format("%d",rec.Priorities.RELIGION));
+      table.insert(tOut, string.format("%d",rec.Priorities.DIPLO));
     else
-			  table.insert(tOut, "-;-;-;-");
+			  table.insert(tOut, "-;-;-;-;-");
     end
     if table.count(rec.Data) &gt; 0 then
 			  table.insert(tOut, tostring(rec.Data.Era));
@@ -84,6 +85,7 @@ end
       <Name>ID:25;Leader:100;Cities:40;MilStr:45;Cap:35;#T:40;SR:40;SciY:45;CulY:45;Tour:40;Prog:40;FaithY:50;Cits:40;</Name>
       <PopulateList>function()
   local listItems = {};
+  local bIsRST:boolean = ExposedMembers.RST ~= nil;
 
   for _,pid in ipairs(PlayerManager.GetAliveMajorIDs()) do
     local player = Players[pid];
@@ -95,13 +97,13 @@ end
     table.insert(tOut, 	sLeader);
     table.insert(tOut, tostring(player:GetCities():GetCount()));
     table.insert(tOut, tostring(stat:GetMilitaryStrengthWithoutTreasury()));
-    table.insert(tOut, tostring(ExposedMembers.RST.PlayerGetNumCapturedCapitals(pid)));
+    table.insert(tOut, bIsRST and tostring(ExposedMembers.RST.PlayerGetNumCapturedCapitals(pid)) or "?");
     table.insert(tOut, tostring(stat:GetNumTechsResearched()));
-    table.insert(tOut, tostring(	ExposedMembers.RST.PlayerGetNumProjectsSpaceRace(pid)));
+    table.insert(tOut, bIsRST and tostring(ExposedMembers.RST.PlayerGetNumProjectsSpaceRace(pid)) or "?");
     table.insert(tOut, string.format("%4.1f",player:GetTechs():GetScienceYield()));
     table.insert(tOut, string.format("%4.1f",player:GetCulture():GetCultureYield()));
     table.insert(tOut, tostring(stat:GetTourism()));
-    table.insert(tOut, string.format("%4.1f", ExposedMembers.RST.PlayerGetCultureVictoryProgress(pid)));
+    table.insert(tOut, bIsRST and string.format("%4.1f", ExposedMembers.RST.PlayerGetCultureVictoryProgress(pid)) or "?");
     table.insert(tOut, string.format("%4.1f",player:GetReligion():GetFaithYield()));
 --    table.insert(tOut, tostring(ExposedMembers.RST.PlayerGetNumCivsConverted(pid)));
     table.insert(tOut, tostring(stat:GetNumCitiesFollowingReligion()));
@@ -123,10 +125,10 @@ end
         <Y>285</Y>
       </Location>
       <Size>
-        <Width>500</Width>
+        <Width>575</Width>
         <Height>250</Height>
       </Size>
-      <Name>ID:25;Leader:100;HOL:40;SCI:40;CUL:40;ENC:40;HAR:40;COM:40;IND:40;AIR:40;SPC:40</Name>
+      <Name>ID:25;Leader:100;Gov:80;HOL:40;SCI:40;CUL:40;ENC:40;HAR:40;COM:40;IND:40;AIR:40;SPC:40</Name>
       <PopulateList>function()
   local listItems = {};
   for _,pid in ipairs(PlayerManager.GetAliveMajorIDs()) do
@@ -145,6 +147,8 @@ end
     local sLeader = string.sub(PlayerConfigurations[pid]:GetLeaderTypeName(),8);
     if player:IsTurnActive() then sLeader = "*"..sLeader; end
     table.insert(tOut, 	sLeader);
+    local eGov:number = player:GetCulture():GetCurrentGovernment();
+    table.insert(tOut, eGov == -1 and "none" or string.sub(GameInfo.Governments[eGov].GovernmentType,12));
     table.insert(tOut, GetNumDistricts("DISTRICT_HOLY_SITE")+GetNumDistricts("DISTRICT_LAVRA"));
     table.insert(tOut, GetNumDistricts("DISTRICT_CAMPUS")+GetNumDistricts("DISTRICT_SEOWON"));
     table.insert(tOut, GetNumDistricts("DISTRICT_THEATER")+GetNumDistricts("DISTRICT_ACROPOLIS"));
@@ -170,12 +174,13 @@ end
         <Y>30</Y>
       </Location>
       <Size>
-        <Width>500</Width>
+        <Width>575</Width>
         <Height>250</Height>
       </Size>
-      <Name>ID:25;Leader:100;P:22;W:22;C:22;E:22;D:22;S:22;C:22;L:22;Gov:90;Gold:40;TR:50;</Name>
+      <Name>ID:25;Leader:100;P:22;W:22;C:22;E:22;D:22;S:22;C:22;L:22;Gold:40;TR:50;Fav:40;FPT:40;DVP:40;</Name>
       <PopulateList>function()
   local listItems = {};
+  local bIsRST:boolean = ExposedMembers.RST ~= nil;
   local data = ( ExposedMembers.RST and ExposedMembers.RST.Data or nil);
   for _,pid in ipairs(PlayerManager.GetAliveMajorIDs()) do
     local player = Players[pid];
@@ -185,7 +190,7 @@ end
     local sLeader = string.sub(PlayerConfigurations[pid]:GetLeaderTypeName(),8);
     if player:IsTurnActive() then sLeader = "*"..sLeader; end
     table.insert(tOut, 	sLeader);
-    if data ~= nil then
+    if bIsRST then
       table.insert(tOut, data[pid].ActivePeace    and "P" or "-");
       table.insert(tOut, data[pid].ActiveAtWar    and "W" or "-");
       table.insert(tOut, data[pid].ActiveCatching and "C" or "-");
@@ -203,10 +208,12 @@ end
       table.insert(tOut, "?");
       table.insert(tOut, "?");
       table.insert(tOut, "?");
-			end
-    table.insert(tOut, string.sub(GameInfo.Governments[player:GetCulture():GetCurrentGovernment()].GovernmentType,12));
+    end
     table.insert(tOut, math.floor(player:GetTreasury():GetGoldBalance()));
     table.insert(tOut, string.format("%d / %d",player:GetTrade():GetNumOutgoingRoutes(),player:GetTrade():GetOutgoingRouteCapacity()));
+    table.insert(tOut, tostring(player:GetFavor()));
+    table.insert(tOut, "+"..tostring(player:GetFavorPerTurn()));
+    table.insert(tOut, string.format("%d/10",player:GetStats():GetDiplomaticVictoryPoints()));
     table.insert(listItems, table.concat(tOut,";"));
   end
   return listItems;
@@ -219,7 +226,7 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>1115</X>
+        <X>1190</X>
         <Y>30</Y>
       </Location>
       <Size>
@@ -240,7 +247,7 @@ end
     table.insert(tOut, tostring(rec.PlayerID));
     local sLeader = string.sub(rec.LeaderType,8);
     local sLeader = string.gsub(sLeader,"MINOR_CIV_","");
-    if Players[pid]:IsTurnActive() then sLeader = "*"..sLeader; end
+    if Players[pid]:IsTurnActive() then sLeader = "&gt;"..sLeader; end
     table.insert(tOut, sLeader);
     table.insert(tOut, rec.TurnRefreshNaval);
     table.insert(tOut, rec.ActiveNaval);
