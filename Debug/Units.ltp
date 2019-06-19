@@ -105,7 +105,7 @@ end</SetFunction>
       </Location>
       <Size>
         <Width>450</Width>
-        <Height>450</Height>
+        <Height>420</Height>
       </Size>
       <Name>PID:30;Name:100;SumCS:40;#Mil:40;#Lnd:40;#Nav:40;#Air:40;#Sup:40;#Civ:40</Name>
       <PopulateList>function()
@@ -151,10 +151,10 @@ end
         <Y>65</Y>
       </Location>
       <Size>
-        <Width>307</Width>
-        <Height>450</Height>
+        <Width>300</Width>
+        <Height>420</Height>
       </Size>
-      <Name>Building:160;Num:40;</Name>
+      <Name>Unit:160;Num:40;</Name>
       <PopulateList>function()
   local listItems = {};
   local tNumUnits = {};
@@ -195,12 +195,12 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>770</X>
+        <X>760</X>
         <Y>65</Y>
       </Location>
       <Size>
-        <Width>271</Width>
-        <Height>450</Height>
+        <Width>270</Width>
+        <Height>420</Height>
       </Size>
       <Name>Name:100;Num:40;</Name>
       <PopulateList>function()

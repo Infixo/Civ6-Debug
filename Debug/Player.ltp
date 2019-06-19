@@ -201,7 +201,7 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>700</X>
+        <X>690</X>
         <Y>190</Y>
       </Location>
     </ActionData>
@@ -210,7 +210,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(0,50);</Action>
       <Location>
         <X>920</X>
-        <Y>269</Y>
+        <Y>255</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -218,7 +218,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(1,50);</Action>
       <Location>
         <X>920</X>
-        <Y>299</Y>
+        <Y>280</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -226,7 +226,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(2,50);</Action>
       <Location>
         <X>920</X>
-        <Y>328</Y>
+        <Y>305</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -234,7 +234,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(3,50);</Action>
       <Location>
         <X>920</X>
-        <Y>357</Y>
+        <Y>330</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -242,7 +242,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(4,50);</Action>
       <Location>
         <X>920</X>
-        <Y>387</Y>
+        <Y>355</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -250,7 +250,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(5,50);</Action>
       <Location>
         <X>920</X>
-        <Y>416</Y>
+        <Y>380</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -258,7 +258,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(6,50);</Action>
       <Location>
         <X>920</X>
-        <Y>444</Y>
+        <Y>405</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -266,7 +266,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(7,50);</Action>
       <Location>
         <X>920</X>
-        <Y>472</Y>
+        <Y>430</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -274,7 +274,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(8,50);</Action>
       <Location>
         <X>920</X>
-        <Y>500</Y>
+        <Y>455</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -660,12 +660,12 @@ end</SetFunction>
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>10</X>
-        <Y>23</Y>
+        <X>5</X>
+        <Y>25</Y>
       </Location>
       <Size>
-        <Width>202</Width>
-        <Height>462</Height>
+        <Width>200</Width>
+        <Height>455</Height>
       </Size>
       <Name>ID;Player Name</Name>
       <PopulateList>function()
@@ -700,12 +700,12 @@ end</OnSelection>
   <MultiselectLists>
     <MultiselectListData>
       <Location>
-        <X>220</X>
+        <X>210</X>
         <Y>25</Y>
       </Location>
       <Size>
         <Width>180</Width>
-        <Height>461</Height>
+        <Height>455</Height>
       </Size>
       <Name>Tech</Name>
       <PopulateList>function()
@@ -764,12 +764,12 @@ end</OnDeselected>
     </MultiselectListData>
     <MultiselectListData>
       <Location>
-        <X>410</X>
+        <X>395</X>
         <Y>25</Y>
       </Location>
       <Size>
-        <Width>162</Width>
-        <Height>457</Height>
+        <Width>180</Width>
+        <Height>455</Height>
       </Size>
       <Name>Civics</Name>
       <PopulateList>function()

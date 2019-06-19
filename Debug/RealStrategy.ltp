@@ -211,9 +211,15 @@ end
     end
     table.insert(tOut, math.floor(player:GetTreasury():GetGoldBalance()));
     table.insert(tOut, string.format("%d / %d",player:GetTrade():GetNumOutgoingRoutes(),player:GetTrade():GetOutgoingRouteCapacity()));
-    table.insert(tOut, tostring(player:GetFavor()));
-    table.insert(tOut, "+"..tostring(player:GetFavorPerTurn()));
-    table.insert(tOut, string.format("%d/10",player:GetStats():GetDiplomaticVictoryPoints()));
+    if Game.GetWorldCongress then		
+      table.insert(tOut, tostring(player:GetFavor()));
+      table.insert(tOut, "+"..tostring(player:GetFavorPerTurn()));
+      table.insert(tOut, string.format("%d/10",player:GetStats():GetDiplomaticVictoryPoints()));
+			else
+      table.insert(tOut, "-");
+      table.insert(tOut, "-");
+      table.insert(tOut, "-");
+			end
     table.insert(listItems, table.concat(tOut,";"));
   end
   return listItems;

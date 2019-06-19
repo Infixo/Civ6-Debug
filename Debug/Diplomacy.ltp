@@ -111,6 +111,38 @@ end</Action>
         <Y>572</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Make Military Alliance</Name>
+      <Action>if g_SelectedPlayer ~= -1 and g_DiplomaticPlayer ~= g_SelectedPlayer then
+	DealManager.ClearWorkingDeal(DealDirection.OUTGOING, g_SelectedPlayer, g_DiplomaticPlayer);
+	local pDeal = DealManager.GetWorkingDeal(DealDirection.OUTGOING, g_SelectedPlayer, g_DiplomaticPlayer);
+	if pDeal then
+		pDealItem = pDeal:AddItemOfType(DealItemTypes.AGREEMENTS, g_SelectedPlayer);
+		if pDealItem then
+			pDealItem:SetSubType(DealAgreementTypes.ALLIANCE);
+			pDealItem:SetValueType(DB.MakeHash("ALLIANCE_MILITARY"));
+			pDealItem:SetLocked(true);
+		end
+		pDeal:Validate();
+		DealManager.EnactWorkingDeal(g_SelectedPlayer, g_DiplomaticPlayer);
+	end
+end</Action>
+      <Location>
+        <X>860</X>
+        <Y>521</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Set Declared Friendship</Name>
+      <Action>if g_SelectedPlayer ~= -1 and g_DiplomaticPlayer ~= gSelectedPlayer then
+	Players[g_SelectedPlayer]:GetDiplomacy():SetHasDeclaredFriendship(g_DiplomaticPlayer, true);
+	Players[g_DiplomaticPlayer]:GetDiplomacy():SetHasDeclaredFriendship(g_SelectedPlayer, true);
+end</Action>
+      <Location>
+        <X>990</X>
+        <Y>521</Y>
+      </Location>
+    </ActionData>
   </Actions>
   <StringControls />
   <IntegerControls>
@@ -212,7 +244,7 @@ end
         <Width>365</Width>
         <Height>256</Height>
       </Size>
-      <Name>Diplomacy;State:200;Score</Name>
+      <Name>Diplomacy;State:200;Score:100;At War</Name>
       <PopulateList>function()
 	local listItems = {};
 	local player = Players[g_SelectedPlayer];
@@ -225,7 +257,7 @@ end
 		for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
 			local otherPlayer = Players[i];
 			if ( playerDiplomacy:HasMet(i) ) then
-				local item = i .. ";" .. aiDiplomacy:GetDiplomaticState(i) .. ";" .. aiDiplomacy:GetDiplomaticScore(i);
+				local item = i .. ";" .. aiDiplomacy:GetDiplomaticState(i) .. ";" .. aiDiplomacy:GetDiplomaticScore(i) .. ";" .. tostring(playerDiplomacy:IsAtWarWith(i));
 		
 				listItems[ID] = item;
 				ID = ID + 1;

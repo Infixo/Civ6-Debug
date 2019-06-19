@@ -79,12 +79,12 @@
       <Fixed>false</Fixed>
       <OnRefresh />
       <Location>
-        <X>20</X>
-        <Y>-23</Y>
+        <X>5</X>
+        <Y>25</Y>
       </Location>
       <Size>
-        <Width>896</Width>
-        <Height>650</Height>
+        <Width>800</Width>
+        <Height>455</Height>
       </Size>
     </TableViewData>
   </TableViews>
