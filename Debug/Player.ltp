@@ -201,7 +201,7 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>690</X>
+        <X>700</X>
         <Y>190</Y>
       </Location>
     </ActionData>
@@ -210,7 +210,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(0,50);</Action>
       <Location>
         <X>920</X>
-        <Y>255</Y>
+        <Y>269</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -218,7 +218,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(1,50);</Action>
       <Location>
         <X>920</X>
-        <Y>280</Y>
+        <Y>299</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -226,7 +226,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(2,50);</Action>
       <Location>
         <X>920</X>
-        <Y>305</Y>
+        <Y>328</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -234,7 +234,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(3,50);</Action>
       <Location>
         <X>920</X>
-        <Y>330</Y>
+        <Y>357</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -242,7 +242,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(4,50);</Action>
       <Location>
         <X>920</X>
-        <Y>355</Y>
+        <Y>387</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -250,7 +250,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(5,50);</Action>
       <Location>
         <X>920</X>
-        <Y>380</Y>
+        <Y>416</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -258,7 +258,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(6,50);</Action>
       <Location>
         <X>920</X>
-        <Y>405</Y>
+        <Y>444</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -266,7 +266,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(7,50);</Action>
       <Location>
         <X>920</X>
-        <Y>430</Y>
+        <Y>472</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -274,7 +274,7 @@ end</Action>
       <Action>Players[g_TunerSelectedPlayer]:GetGreatPeoplePoints():ChangePointsTotal(8,50);</Action>
       <Location>
         <X>920</X>
-        <Y>455</Y>
+        <Y>500</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -303,8 +303,8 @@ end</Action>
     </ActionData>
     <ActionData>
       <Name>+5 Era Score</Name>
-      <Action>if (Game.ChangePlayerEraScore ~= nil) then
-	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, 5);
+      <Action>if (Game.GetEras ~= nil) then
+	Game.GetEras():ChangePlayerEraScore(g_TunerSelectedPlayer, 5);
 end</Action>
       <Location>
         <X>830</X>
@@ -313,8 +313,8 @@ end</Action>
     </ActionData>
     <ActionData>
       <Name>+1 Era Score</Name>
-      <Action>if (Game.ChangePlayerEraScore ~= nil) then
-	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, 1);
+      <Action>if (Game.GetEras ~= nil) then
+	Game.GetEras():ChangePlayerEraScore(g_TunerSelectedPlayer, 1);
 end</Action>
       <Location>
         <X>830</X>
@@ -323,8 +323,8 @@ end</Action>
     </ActionData>
     <ActionData>
       <Name>-1 Era Score</Name>
-      <Action>if (Game.ChangePlayerEraScore ~= nil) then
-	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, -1);
+      <Action>if (Game.GetEras ~= nil) then
+	Game.GetEras():ChangePlayerEraScore(g_TunerSelectedPlayer, -1);
 end</Action>
       <Location>
         <X>830</X>
@@ -333,8 +333,8 @@ end</Action>
     </ActionData>
     <ActionData>
       <Name>-5 Era Score</Name>
-      <Action>if (Game.ChangePlayerEraScore ~= nil) then
-	Game.ChangePlayerEraScore(g_TunerSelectedPlayer, -5);
+      <Action>if (Game.GetEras ~= nil) then
+	Game.GetEras():ChangePlayerEraScore(g_TunerSelectedPlayer, -5);
 end</Action>
       <Location>
         <X>830</X>
@@ -359,7 +359,12 @@ end
     </ActionData>
     <ActionData>
       <Name>+10 Favor</Name>
-      <Action>Players[g_TunerSelectedPlayer]:ChangeDiplomaticFavor(10);
+      <Action>local pPlayer = Players[g_TunerSelectedPlayer];
+if pPlayer ~= nil then
+	if pPlayer:GetDiplomacy().ChangeFavor ~= nil then
+		pPlayer:GetDiplomacy():ChangeFavor(10);
+	end
+end
 </Action>
       <Location>
         <X>1190</X>
@@ -368,7 +373,12 @@ end
     </ActionData>
     <ActionData>
       <Name>+1000 Favor</Name>
-      <Action>Players[g_TunerSelectedPlayer]:ChangeDiplomaticFavor(1000);
+      <Action>local pPlayer = Players[g_TunerSelectedPlayer];
+if pPlayer ~= nil then
+	if pPlayer:GetDiplomacy().ChangeFavor ~= nil then
+		pPlayer:GetDiplomacy():ChangeFavor(1000);
+	end
+end
 </Action>
       <Location>
         <X>1190</X>
@@ -461,6 +471,36 @@ playerStats:ChangeScienceVictoryPoints(1);</Action>
       <Location>
         <X>1120</X>
         <Y>444</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Add WMD</Name>
+      <Action>if g_SelectedWMDType ~= nil and g_SelectedWMDType ~= -1 then
+	local player = Players[g_TunerSelectedPlayer];
+	if (player == nil) then return; end
+	
+	local playerWMDs = player:GetWMDs();
+	
+	playerWMDs:ChangeWeaponCount(g_SelectedWMDType, 1);
+end</Action>
+      <Location>
+        <X>10</X>
+        <Y>627</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove WMD</Name>
+      <Action>if g_SelectedWMDType ~= nil and g_SelectedWMDType ~= -1 then
+	local player = Players[g_TunerSelectedPlayer];
+	if (player == nil) then return; end
+	
+	local playerWMDs = player:GetWMDs();
+	
+	playerWMDs:ChangeWeaponCount(g_SelectedWMDType, -1);
+end</Action>
+      <Location>
+        <X>80</X>
+        <Y>627</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -600,7 +640,7 @@ end</SetFunction>
       <GetFunction>function()
 	if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
 	local player = Players[g_TunerSelectedPlayer];
-	if (player ~= nil) then
+	if (player ~= nil and player.GetGovernors ~= nil) then
 		local playerGovernors = player:GetGovernors();
 		if (playerGovernors ~= nil) then
 			return playerGovernors:GetGovernorPoints();
@@ -622,7 +662,7 @@ end</SetFunction>
       <GetFunction>function()
 	if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
 	local player = Players[g_TunerSelectedPlayer];
-	if (player ~= nil) then
+	if (player ~= nil and player.GetGovernors ~= nil) then
 		local playerGovernors = player:GetGovernors();
 		if (playerGovernors ~= nil) then
 			return playerGovernors:GetGovernorPointsSpent();	
@@ -640,8 +680,13 @@ end</SetFunction>
     <IntegerControlData>
       <Name>Favor</Name>
       <GetFunction>function()
-				if Players == nil or g_TunerSelectedPlayer == nil or Players[g_TunerSelectedPlayer] == nil then return -1; end
-				return Players[g_TunerSelectedPlayer]:GetDiplomaticFavor();
+	if Players ~= nil and g_TunerSelectedPlayer ~= nil then
+		local pPlayer = Players[g_TunerSelectedPlayer];
+		if pPlayer ~= nil and pPlayer:GetDiplomacy().GetFavor ~= nil then
+				return pPlayer:GetDiplomacy():GetFavor();
+		end
+	end
+	return -1;
 end</GetFunction>
       <SetFunction>function(value)
 end</SetFunction>
@@ -660,12 +705,12 @@ end</SetFunction>
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>5</X>
-        <Y>25</Y>
+        <X>10</X>
+        <Y>23</Y>
       </Location>
       <Size>
-        <Width>200</Width>
-        <Height>455</Height>
+        <Width>202</Width>
+        <Height>462</Height>
       </Size>
       <Name>ID;Player Name</Name>
       <PopulateList>function()
@@ -696,16 +741,53 @@ end</PopulateList>
 end</OnSelection>
       <Sorted>false</Sorted>
     </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>10</X>
+        <Y>494</Y>
+      </Location>
+      <Size>
+        <Width>300</Width>
+        <Height>127</Height>
+      </Size>
+      <Name>ID:30;Type:200;Count</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local z = 1;
+	local player = Players[g_TunerSelectedPlayer];
+	if (player == nil) then return; end
+	
+	local playerWMDs = player:GetWMDs();
+	
+	local ID = 0;
+	for wmdDef in GameInfo.WMDs() do
+		if wmdDef ~= nil then
+			local str = tostring(ID) .. ";" .. wmdDef.WeaponType .. ";" .. tostring(playerWMDs:GetWeaponCount(ID));
+			listItems[z] = str;
+			z = z + 1;
+			ID = ID + 1;
+		end
+	end
+
+	return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+	local str1 = string.match(selection, "%d+");
+	
+	g_SelectedWMDType = tonumber(str1);
+end</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
   </SelectionLists>
   <MultiselectLists>
     <MultiselectListData>
       <Location>
-        <X>210</X>
+        <X>220</X>
         <Y>25</Y>
       </Location>
       <Size>
         <Width>180</Width>
-        <Height>455</Height>
+        <Height>461</Height>
       </Size>
       <Name>Tech</Name>
       <PopulateList>function()
@@ -764,12 +846,12 @@ end</OnDeselected>
     </MultiselectListData>
     <MultiselectListData>
       <Location>
-        <X>395</X>
+        <X>410</X>
         <Y>25</Y>
       </Location>
       <Size>
-        <Width>180</Width>
-        <Height>455</Height>
+        <Width>162</Width>
+        <Height>457</Height>
       </Size>
       <Name>Civics</Name>
       <PopulateList>function()

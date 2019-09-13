@@ -19,14 +19,14 @@
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>10</X>
-        <Y>31</Y>
+        <X>60</X>
+        <Y>48</Y>
       </Location>
       <Size>
         <Width>1029</Width>
         <Height>419</Height>
       </Size>
-      <Name>Player:60;Alive:60;Turn Active:60;Civilization:200;Handicap:200;Human?:50;Major?:50;Team:50;Era;Score;DarkA;GoldenA</Name>
+      <Name>Player:60;Alive:60;Turn Active:60;Civilization:200;Nick Name:200;Handicap:200;Human?:50;Major?:50;Team:50</Name>
       <PopulateList>function()
 	local listItems = {};
 	local player_ids = GameConfiguration.GetParticipatingPlayerIDs();
@@ -39,7 +39,7 @@
 			str = str .. tostring(pPlayer:IsAlive()) .. ";";
 			str = str .. tostring(pPlayer:IsTurnActive()) .. ";";
 					
-			local szName = pPlayerConfig:GetCivilizationTypeName();
+			local szName = pPlayerConfig:GetCivilizationShortDescription();
 			if (szName == nil or string.len(szName) == 0) then
 				szName = pPlayerConfig:GetCivilizationTypeName();
 			end
@@ -47,10 +47,11 @@
 			if (szName == nil or string.len(szName) == 0) then
 				szName = tostring(pPlayerConfig:GetCivilizationTypeID());
 			end
-		 str = str..szName;
+		  
+			str = str .. szName .. ";" .. pPlayerConfig:GetNickName();
 			local pHandicap = GameInfo.Difficulties[pPlayerConfig:GetHandicapTypeID()];
 			if (pHandicap ~= nil) then
-				str = str .. ";" .. pHandicap.DifficultyType;
+				str = str .. ";" .. pHandicap.Name;
 			end
 			
 			if (pPlayer:IsHuman()) then
@@ -66,16 +67,6 @@
 			end
 						
 			str = str .. ";" .. tostring(pPlayer:GetTeam());
-			str = str .. ";" .. tostring(pPlayer:GetEra());
-			
-			pge = Game.GetEras();
-			if pge ~= nil then
-      str = str..";"..tostring(pge:GetPlayerCurrentScore(player_id));
-      str = str..";"..tostring(pge:HasDarkAge(player_id));
-      str = str..";"..tostring(pge:HasGoldenAge(player_id));
-			else
-				str = str..";-;-;-"
-			end
 			
 			table.insert(listItems, str);
 		end

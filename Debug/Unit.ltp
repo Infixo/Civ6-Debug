@@ -179,6 +179,38 @@ end</Action>
         <Y>434</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Add Reference</Name>
+      <Action>if g_SelectedUnitAbility ~= nil and g_SelectedUnitAbility ~= -1 then
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	
+	local unitAbilities = unit:GetAbility();
+	if unitAbilities == nil then return; end
+	
+	unitAbilities:ChangeAbilityCount(g_SelectedUnitAbility, 1);
+end</Action>
+      <Location>
+        <X>120</X>
+        <Y>756</Y>
+      </Location>
+    </ActionData>
+    <ActionData>
+      <Name>Remove Reference</Name>
+      <Action>if g_SelectedUnitAbility ~= nil and g_SelectedUnitAbility ~= -1 then
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	
+	local unitAbilities = unit:GetAbility();
+	if unitAbilities == nil then return; end
+	
+	unitAbilities:ChangeAbilityCount(g_SelectedUnitAbility, -1);
+end</Action>
+      <Location>
+        <X>220</X>
+        <Y>756</Y>
+      </Location>
+    </ActionData>
   </Actions>
   <StringControls>
     <StringControlData>
@@ -204,7 +236,25 @@ end</SetFunction>
   </StringControls>
   <IntegerControls />
   <FloatControls />
-  <BooleanControls />
+  <BooleanControls>
+    <BooleanControlData>
+      <Name>Show All</Name>
+      <GetFunction>function()
+		if g_ShowAllUnitAbilities ~= nil then
+			return g_ShowAllUnitAbilities;
+		else
+			return 0;
+		end
+end</GetFunction>
+      <SetFunction>function(value)
+	g_ShowAllUnitAbilities = value;
+end</SetFunction>
+      <Location>
+        <X>20</X>
+        <Y>753</Y>
+      </Location>
+    </BooleanControlData>
+  </BooleanControls>
   <TableViews />
   <DataViews />
   <StatTrackers />
@@ -295,6 +345,50 @@ end</PopulateList>
 
 end
 </OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>20</X>
+        <Y>414</Y>
+      </Location>
+      <Size>
+        <Width>434</Width>
+        <Height>329</Height>
+      </Size>
+      <Name>Type:30;Ability:320;Count</Name>
+      <PopulateList>function()
+	local listItems = {};
+	local z = 1;
+	local unit = GetSelectedUnit();
+	if (unit == nil) then return; end
+	local unitAbilities = unit:GetAbility();
+	if unitAbilities == nil then return; end
+	local onlyActive = true;
+	if g_ShowAllUnitAbilities ~= nil and g_ShowAllUnitAbilities == true then
+		onlyActive = false;
+	end
+	
+	local ID = 0;
+	for abilityDef in GameInfo.UnitAbilities() do
+		if abilityDef ~= nil then
+			local count = unitAbilities:GetAbilityCount(ID);
+			if onlyActive == false or count &gt; 0 then
+				local str = tostring(ID) .. ";" .. abilityDef.UnitAbilityType .. ";" .. tostring(count);
+				listItems[z] = str;
+				z = z + 1;
+			end
+			ID = ID + 1;
+		end
+	end
+
+	return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+	local str1 = string.match(selection, "%d+");
+	
+	g_SelectedUnitAbility = tonumber(str1);
+end</OnSelection>
       <Sorted>false</Sorted>
     </SelectionListData>
   </SelectionLists>

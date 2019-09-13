@@ -81,7 +81,7 @@ end</SetFunction>
         <Width>300</Width>
         <Height>400</Height>
       </Size>
-      <Name>Return As:60;Civilization:150</Name>
+      <Name>Return As:60;Civilization:360</Name>
       <PopulateList>function()
 
 		
@@ -94,7 +94,7 @@ end</SetFunction>
 		
 			if (pPlayer:IsAlive()) then
 				local str = tostring(playerID) .. ";";
-				str = str .. pPlayerConfig:GetCivilizationTypeName(playerID);
+				str = str .. pPlayerConfig:GetCivilizationShortDescription(playerID);
 				
 				listItems[i] = str;
 			 if (AutoplayManager.GetReturnAsPlayer() == playerID) then
@@ -136,11 +136,11 @@ end</OnSelection>
 	listItems[8] = "30";
 	listItems[9] = "40";
 	listItems[10] = "50";
-	listItems[11] = "60";
-	listItems[12] = "75";
-	listItems[13] = "100";
-	listItems[14] = "2";
-	listItems[15] = "3";
+	listItems[11] = "75";
+	listItems[12] = "100";
+	listItems[13] = "150";
+	listItems[14] = "200";
+	listItems[15] = "300";
 	
 	local iCurrentTurns = AutoplayManager.GetTurns();
 	if (iCurrentTurns &lt; 0) then
@@ -193,7 +193,7 @@ end</OnSelection>
 		
 			if (pPlayer:IsAlive()) then
 				local str = tostring(playerID) .. ";";
-				str = str .. pPlayerConfig:GetCivilizationTypeName(playerID);
+				str = str .. pPlayerConfig:GetCivilizationShortDescription(playerID);
 				
 				listItems[i] = str;
 			 if (AutoplayManager.GetObserveAsPlayer() == playerID) then

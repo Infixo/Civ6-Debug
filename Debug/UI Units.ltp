@@ -759,6 +759,23 @@ end
         <Y>122</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Play Action 1</Name>
+      <Action>if (g_SelectedPlayer ~= nil and g_SelectedPlayer &gt;= 0 and g_SelectedUnitID ~= nil and g_SelectedUnitID &gt;= 0) then
+	local pPlayer = Players[g_SelectedPlayer];
+	if pPlayer ~= nil then
+		local pUnit = pPlayer:GetUnits():FindID(g_SelectedUnitID);
+		if (pUnit ~= nil) then
+			SimUnitSystem.SetAnimationState(pUnit, "ACTION_1");
+		end
+	end
+end
+</Action>
+      <Location>
+        <X>1020</X>
+        <Y>225</Y>
+      </Location>
+    </ActionData>
   </Actions>
   <StringControls />
   <IntegerControls />
