@@ -30,7 +30,11 @@ end</ExitAction>
 			if kEventDef.NaturalWonder ~= nil and kEventDef.NaturalWonder ~= "" then
 				kEvent.FeatureType = kEventDef.NaturalWonder;
 			end
-			 
+			
+			if g_RandomEventLocation ~= nil and g_RandomEventLocation &gt;= 0 then
+					kEvent.Location = g_RandomEventLocation;
+			end
+			
 			if kEventDef.EffectOperatorType ~= nil and kEventDef.EffectOperatorType == "NUCLEAR_ACCIDENT" then
 				if g_Selected.ReactorIndex ~= nil then
 					local reactor = Game.GetFalloutManager():GetReactorByIndex(g_Selected.ReactorIndex - 1);
@@ -50,10 +54,30 @@ end</Action>
     </ActionData>
   </Actions>
   <StringControls />
-  <IntegerControls />
+  <IntegerControls>
+    <IntegerControlData>
+      <Name>Location</Name>
+      <GetFunction>function()
+	if g_RandomEventLocation ~= nil then
+		return g_RandomEventLocation;
+	else
+		return -1;
+	end
+end</GetFunction>
+      <SetFunction>function(value)
+	g_RandomEventLocation = value;
+end</SetFunction>
+      <Location>
+        <X>230</X>
+        <Y>449</Y>
+      </Location>
+      <DefaultValue>-1</DefaultValue>
+    </IntegerControlData>
+  </IntegerControls>
   <FloatControls />
   <BooleanControls />
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>

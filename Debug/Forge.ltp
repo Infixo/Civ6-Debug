@@ -12,30 +12,6 @@
   <LoadStates />
   <Actions>
     <ActionData>
-      <Name>Child --&gt;</Name>
-      <Action>if TunerUtilities then TunerUtilities:NavigateForward() end</Action>
-      <Location>
-        <X>540</X>
-        <Y>123</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>&lt;-- Parent</Name>
-      <Action>if TunerUtilities then TunerUtilities:NavigateBackward() end</Action>
-      <Location>
-        <X>470</X>
-        <Y>123</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
-      <Name>Select Root</Name>
-      <Action>if TunerUtilities then TunerUtilities:NavigateToRoot() end</Action>
-      <Location>
-        <X>390</X>
-        <Y>123</Y>
-      </Location>
-    </ActionData>
-    <ActionData>
       <Name>Play</Name>
       <Action>if TunerUtilities then TunerUtilities:PlayAnimation() end</Action>
       <Location>
@@ -136,8 +112,8 @@ end
 
 end</SetFunction>
       <Location>
-        <X>610</X>
-        <Y>121</Y>
+        <X>380</X>
+        <Y>79</Y>
       </Location>
     </StringControlData>
     <StringControlData>
@@ -149,8 +125,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>610</X>
-        <Y>65</Y>
+        <X>380</X>
+        <Y>25</Y>
       </Location>
     </StringControlData>
     <StringControlData>
@@ -162,8 +138,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>610</X>
-        <Y>93</Y>
+        <X>380</X>
+        <Y>52</Y>
       </Location>
     </StringControlData>
     <StringControlData>
@@ -495,29 +471,28 @@ end</SetFunction>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
-  <DataViews />
-  <StatTrackers />
-  <SelectionLists>
-    <SelectionListData>
-      <Location>
-        <X>390</X>
-        <Y>150</Y>
-      </Location>
-      <Size>
-        <Width>482</Width>
-        <Height>170</Height>
-      </Size>
-      <Name>#:20;ID:100;Type:100;Context:100</Name>
-      <PopulateList>function()
-  return TunerUtilities and TunerUtilities:GetNavigationOptions() or nil
-end</PopulateList>
+  <TreeViews>
+    <TreeViewData>
+      <ControlName>Context/Control Tree</ControlName>
+      <PopulateTree>function(viewRoot)
+  return TunerUtilities and TunerUtilities:GetContextTree(viewRoot) or nil
+end</PopulateTree>
       <OnSelection>function(selection)
-  	if TunerUtilities then TunerUtilities:SetNavigationOption(selection) end
+  	if TunerUtilities then TunerUtilities:OnContextTreeSelection(selection) end
 end
 </OnSelection>
-      <Sorted>false</Sorted>
-    </SelectionListData>
-  </SelectionLists>
+      <Location>
+        <X>390</X>
+        <Y>112</Y>
+      </Location>
+      <Size>
+        <Width>481</Width>
+        <Height>207</Height>
+      </Size>
+    </TreeViewData>
+  </TreeViews>
+  <DataViews />
+  <StatTrackers />
   <SelectionLists>
     <SelectionListData>
       <Location>
@@ -537,8 +512,6 @@ end
 </OnSelection>
       <Sorted>false</Sorted>
     </SelectionListData>
-  </SelectionLists>
-  <SelectionLists>
     <SelectionListData>
       <Location>
         <X>390</X>

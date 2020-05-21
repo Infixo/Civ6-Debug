@@ -21,14 +21,14 @@
     </ActionData>
     <ActionData>
       <Name>Matt's 4K Screenshot Button</Name>
-      <Action>AutoProfiler.RunCommand( "ss settings 3840 2160 -1 -1" );
+      <Action>AutoProfiler.RunCommand( "ss settings 3840 2160 0 0" );
 AutoProfiler.RunCommand( "screenshot noui" );</Action>
       <Location>
         <X>90</X>
         <Y>32</Y>
       </Location>
     </ActionData>
-	<ActionData>
+    <ActionData>
       <Name>Unit Focus</Name>
       <Action>AutoProfiler.RunCommand( "toggle ocean" );
 	  AutoProfiler.RunCommand( "toggle landmarks" );
@@ -266,7 +266,7 @@ AutoProfiler.RunCommand( "toggle coastwaves" );
     </ActionData>
     <ActionData>
       <Name>Disable Overlay</Name>
-      <Action>AutoProfiler.RunCommand( "commandset zero BorderOverlay" );</Action>
+      <Action>AutoProfiler.RunCommand( "commandset zero OverlayPass" );</Action>
       <Location>
         <X>210</X>
         <Y>83</Y>
@@ -274,7 +274,7 @@ AutoProfiler.RunCommand( "toggle coastwaves" );
     </ActionData>
     <ActionData>
       <Name>Enable Overlay</Name>
-      <Action>AutoProfiler.RunCommand( "commandset reset BorderOverlay" );</Action>
+      <Action>AutoProfiler.RunCommand( "commandset reset OverlayPass" );</Action>
       <Location>
         <X>210</X>
         <Y>107</Y>
