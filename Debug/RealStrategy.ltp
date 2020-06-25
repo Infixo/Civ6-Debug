@@ -15,6 +15,7 @@
   <FloatControls />
   <BooleanControls />
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -214,7 +215,7 @@ end
     if Game.GetWorldCongress then		
       table.insert(tOut, tostring(player:GetFavor()));
       table.insert(tOut, "+"..tostring(player:GetFavorPerTurn()));
-      table.insert(tOut, string.format("%d/10",player:GetStats():GetDiplomaticVictoryPoints()));
+      table.insert(tOut, string.format("%d/20",player:GetStats():GetDiplomaticVictoryPoints()));
 			else
       table.insert(tOut, "-");
       table.insert(tOut, "-");

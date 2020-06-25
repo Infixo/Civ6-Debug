@@ -69,6 +69,7 @@ end</SetFunction>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -139,8 +140,8 @@ end</OnSelection>
 	listItems[11] = "75";
 	listItems[12] = "100";
 	listItems[13] = "150";
-	listItems[14] = "200";
-	listItems[15] = "300";
+	listItems[14] = "2";
+	listItems[15] = "3";
 	
 	local iCurrentTurns = AutoplayManager.GetTurns();
 	if (iCurrentTurns &lt; 0) then
