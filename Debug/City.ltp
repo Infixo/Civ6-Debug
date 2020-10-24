@@ -640,7 +640,6 @@ end</SetFunction>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
-  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -653,7 +652,7 @@ end</SetFunction>
         <Width>655</Width>
         <Height>285</Height>
       </Size>
-      <Name>ID:70;Plot;Name;Owner;Original Owner</Name>
+      <Name>ID:0;Plot;Name;Owner;Original Owner</Name>
       <PopulateList>function()
 	local items = {};
 	for i = 0, GameDefines.MAX_PLAYERS-1, 1 do

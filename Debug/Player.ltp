@@ -503,6 +503,14 @@ end</Action>
         <Y>627</Y>
       </Location>
     </ActionData>
+    <ActionData>
+      <Name>Recompute Unit Costs</Name>
+      <Action>Players[g_TunerSelectedPlayer]:GetUnits():RecomputeAllCosts();</Action>
+      <Location>
+        <X>580</X>
+        <Y>491</Y>
+      </Location>
+    </ActionData>
   </Actions>
   <StringControls />
   <IntegerControls>
@@ -700,6 +708,7 @@ end</SetFunction>
   <FloatControls />
   <BooleanControls />
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
