@@ -378,6 +378,7 @@ end
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -394,16 +395,17 @@ end
       <PopulateList>function()
 	listItems = {};
 	
-	local count = AssetPreview.GetAssetCount();
-	local strLowerFilter = string.lower(g_FilterString);
+	if g_PanelHasFocus == true then
+		local count = AssetPreview.GetAssetCount();
+		local strLowerFilter = string.lower(g_FilterString);
 	
-	for i=1, count do
-		local strAstName = AssetPreview.GetAssetName(i-1);
-		if ( string.find( string.lower(strAstName), strLowerFilter ) ~= nil ) then
-			table.insert( listItems, strAstName );
+		for i=1, count do
+			local strAstName = AssetPreview.GetAssetName(i-1);
+			if ( string.find( string.lower(strAstName), strLowerFilter ) ~= nil ) then
+				table.insert( listItems, strAstName );
+			end
 		end
 	end
-	
 	table.sort(listItems);
 	
 	return listItems;

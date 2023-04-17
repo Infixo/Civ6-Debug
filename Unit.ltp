@@ -164,8 +164,8 @@ if (pUnit ~= nil) then
 	pUnit:SetMilitaryFormation(MilitaryFormationTypes.ARMY_FORMATION);
 end</Action>
       <Location>
-        <X>470</X>
-        <Y>464</Y>
+        <X>900</X>
+        <Y>40</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -175,8 +175,8 @@ if (pUnit ~= nil) then
 	pUnit:SetMilitaryFormation(MilitaryFormationTypes.CORPS_FORMATION);
 end</Action>
       <Location>
-        <X>470</X>
-        <Y>434</Y>
+        <X>820</X>
+        <Y>40</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -192,7 +192,7 @@ end</Action>
 end</Action>
       <Location>
         <X>120</X>
-        <Y>756</Y>
+        <Y>652</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -208,7 +208,7 @@ end</Action>
 end</Action>
       <Location>
         <X>220</X>
-        <Y>756</Y>
+        <Y>653</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -229,8 +229,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>1050</X>
-        <Y>434</Y>
+        <X>830</X>
+        <Y>413</Y>
       </Location>
     </StringControlData>
   </StringControls>
@@ -252,8 +252,8 @@ end</GetFunction>
 
 end</SetFunction>
       <Location>
-        <X>1280</X>
-        <Y>75</Y>
+        <X>720</X>
+        <Y>36</Y>
       </Location>
       <DefaultValue>0</DefaultValue>
     </IntegerControlData>
@@ -274,11 +274,12 @@ end</GetFunction>
 end</SetFunction>
       <Location>
         <X>20</X>
-        <Y>753</Y>
+        <Y>649</Y>
       </Location>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -288,10 +289,10 @@ end</SetFunction>
         <Y>73</Y>
       </Location>
       <Size>
-        <Width>1245</Width>
-        <Height>322</Height>
+        <Width>1164</Width>
+        <Height>333</Height>
       </Size>
-      <Name>ID:60;Type:220;X:40;Y:40;Damage:56;Fortify:40;XP:40;Owner:180;Orig Owner:180;Operation:180</Name>
+      <Name>ID:60;Type:200;X:40;Y:40;Damage:56;Fortify:40;XP:40;Owner:180;Orig Owner:180;Operation</Name>
       <PopulateList>function()
 	local listItems = {};
 	local i = 0;
@@ -301,7 +302,7 @@ end</SetFunction>
 		local pPlayerConfig = PlayerConfigurations[i];
 
 		if pPlayer:WasEverAlive()  then
-			local strPlayer = pPlayerConfig:GetCivilizationShortDescription();
+			local strPlayer = pPlayerConfig:GetCivilizationTypeName();
 			if (#strPlayer == 0) then
 				strPlayer = "Player " .. tostring(i);
 			end
@@ -312,7 +313,7 @@ end</SetFunction>
 				local origOwner = pUnit:GetOriginalOwner();
 				local origOwnerStr = "none";
 				if origOwner ~= -1 then
-					origOwnerStr = PlayerConfigurations[origOwner]:GetCivilizationShortDescription();
+					origOwnerStr = PlayerConfigurations[origOwner]:GetCivilizationTypeName();
 					if (#origOwnerStr == 0) then
 						origOwnerStr = "Player " .. tostring(origOwner);
 					end
@@ -342,12 +343,12 @@ end</OnSelection>
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>1050</X>
-        <Y>465</Y>
+        <X>830</X>
+        <Y>448</Y>
       </Location>
       <Size>
-        <Width>150</Width>
-        <Height>258</Height>
+        <Width>152</Width>
+        <Height>227</Height>
       </Size>
       <Name>Children</Name>
       <PopulateList>function()
@@ -376,10 +377,10 @@ end
         <Y>414</Y>
       </Location>
       <Size>
-        <Width>434</Width>
-        <Height>329</Height>
+        <Width>380</Width>
+        <Height>234</Height>
       </Size>
-      <Name>Type:30;Ability:320;Count</Name>
+      <Name>Type:30;Ability:270;Count</Name>
       <PopulateList>function()
 	local listItems = {};
 	local z = 1;
@@ -418,12 +419,12 @@ end</OnSelection>
   <MultiselectLists>
     <MultiselectListData>
       <Location>
-        <X>560</X>
-        <Y>434</Y>
+        <X>410</X>
+        <Y>415</Y>
       </Location>
       <Size>
-        <Width>236</Width>
-        <Height>136</Height>
+        <Width>194</Width>
+        <Height>153</Height>
       </Size>
       <Name>Promotion</Name>
       <PopulateList>function()
@@ -470,12 +471,12 @@ end</OnDeselected>
     </MultiselectListData>
     <MultiselectListData>
       <Location>
-        <X>810</X>
-        <Y>435</Y>
+        <X>610</X>
+        <Y>413</Y>
       </Location>
       <Size>
-        <Width>229</Width>
-        <Height>287</Height>
+        <Width>198</Width>
+        <Height>263</Height>
       </Size>
       <Name>Religion</Name>
       <PopulateList>function()
