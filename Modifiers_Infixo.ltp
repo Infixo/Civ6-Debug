@@ -248,6 +248,7 @@ end</SetFunction>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
@@ -415,12 +416,12 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>810</X>
-        <Y>171</Y>
+        <X>780</X>
+        <Y>202</Y>
       </Location>
       <Size>
-        <Width>311</Width>
-        <Height>164</Height>
+        <Width>335</Width>
+        <Height>120</Height>
       </Size>
       <Name>Name:90;Value:60</Name>
       <PopulateList>function()

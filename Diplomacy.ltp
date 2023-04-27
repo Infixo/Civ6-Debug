@@ -21,8 +21,8 @@
 		aiDiplomacy:AdjustBaseDiplomacy(g_DiplomaticPlayer, 5);
 	end</Action>
       <Location>
-        <X>250</X>
-        <Y>321</Y>
+        <X>220</X>
+        <Y>319</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -35,8 +35,8 @@
 	end
 </Action>
       <Location>
-        <X>330</X>
-        <Y>321</Y>
+        <X>300</X>
+        <Y>319</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -54,8 +54,8 @@
 	end
 end</Action>
       <Location>
-        <X>620</X>
-        <Y>521</Y>
+        <X>1040</X>
+        <Y>70</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -73,8 +73,8 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>710</X>
-        <Y>521</Y>
+        <X>1020</X>
+        <Y>100</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -90,8 +90,8 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>140</X>
-        <Y>533</Y>
+        <X>380</X>
+        <Y>320</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -107,8 +107,8 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>140</X>
-        <Y>572</Y>
+        <X>470</X>
+        <Y>318</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -128,8 +128,8 @@ end</Action>
 	end
 end</Action>
       <Location>
-        <X>860</X>
-        <Y>521</Y>
+        <X>1030</X>
+        <Y>129</Y>
       </Location>
     </ActionData>
     <ActionData>
@@ -139,8 +139,8 @@ end</Action>
 	Players[g_DiplomaticPlayer]:GetDiplomacy():SetHasDeclaredFriendship(g_SelectedPlayer, true);
 end</Action>
       <Location>
-        <X>990</X>
-        <Y>521</Y>
+        <X>1030</X>
+        <Y>158</Y>
       </Location>
     </ActionData>
   </Actions>
@@ -166,8 +166,8 @@ end</GetFunction>
 		end;	
 end</SetFunction>
       <Location>
-        <X>640</X>
-        <Y>51</Y>
+        <X>1000</X>
+        <Y>36</Y>
       </Location>
       <DefaultValue>0</DefaultValue>
     </IntegerControlData>
@@ -192,25 +192,26 @@ end</GetFunction>
 		end;	
 end</SetFunction>
       <Location>
-        <X>510</X>
-        <Y>321</Y>
+        <X>1080</X>
+        <Y>37</Y>
       </Location>
     </BooleanControlData>
   </BooleanControls>
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>20</X>
-        <Y>48</Y>
+        <X>10</X>
+        <Y>33</Y>
       </Location>
       <Size>
-        <Width>205</Width>
-        <Height>416</Height>
+        <Width>206</Width>
+        <Height>307</Height>
       </Size>
-      <Name>Player</Name>
+      <Name>Player;Name</Name>
       <PopulateList>function()
    local listItems = {};
 	local i = 0;
@@ -220,8 +221,7 @@ end</SetFunction>
 		
 			if (pPlayer:IsAlive()) then
 				local str = tostring(i) .. ";";
-				str = str .. pPlayerConfig:GetNickName(i);
-				
+     str = str .. string.gsub( pPlayerConfig:GetCivilizationTypeName(playerID), "CIVILIZATION_", "");
 				listItems[i + 1] = str;
 			end
 	end
@@ -237,14 +237,14 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>250</X>
-        <Y>49</Y>
+        <X>220</X>
+        <Y>34</Y>
       </Location>
       <Size>
-        <Width>365</Width>
-        <Height>256</Height>
+        <Width>366</Width>
+        <Height>279</Height>
       </Size>
-      <Name>Diplomacy;State:200;Score:100;At War</Name>
+      <Name>Diplomacy;State:180;Score:50;At War:50</Name>
       <PopulateList>function()
 	local listItems = {};
 	local player = Players[g_SelectedPlayer];
@@ -257,7 +257,7 @@ end
 		for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
 			local otherPlayer = Players[i];
 			if ( playerDiplomacy:HasMet(i) ) then
-				local item = i .. ";" .. aiDiplomacy:GetDiplomaticState(i) .. ";" .. aiDiplomacy:GetDiplomaticScore(i) .. ";" .. tostring(playerDiplomacy:IsAtWarWith(i));
+				local item = i..";"..string.sub(aiDiplomacy:GetDiplomaticState(i),13)..";"..aiDiplomacy:GetDiplomaticScore(i) .. ";" .. tostring(playerDiplomacy:IsAtWarWith(i));
 		
 				listItems[ID] = item;
 				ID = ID + 1;
@@ -277,12 +277,12 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>620</X>
-        <Y>107</Y>
+        <X>590</X>
+        <Y>35</Y>
       </Location>
       <Size>
-        <Width>400</Width>
-        <Height>194</Height>
+        <Width>406</Width>
+        <Height>162</Height>
       </Size>
       <Name>ToolTips</Name>
       <PopulateList>function()
@@ -309,14 +309,14 @@ end</OnSelection>
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>620</X>
-        <Y>318</Y>
+        <X>590</X>
+        <Y>199</Y>
       </Location>
       <Size>
-        <Width>832</Width>
-        <Height>168</Height>
+        <Width>610</Width>
+        <Height>175</Height>
       </Size>
-      <Name>Type:180;For:180;Max Amount:80;Duration:80;Valid?:80;Reason</Name>
+      <Name>Type:140;For:140;Max Amount:80;Duration:80;Valid?:80;Reason:80</Name>
       <PopulateList>function()
  local listItems = {};
 	if (g_SelectedPlayer ~= nil and g_DiplomaticPlayer ~= nil) then
@@ -346,14 +346,14 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>620</X>
-        <Y>552</Y>
+        <X>590</X>
+        <Y>376</Y>
       </Location>
       <Size>
-        <Width>575</Width>
-        <Height>170</Height>
+        <Width>504</Width>
+        <Height>158</Height>
       </Size>
-      <Name>Type:80;From:80;To:80;Duration:80;Amount:80; Turns Remaining</Name>
+      <Name>Type:120;From:50;To:50;Duration:50;Amount:50; Turns Remaining:100</Name>
       <PopulateList>function()
 	local listItems = {};
 	if (g_SelectedPlayer ~= nil and g_DiplomaticPlayer ~= nil) then
@@ -361,8 +361,11 @@ end
 		if (aDeals ~= nil) then
 			for _, pDeal in ipairs(aDeals) do
 				for pItem in pDeal:Items() do
-				local item = tostring(pItem:GetType()) .. ";" .. tostring(pItem:GetFromPlayerID()) .. ";" .. tostring(pItem:GetToPlayerID()) .. ";" .. tostring(pItem:GetDuration()) .. ";" .. tostring(pItem:GetAmount()) .. ";" .. tostring(pItem:GetEndTurn() - Game.GetCurrentGameTurn());
-				table.insert(listItems, item);
+					local itemType = string.sub(GameInfo.Types[pItem:GetType()].Type,11);
+					if itemType == "RESOURCES" then itemType = string.sub(pItem:GetValueTypeID(),10) end
+					if itemType == "AGREEMENTS" then itemType = string.sub(pItem:GetSubTypeID(),13) end
+				 local item = tostring(itemType)..";"..tostring(pItem:GetFromPlayerID())..";"..tostring(pItem:GetToPlayerID())..";"..tostring(pItem:GetDuration())..";"..tostring(pItem:GetAmount())..";".. tostring(pItem:GetEndTurn()-Game.GetCurrentGameTurn());
+				 table.insert(listItems, item);
 				end
 			end
 		end
@@ -378,14 +381,14 @@ end
     </SelectionListData>
     <SelectionListData>
       <Location>
-        <X>240</X>
-        <Y>354</Y>
+        <X>10</X>
+        <Y>347</Y>
       </Location>
       <Size>
-        <Width>374</Width>
-        <Height>368</Height>
+        <Width>575</Width>
+        <Height>160</Height>
       </Size>
-      <Name>Inst:40;Modifier Id:280;Owner:120;# Subjects:40;Active:40;</Name>
+      <Name>Inst:40;Modifier Id:260;Owner:110;# Subjects:40;Active:30;</Name>
       <PopulateList>function()
 local modifiers = GameEffects.GetModifiers();
 local table_data = {};
