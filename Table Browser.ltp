@@ -6,19 +6,16 @@
   <ExitAction />
   <CompatibleStates>
     <string>Main State</string>
-    <string>GameCore_Tuner</string>
     <string>WorldCongress</string>
-    <string>CityBannerManager</string>
+    <string>GameCore_Tuner</string>
     <string>UnitFlagManager</string>
     <string>NotificationPanel</string>
     <string>MinimapPanel</string>
     <string>UnitPanel</string>
     <string>TopPanel</string>
     <string>LaunchBar</string>
-    <string>BoostUnlockedPopup</string>
     <string>Options</string>
     <string>InGame</string>
-    <string>EventListener</string>
     <string>TestA</string>
     <string>TestB</string>
     <string>TestC</string>
@@ -79,7 +76,7 @@
       <Fixed>false</Fixed>
       <OnRefresh />
       <Location>
-        <X>5</X>
+        <X>10</X>
         <Y>25</Y>
       </Location>
       <Size>
@@ -88,6 +85,7 @@
       </Size>
     </TableViewData>
   </TableViews>
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists />

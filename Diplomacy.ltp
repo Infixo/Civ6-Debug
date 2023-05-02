@@ -213,20 +213,19 @@ end</SetFunction>
       </Size>
       <Name>Player;Name</Name>
       <PopulateList>function()
-   local listItems = {};
+ local listItems = {};
 	local i = 0;
-	for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
+ for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
 			local pPlayer = Players[i];
 			local pPlayerConfig = PlayerConfigurations[i];
-		
-			if (pPlayer:IsAlive()) then
+			if pPlayer:IsAlive() then
 				local str = tostring(i) .. ";";
-     str = str .. string.gsub( pPlayerConfig:GetCivilizationTypeName(playerID), "CIVILIZATION_", "");
-				listItems[i + 1] = str;
-			end
-	end
-
-  return listItems;
+     str = str .. string.sub(pPlayerConfig:GetCivilizationTypeName(),14);
+			 table.insert(listItems,str);
+				--listItems[i+1] = str;
+			end -- if
+	end -- for
+ return listItems;
 end</PopulateList>
       <OnSelection>function(selection)
 	  local selectedPlayerIDStr = string.match(selection, "%d+");
@@ -244,36 +243,31 @@ end
         <Width>366</Width>
         <Height>279</Height>
       </Size>
-      <Name>Diplomacy;State:180;Score:50;At War:50</Name>
+      <Name>Diplomacy;State:160;Score:50;At War:50</Name>
       <PopulateList>function()
 	local listItems = {};
 	local player = Players[g_SelectedPlayer];
-	if ( player ~= nil ) then
+	if player then
 		local playerDiplomacy = player:GetDiplomacy();
 		local aiDiplomacy = player:GetAi_Diplomacy();
-		local ID = 0;
-	
 		local i = 0;
 		for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
 			local otherPlayer = Players[i];
-			if ( playerDiplomacy:HasMet(i) ) then
-				local item = i..";"..string.sub(aiDiplomacy:GetDiplomaticState(i),13)..";"..aiDiplomacy:GetDiplomaticScore(i) .. ";" .. tostring(playerDiplomacy:IsAtWarWith(i));
-		
-				listItems[ID] = item;
-				ID = ID + 1;
+			if playerDiplomacy:HasMet(i) then
+				local item = tostring(i)..";"..string.sub(aiDiplomacy:GetDiplomaticState(i),13)..";"..aiDiplomacy:GetDiplomaticScore(i) .. ";" .. tostring(playerDiplomacy:IsAtWarWith(i));
+				table.insert(listItems,item);
 			end
-		end
-	end
+		end -- for
+	end -- if
 	return listItems;
-end
-</PopulateList>
+end</PopulateList>
       <OnSelection>function(selection)
 	  local selectedPlayerIDStr = string.match(selection, "%d+");
 	  g_DiplomaticPlayer = tonumber(selectedPlayerIDStr);
 end
 
 </OnSelection>
-      <Sorted>true</Sorted>
+      <Sorted>false</Sorted>
     </SelectionListData>
     <SelectionListData>
       <Location>
@@ -290,15 +284,17 @@ end
 	local pPlayer = Players[g_SelectedPlayer];
 	local pDiploPlayer = Players[g_DiplomaticPlayer];
 	if ( pPlayer ~= nil and pDiploPlayer ~= nil) then
-		local aiDiplomacy = pDiploPlayer:GetAi_Diplomacy();
-		local toolTips = aiDiplomacy:GetDiplomaticModifiers(g_SelectedPlayer);
-		for i, toolTip in ipairs(toolTips) do
-			local score = toolTip.Score;
-			local text = toolTip.Text;
-			if(score ~= 0) then
-				table.insert(listItems, tostring(score) .. " - " .. Locale.Lookup(text));
-			end
-		end
+		local aiDiplomacy = pPlayer:GetAi_Diplomacy();
+		local toolTips = aiDiplomacy:GetDiplomaticModifiers(g_DiplomaticPlayer);
+		if toolTips then
+		 for _,toolTip in ipairs(toolTips) do
+			 local score = toolTip.Score;
+			 local text = toolTip.Text;
+			 --if(score ~= 0) then
+				 table.insert(listItems, tostring(score) .. " - " .. Locale.Lookup(text));
+			 --end
+		 end
+		end	
 	end
 	return listItems;
 end</PopulateList>
@@ -316,7 +312,7 @@ end</OnSelection>
         <Width>610</Width>
         <Height>175</Height>
       </Size>
-      <Name>Type:140;For:140;Max Amount:80;Duration:80;Valid?:80;Reason:80</Name>
+      <Name>Type:120;For:140;Max Amount:80;Duration:80;Valid?:80;Reason:80</Name>
       <PopulateList>function()
  local listItems = {};
 	if (g_SelectedPlayer ~= nil and g_DiplomaticPlayer ~= nil) then
@@ -324,10 +320,15 @@ end</OnSelection>
 		if (aPossibleItems ~= nil) then
 			for _, possibleItem in ipairs(aPossibleItems) do
 				local forName = possibleItem.ForTypeName;
-				if (forName == nil) then
-						forName = "-";
+				if possibleItem.Type == DealItemTypes.AGREEMENTS then
+					forName = string.sub(GameInfo.Types[possibleItem.SubType].Type,13);
+				elseif forName == nil then
+					forName = "-";
+				else
+				 forName = Locale.Lookup(forName);
 				end
-				local item = GameInfo.DealItems[possibleItem.Type].Name .. ";" .. forName .. ";" .. tostring(possibleItem.MaxAmount) .. ";" .. tostring(possibleItem.Duration) .. ";" .. tostring(possibleItem.IsValid);
+				local item = string.sub(GameInfo.Types[possibleItem.Type].Type,11);
+				item = item..";"..forName.. ";" .. tostring(possibleItem.MaxAmount) .. ";" .. tostring(possibleItem.Duration) .. ";" .. tostring(possibleItem.IsValid);
 				if (possibleItem.ValidationReason ~= nil) then
 					item = item .. ";" .. possibleItem.ValidationReason;
 				end
