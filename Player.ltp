@@ -583,10 +583,11 @@ end</SetFunction>
     <IntegerControlData>
       <Name>Random Seed</Name>
       <GetFunction>function()
-	return Game.GetRandomSeed();
+	if Game then return Game.GetRandomSeed(); end
+	return -1;
 end</GetFunction>
       <SetFunction>function(value)
-	Game.SetRandomSeed(value);
+	if Game then Game.SetRandomSeed(value); end
 end</SetFunction>
       <Location>
         <X>580</X>
@@ -728,6 +729,7 @@ end</SetFunction>
 	end
 	
 	local items = {};
+	if PlayerManager == nil then return items; end
 	local aPlayers = PlayerManager.GetAlive();
 	for _, pPlayer in ipairs(aPlayers) do
 		local pPlayerConfig = PlayerConfigurations[pPlayer:GetID()];
@@ -762,6 +764,7 @@ end</OnSelection>
       <Name>ID:30;Type:200;Count</Name>
       <PopulateList>function()
 	local listItems = {};
+	if Players == nil then return listItems; end
 	local z = 1;
 	local player = Players[g_TunerSelectedPlayer];
 	if (player == nil) then return; end
@@ -801,6 +804,7 @@ end</OnSelection>
       <Name>Tech</Name>
       <PopulateList>function()
 	local listItems = {};
+	if Players == nil then return listItems; end
 	local player = Players[g_TunerSelectedPlayer];
 	local playerTechs = player:GetTechs();
 	local ID = 0;		
@@ -865,6 +869,7 @@ end</OnDeselected>
       <Name>Civics</Name>
       <PopulateList>function()
 	local listItems = {};
+	if Players == nil then return listItems; end
 	local player = Players[g_TunerSelectedPlayer];
 	local playerCulture = player:GetCulture();
 	local ID = 0;		
@@ -931,6 +936,7 @@ end
       <Name>Era</Name>
       <PopulateList>function()
 	local listItems = {};
+	if Players == nil then return listItems; end
 	local player = Players[g_TunerSelectedPlayer];
 	local playerEra = player:GetEras();
 	local ID = 0;		
