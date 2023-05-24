@@ -6,6 +6,7 @@
   <ExitAction />
   <CompatibleStates>
     <string>InGame</string>
+    <string>TunerCityPanel</string>
   </CompatibleStates>
   <LoadStates />
   <Actions />
@@ -14,13 +15,14 @@
   <FloatControls />
   <BooleanControls />
   <TableViews />
+  <TreeViews />
   <DataViews />
   <StatTrackers />
   <SelectionLists>
     <SelectionListData>
       <Location>
-        <X>20</X>
-        <Y>44</Y>
+        <X>10</X>
+        <Y>367</Y>
       </Location>
       <Size>
         <Width>565</Width>
@@ -50,6 +52,125 @@
 		end
 	end
   return listItems;
+end</PopulateList>
+      <OnSelection>function(selection)
+
+end
+</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>10</X>
+        <Y>33</Y>
+      </Location>
+      <Size>
+        <Width>286</Width>
+        <Height>327</Height>
+      </Size>
+      <Name>ID;Plot;Name;Owner:100</Name>
+      <PopulateList>function()
+	local items = {};
+	for i = 0, GameDefines.MAX_PLAYERS-1, 1 do
+		local pPlayer = Players[i];
+		local pPlayerConfig = PlayerConfigurations[i];
+		
+		if pPlayer:WasEverAlive()  then
+			local strPlayer = Locale.Lookup(pPlayerConfig:GetCivilizationShortDescription());
+			if (#strPlayer == 0) then
+				strPlayer = "Player " .. tostring(i);
+			end
+			
+			local pCities = pPlayer:GetCities();
+			local pCity;
+			for ii, pCity in pCities:Members() do
+				
+				--if ( g_PlacementSettings.Player == -1 or g_PlacementSettings.CityID == -1 ) then
+					--g_PlacementSettings.Player = pPlayer:GetID();
+					--g_PlacementSettings.CityID = pCity:GetID();
+				--end
+				
+				local origOwner = pCity:GetOriginalOwner();
+				local origOwnerStr = "none";
+				if origOwner ~= -1 then
+					origOwnerStr = Locale.Lookup(PlayerConfigurations[origOwner]:GetCivilizationShortDescription());
+					if (#origOwnerStr == 0) then
+						origOwnerStr = "Player " .. tostring(origOwner);
+					end
+				end
+				
+				local cityName = string.gsub(pCity:GetName(), "LOC_CITY_NAME_", "");
+				local cityLocName = string.upper(Locale.Lookup(pCity:GetName()))
+				if ( #cityName &gt; #cityLocName ) then
+					cityName = cityLocName;
+				end
+				
+				origOwnerStr = string.gsub(origOwnerStr, "LOC_CIVILIZATION_", "");
+
+				local str = pPlayer:GetID()..","..pCity:GetID()..";"..pCity:GetX()..","..pCity:GetY()..";"..cityName..";"..strPlayer;
+				table.insert(items, str);
+				--if ( pPlayer:GetID() == g_PlacementSettings.Player and pCity:GetID() == g_PlacementSettings.CityID ) then
+					--items.selected = #items;
+				--end
+			end		
+		end
+	end
+
+	return items;
+end</PopulateList>
+      <OnSelection>function(selection)
+	local selectionParts = {};
+	-- No split available?
+	local str1 = string.match(selection, "%d+");
+	local str2 = string.match(selection, "%d+", string.len(str1) + 1);
+	
+	g_RoutesPlayer = tonumber(str1);
+	g_RoutesCityID = tonumber(str2);	
+end</OnSelection>
+      <Sorted>false</Sorted>
+    </SelectionListData>
+    <SelectionListData>
+      <Location>
+        <X>300</X>
+        <Y>34</Y>
+      </Location>
+      <Size>
+        <Width>550</Width>
+        <Height>326</Height>
+      </Size>
+      <Name>Direction:50;Type:40;Origin:60;Destination:60;OriginYields:110;DestinationYields:110;</Name>
+      <PopulateList>function()
+	local listItems = {};
+	if g_RoutesPlayer == nil or g_RoutesCityID == nil then return listItems; end
+ local pPlayer = Players[g_RoutesPlayer];
+ if pPlayer == nil then return listItems; end
+	local pCity = nil;
+ local cities = pPlayer:GetCities();
+ if cities ~= nil then pCity = cities:FindID(g_RoutesCityID); end
+	if pCity == nil then return listItems; end
+ local pTrade = pCity:GetTrade();
+ local str = "";
+	-- outgoing
+	for _,tr in ipairs(pTrade:GetOutgoingRoutes()) do
+	 str = "OUT;"..(tr.OriginCityPlayer == tr.DestinationCityPlayer and "DOM;" or "INT;");
+		str = str..tr.OriginCityPlayer..","..tr.OriginCityID..";"..tr.DestinationCityPlayer..","..tr.DestinationCityID..";"
+		local yo, yd = "fpgscf:", "fpgscf:";
+		for k,v in pairs(tr.OriginYields)      do yo = yo..v.Amount..","; end
+		for k,v in pairs(tr.DestinationYields) do yd = yd..v.Amount..","; end
+		str = str..yo..";"..yd..";"
+		table.insert(listItems, str);
+	end	
+ -- incoming		
+	for _,tr in ipairs(pTrade:GetIncomingRoutes()) do
+	 str = "IN;"..(tr.OriginCityPlayer == tr.DestinationCityPlayer and "DOM;" or "INT;");
+		str = str..tr.OriginCityPlayer..","..tr.OriginCityID..";"..tr.DestinationCityPlayer..","..tr.DestinationCityID..";"
+		local yo, yd = "fpgscf:", "fpgscf:";
+		for k,v in pairs(tr.OriginYields)      do yo = yo..v.Amount..","; end
+		for k,v in pairs(tr.DestinationYields) do yd = yd..v.Amount..","; end
+		str = str..yo..";"..yd..";"
+		table.insert(listItems, str);
+	end	
+	return listItems;
 end</PopulateList>
       <OnSelection>function(selection)
 

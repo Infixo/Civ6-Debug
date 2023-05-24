@@ -292,7 +292,7 @@ end</SetFunction>
         <Width>1164</Width>
         <Height>333</Height>
       </Size>
-      <Name>ID:60;Type:200;X:40;Y:40;Damage:56;Fortify:40;XP:40;Owner:180;Orig Owner:180;Operation</Name>
+      <Name>ID:60;Type:180;X:40;Y:40;Damage:50;Fortify:40;XP:40;Combat:50;Owner:140;Orig Owner:140;Operation</Name>
       <PopulateList>function()
 	local listItems = {};
 	local i = 0;
@@ -305,6 +305,8 @@ end</SetFunction>
 			local strPlayer = pPlayerConfig:GetCivilizationTypeName();
 			if (#strPlayer == 0) then
 				strPlayer = "Player " .. tostring(i);
+			else
+     strPlayer = string.sub(strPlayer,14);
 			end
 			
 			local pUnits = pPlayer:GetUnits();
@@ -316,12 +318,17 @@ end</SetFunction>
 					origOwnerStr = PlayerConfigurations[origOwner]:GetCivilizationTypeName();
 					if (#origOwnerStr == 0) then
 						origOwnerStr = "Player " .. tostring(origOwner);
+					else
+						origOwnerStr = string.sub(origOwnerStr,14);
 					end
 				end
 				local typeName = string.gsub(GameInfo.Units[pUnit:GetType()].UnitType, "UNIT_", "");
 				local unitXP = pUnit:GetExperience();
 				local fortifyTurns = pUnit:GetFortifyTurns();
-				local str = pPlayer:GetID() .. "," .. pUnit:GetID() .. ";" .. typeName .. ";" .. pUnit:GetX() .. ";" .. pUnit:GetY() .. ";" .. pUnit:GetDamage() .. ";" .. fortifyTurns .. ";" .. unitXP:GetExperiencePoints() .. ";" .. strPlayer .. ";" .. origOwnerStr .. ";" .. UnitManager.GetOperationTypeName(pUnit);
+				local opType = UnitManager.GetOperationTypeName(pUnit);
+     if opType and opType ~= "" then opType = string.sub(opType,15); end
+				local str = pPlayer:GetID()..","..pUnit:GetID()..";"..typeName..";"..pUnit:GetX()..";"..pUnit:GetY()..";"
+				str = str..pUnit:GetDamage()..";"..fortifyTurns..";"..unitXP:GetExperiencePoints()..";"..pUnit:GetCombat()..";"..strPlayer..";"..origOwnerStr..";"..opType;
 				listItems[z] = str;
 				z = z + 1;			
 			end		
